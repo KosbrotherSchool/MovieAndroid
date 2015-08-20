@@ -12,7 +12,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
     private Button btn_theaters;
 
-    // master
+    // master merge test1
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
