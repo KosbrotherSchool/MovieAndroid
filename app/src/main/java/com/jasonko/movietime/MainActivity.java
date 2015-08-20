@@ -1,11 +1,6 @@
 package com.jasonko.movietime;
 
 import android.content.Intent;
-import android.speech.RecognizerIntent;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -25,6 +20,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private Button btn_theaters;
     private SearchBox searchBox;
+
+    // master merge test1
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
