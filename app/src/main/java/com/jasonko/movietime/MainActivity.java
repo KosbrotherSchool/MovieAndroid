@@ -6,22 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.quinny898.library.persistentsearch.SearchBox;
 import com.quinny898.library.persistentsearch.SearchResult;
 
-import java.util.ArrayList;
-
 
 public class MainActivity extends AppCompatActivity {
     private Button btn_theaters;
     private SearchBox searchBox;
-
-    // master merge test1
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    //test
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -80,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             searchBox.addSearchable(option);
         }
         searchBox.setLogoText("My App");
-        searchBox.setMenuListener(new SearchBox.MenuListener(){
+        searchBox.setMenuListener(new SearchBox.MenuListener() {
 
             @Override
             public void onMenuClick() {
