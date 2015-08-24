@@ -11,12 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
 import android.widget.Toast;
 
 import com.quinny898.library.persistentsearch.SearchBox;
 import com.quinny898.library.persistentsearch.SearchResult;
-
-import java.util.ArrayList;
 
 
 public class MainActivity extends Activity {
@@ -58,7 +57,12 @@ public class MainActivity extends Activity {
         });
     }
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
     //設定各個元件的對應id
     protected void processViews(){
@@ -81,7 +85,7 @@ public class MainActivity extends Activity {
             searchBox.addSearchable(option);
         }
         searchBox.setLogoText("My App");
-        searchBox.setMenuListener(new SearchBox.MenuListener(){
+        searchBox.setMenuListener(new SearchBox.MenuListener() {
 
             @Override
             public void onMenuClick() {
