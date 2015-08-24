@@ -1,13 +1,15 @@
 package com.jasonko.movietime;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,16 +19,28 @@ import com.quinny898.library.persistentsearch.SearchResult;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
+    private DrawerLayout mDrawerLayout;
+    private LinearLayout lLayout_drawer;
+    private ListView listview_drawer;
+
+    private static final String[] drawer_menu_items = new String[]{
+            "最近瀏覽", "我的追蹤", "我要訂票", "問題回報", "好用給個讚", "分享給好友", "關於我們", "我的設定"};
+
+
+
     private Button btn_theaters;
     private SearchBox searchBox;
 
-    // master merge test1
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //設定各個元件的對應id
+        processViews();
+
 
         searchBox = (SearchBox) findViewById(R.id.searchbox);
         btn_theaters = (Button) findViewById(R.id.btn_theaters);
@@ -42,32 +56,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent_theaters);
             }
         });
-
     }
 
 
 
-    //test
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+    //設定各個元件的對應id
+    protected void processViews(){
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.layout_drawer);
+        listview_drawer = (ListView)findViewById(R.id.listview_drawer);
+        lLayout_drawer = (LinearLayout)findViewById(R.id.lLayout_drawer);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        //設定drawer中的listview的選項
+        listview_drawer.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, drawer_menu_items));
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onMenuClick() {
                 //Hamburger has been clicked
-                Toast.makeText(MainActivity.this, "Menu click", Toast.LENGTH_LONG).show();
+                mDrawerLayout.openDrawer(lLayout_drawer);//點擊menu icon時就會跳出drawer
             }
 
         });
