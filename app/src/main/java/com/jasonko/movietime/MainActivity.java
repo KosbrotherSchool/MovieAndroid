@@ -1,12 +1,15 @@
 package com.jasonko.movietime;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -37,6 +40,12 @@ public class MainActivity extends Activity {
 
     private static final String[] drawer_menu_items = new String[]{
             "最近瀏覽", "我的追蹤", "我要訂票", "問題回報", "好用給個讚", "分享給好友", "關於我們", "我的設定"};
+
+    private CardView newsCardView;
+    private CardView theaterCardView;
+    private CardView movieCardView;
+    private CardView creditCardView;
+    private CardView ticketCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +86,54 @@ public class MainActivity extends Activity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.layout_drawer);
         listview_drawer = (ListView)findViewById(R.id.listview_drawer);
         lLayout_drawer = (LinearLayout)findViewById(R.id.lLayout_drawer);
+        newsCardView = (CardView) findViewById(R.id.news_card_view);
+        theaterCardView = (CardView) findViewById(R.id.theater_card_view);
+        movieCardView = (CardView) findViewById(R.id.movie_card_view);
+        creditCardView = (CardView) findViewById(R.id.credit_card_view);
+        ticketCardView = (CardView) findViewById(R.id.ticket_card_view);
 
         //設定drawer中的listview的選項
         listview_drawer.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, drawer_menu_items));
 
+        newsCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(MainActivity.this, NewsActivity.class);
+                startActivity(newIntent);
+            }
+        });
+
+        theaterCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(MainActivity.this, TheatersActivity.class);
+                startActivity(newIntent);
+            }
+        });
+
+        ticketCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(MainActivity.this, TicketActivity.class);
+                startActivity(newIntent);
+            }
+        });
+
+        movieCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(MainActivity.this, MovieActivity.class);
+                startActivity(newIntent);
+            }
+        });
+
+        creditCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(MainActivity.this, CreditCardActivity.class);
+                startActivity(newIntent);
+            }
+        });
     }
 
     private class RankMoviesTask extends AsyncTask {

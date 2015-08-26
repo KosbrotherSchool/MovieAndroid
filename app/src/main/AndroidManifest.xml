@@ -24,7 +24,29 @@
 
         <activity
             android:name=".TheatersActivity"
+            android:screenOrientation="portrait"
             android:label="全台戲院"/>
+
+        <activity
+            android:name=".NewsActivity"
+            android:screenOrientation="portrait"
+            android:label="熱門新聞"/>
+
+        <activity
+            android:name=".MovieActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name=".CreditCardActivity"
+            android:screenOrientation="portrait"
+            android:label="信用卡優惠"/>
+
+        <activity
+            android:name=".TicketActivity"
+            android:screenOrientation="portrait"
+            android:label="訂票"/>
+
     </application>
 
 </manifest>
