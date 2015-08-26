@@ -5,6 +5,7 @@ import android.util.Log;
 import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.model.MovieNews;
 import com.jasonko.movietime.model.MovieTime;
+import com.jasonko.movietime.model.MyYoutubeVideo;
 import com.jasonko.movietime.model.Photo;
 
 import org.json.JSONArray;
@@ -120,6 +121,43 @@ public class MovieAPI {
             parseMovieTimes(times, message);
         }
         return times;
+    }
+
+    public static ArrayList<MyYoutubeVideo> getRandomYoutubeVideos(){
+        ArrayList<MyYoutubeVideo> videos = new ArrayList<MyYoutubeVideo>();
+        String url = host + "/api/movie/youtubes";
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            parseMyYoutubeVideos(videos, message);
+        }
+        return videos;
+    }
+
+    private static void parseMyYoutubeVideos(ArrayList<MyYoutubeVideo> videos, String message) {
+        try {
+            JSONArray videoArray = new JSONArray(message);
+            for (int i = 0; i < videoArray.length(); i++){
+                JSONObject videoObject = videoArray.getJSONObject(i);
+                String title = "";
+                String youtube_id = "";
+                int youtube_column_id = 0;
+                int youtube_sub_column_id = 0;
+                try {
+                    title = videoObject.getString("title");
+                    youtube_id = videoObject.getString("youtube_id");
+                    youtube_column_id = videoObject.getInt("youtube_column_id");
+                    youtube_sub_column_id = videoObject.getInt("youtube_sub_column_id");
+                }catch (Exception e){
+
+                }
+                MyYoutubeVideo newVideo = new MyYoutubeVideo(title, youtube_id, youtube_column_id, youtube_sub_column_id);
+                videos.add(newVideo);
+            }
+        }catch (Exception e){
+
+        }
     }
 
     private static void parseMovieTimes(ArrayList<MovieTime> times, String message) {

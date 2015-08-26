@@ -1,36 +1,42 @@
 package com.jasonko.movietime;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-
 import android.widget.Toast;
 
+import com.jasonko.movietime.adapters.RandomYoutubeVideoAdapter;
+import com.jasonko.movietime.adapters.RankMovieAdapter;
+import com.jasonko.movietime.api.MovieAPI;
+import com.jasonko.movietime.model.Movie;
+import com.jasonko.movietime.model.MyYoutubeVideo;
 import com.quinny898.library.persistentsearch.SearchBox;
 import com.quinny898.library.persistentsearch.SearchResult;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends Activity {
+
     private DrawerLayout mDrawerLayout;
     private LinearLayout lLayout_drawer;
     private ListView listview_drawer;
+    private SearchBox searchBox;
+    private RecyclerView rankRecyclerView;
+    private RecyclerView recommendRecyclerView;
+
+    private ArrayList<Movie> rankMovies = new ArrayList<>();
+    private ArrayList<MyYoutubeVideo> randomVideos = new ArrayList<>();
 
     private static final String[] drawer_menu_items = new String[]{
             "最近瀏覽", "我的追蹤", "我要訂票", "問題回報", "好用給個讚", "分享給好友", "關於我們", "我的設定"};
-
-
-
-    private Button btn_theaters;
-    private SearchBox searchBox;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,21 +46,23 @@ public class MainActivity extends Activity {
         //設定各個元件的對應id
         processViews();
 
-
         searchBox = (SearchBox) findViewById(R.id.searchbox);
-        btn_theaters = (Button) findViewById(R.id.btn_theaters);
         setSearchBar();
 
+        rankRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_rank);
+        rankRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rankRecyclerView.setLayoutManager(mLayoutManager);
 
-        //打開戲院的activity
-        btn_theaters.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent_theaters = new Intent();
-                intent_theaters.setClass(MainActivity.this, TheatersActivity.class);
-                startActivity(intent_theaters);
-            }
-        });
+        recommendRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_recommend);
+        recommendRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager2 = new LinearLayoutManager(this);
+        mLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recommendRecyclerView.setLayoutManager(mLayoutManager2);
+
+        new RankMoviesTask().execute();
+        new RandomVideosTask().execute();
     }
 
     @Override
@@ -75,6 +83,35 @@ public class MainActivity extends Activity {
 
     }
 
+    private class RankMoviesTask extends AsyncTask {
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            rankMovies = MovieAPI.getTaipeiRankMovies();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object result) {
+            RankMovieAdapter videoAdapter = new RankMovieAdapter(MainActivity.this, rankMovies);
+            rankRecyclerView.setAdapter(videoAdapter);
+        }
+    }
+
+    private class RandomVideosTask extends AsyncTask {
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            randomVideos = MovieAPI.getRandomYoutubeVideos();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object result) {
+            RandomYoutubeVideoAdapter videoAdapter = new RandomYoutubeVideoAdapter(MainActivity.this, randomVideos);
+            recommendRecyclerView.setAdapter(videoAdapter);
+        }
+    }
 
 
     private void setSearchBar(){
