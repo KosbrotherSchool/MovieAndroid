@@ -1,5 +1,6 @@
 package com.jasonko.movietime;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -28,6 +29,7 @@ public class NewsActivity extends FragmentActivity {
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
+        tabsStrip.setIndicatorColor(Color.parseColor("#ff2EB9FF"));
     }
 
     public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
