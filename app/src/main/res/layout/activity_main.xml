@@ -260,12 +260,29 @@
                         android:textSize="20sp"
                         android:layout_weight="1" />
 
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
+                    <android.support.v7.widget.CardView
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="更多"
-                        android:id="@+id/btn_more_one" />
+                        card_view:cardBackgroundColor="#FF9245"
+                        card_view:cardUseCompatPadding="true"
+                        card_view:cardElevation="0dp"
+                        card_view:cardCornerRadius="3dp"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="更多"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="3dp"
+                            />
+
+                    </android.support.v7.widget.CardView>
                 </LinearLayout>
 
 
@@ -300,12 +317,28 @@
                         android:textSize="20sp"
                         android:layout_weight="1" />
 
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
+                    <android.support.v7.widget.CardView
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="更多"
-                        android:id="@+id/btn_more_two" />
+                        card_view:cardBackgroundColor="#FF9245"
+                        card_view:cardUseCompatPadding="true"
+                        card_view:cardElevation="0dp"
+                        card_view:cardCornerRadius="3dp"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="更多"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="3dp"
+                            />
+                    </android.support.v7.widget.CardView>
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
@@ -330,6 +363,12 @@
     android:layout_gravity="start"
     android:orientation="vertical"
     android:background="#FFF">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/movie_time"
+        />
 
     <ListView
         android:id="@+id/listview_drawer"
