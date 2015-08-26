@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.jasonko.movietime.fragments.PageFragment;
+import com.jasonko.movietime.fragments.NewsFragment;
 
 /**
  * Created by kolichung on 8/26/15.
@@ -30,9 +30,10 @@ public class NewsActivity extends FragmentActivity {
         tabsStrip.setViewPager(viewPager);
     }
 
-    public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
-        final int PAGE_COUNT = 3;
-        private String tabTitles[] = new String[] { "Tab1", "Tab2", "Tab3" };
+    public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
+
+        final int PAGE_COUNT = 4;
+        private String tabTitles[] = new String[] { "影片新聞", "選片指南", "影評", "專題報導" };
 
         public SampleFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -45,7 +46,7 @@ public class NewsActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return PageFragment.newInstance(position + 1);
+            return NewsFragment.newInstance(position + 1);
         }
 
         @Override

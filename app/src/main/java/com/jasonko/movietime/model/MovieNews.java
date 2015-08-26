@@ -40,6 +40,10 @@ public class MovieNews {
         return news_link;
     }
 
+    public String getPic_link(){
+        return pic_link;
+    }
+
     public String getPublish_day(){
         return publish_day;
     }
