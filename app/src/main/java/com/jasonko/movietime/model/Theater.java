@@ -79,4 +79,36 @@ public class Theater {
         return theaters;
     }
 
+    public static Theater getTheaterByID(int the_theater_id){
+        Theater mTheater = null;
+        try {
+            JSONArray photoArray = new JSONArray(theater_message);
+            for (int i = 0; i < photoArray.length(); i++){
+                JSONObject theaterObject = photoArray.getJSONObject(i);
+
+                if (theaterObject.getInt("id") == the_theater_id) {
+                    String name = "";
+                    String address = "";
+                    String phone = "";
+                    int area_id = 0;
+                    int theater_id = 0;
+
+                    try {
+                        name = theaterObject.getString("name");
+                        address = theaterObject.getString("address");
+                        phone = theaterObject.getString("phone");
+                        area_id = theaterObject.getInt("area_id");
+                        theater_id = theaterObject.getInt("id");
+                    } catch (Exception e) {
+
+                    }
+                    mTheater = new Theater(name, address, phone, area_id, theater_id);
+                }
+            }
+        }catch (Exception e){
+
+        }
+        return  mTheater;
+    }
+
 }

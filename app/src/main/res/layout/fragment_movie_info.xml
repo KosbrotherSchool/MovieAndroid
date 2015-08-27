@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+
+            >
+
+            <ImageView
+                android:id="@+id/movieinfo_image"
+                android:layout_width="110dp"
+                android:layout_height="150dp"
+                android:src="@mipmap/ic_launcher"
+                />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                >
+                <TextView
+                    android:id="@+id/movieinfo_text_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="我的少女時代"
+                    android:textSize="22dp"
+                    android:layout_marginTop="3dp"
+                    android:maxLines="2"
+                    />
+                <TextView
+                    android:id="@+id/movieinfo_text_title_eng"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="English title here"
+                    android:textSize="15dp"
+                    android:maxLines="2"
+                    android:layout_marginTop="3dp"
+                    />
+                <TextView
+                    android:id="@+id/movieinfo_text_class"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="保護級 片長:2時11分"
+                    android:layout_marginTop="5dp"
+                    android:textSize="14dp"
+                    />
+                <TextView
+                    android:id="@+id/movieinfo_text_publish_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="上映日期:2015/9/13"
+                    android:layout_marginTop="5dp"
+                    android:textSize="14dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/icon_tag"
+                    android:layout_marginTop="10dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="3dp"
+            >
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/movie_photos_card_view"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                card_view:cardBackgroundColor="#FF9245"
+                card_view:cardUseCompatPadding="true"
+                card_view:cardElevation="0dp"
+                card_view:cardCornerRadius="3dp"
+                android:layout_weight="1"
+                >
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/icon_photo"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/movieinfo_text_photos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="圖集(15)"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="50dp"
+                    />
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/movie_trailers_card_view"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                card_view:cardBackgroundColor="#FF9245"
+                card_view:cardUseCompatPadding="true"
+                card_view:cardElevation="0dp"
+                card_view:cardCornerRadius="3dp"
+                android:layout_weight="1"
+                >
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/icon_play"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/movieinfo_text_trailers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="影片(5)"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="50dp"
+                    />
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/movieinfo_text_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:maxLines="4"
+                android:textSize="18dp"
+                android:text="在高潮迭起的諜報動作系列電影第五集《不可能的任務：失控國度》中，湯姆克魯斯再次飾演伊森韓特，他將面臨極為艱鉅的不可能"
+                />
+
+            <TextView
+                android:id="@+id/textview_movie_info_readmore"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="18dp"
+                android:text="閱讀完整內容"
+                android:gravity="center"
+                android:textColor="@color/movie_indicator"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_line"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                >
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/movieinfo_text_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="類型:\n動作、懸疑/驚悚、冒險"
+                android:layout_marginTop="5dp"
+                android:textSize="18dp"
+                />
+
+            <TextView
+                android:id="@+id/movieinfo_text_director"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="導演:\n陳玉珊"
+                android:layout_marginTop="5dp"
+                android:textSize="18dp"
+                />
+            <TextView
+                android:id="@+id/movieinfo_text_actors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="演員:\n湯姆克魯斯、傑瑞米雷納、賽門佩吉、文雷姆斯"
+                android:layout_marginTop="5dp"
+                android:textSize="18dp"
+                />
+            <TextView
+                android:id="@+id/movieinfo_text_officier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="出品公司:\n派拉蒙影業"
+                android:layout_marginTop="5dp"
+                android:textSize="18dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_line"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            >
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_marginBottom="10dp"
+            >
+
+            <LinearLayout
+                android:id="@+id/linearLayout_movie_add_follow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/icon_tag"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="加入追蹤"
+                    android:textSize="14dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout_movie_share"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/icon_share"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="分享"
+                    android:textSize="14dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout_movie_response"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/icon_message_2"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="問題回報"
+                    android:textSize="14dp"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

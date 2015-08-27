@@ -1,5 +1,6 @@
 package com.jasonko.movietime;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,7 +9,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.jasonko.movietime.fragments.PageFragment;
+import com.jasonko.movietime.fragments.MovieInfoFragment;
+import com.jasonko.movietime.fragments.MovieTimeFragment;
 
 /**
  * Created by kolichung on 8/26/15.
@@ -28,11 +30,12 @@ public class MovieActivity extends FragmentActivity {
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
+        tabsStrip.setIndicatorColor(Color.parseColor("#ffFF9245"));
     }
 
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
-        final int PAGE_COUNT = 3;
-        private String tabTitles[] = new String[]{"Tab1", "Tab2", "Tab3"};
+        final int PAGE_COUNT = 2;
+        private String tabTitles[] = new String[]{"簡介", "電影時刻"};
 
         public SampleFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -45,7 +48,13 @@ public class MovieActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return PageFragment.newInstance(position + 1);
+            Fragment newFragment;
+            if (position == 0){
+                newFragment = MovieInfoFragment.newInstance(1);
+            }else {
+                newFragment = MovieTimeFragment.newInstance(1, 1);
+            }
+            return newFragment;
         }
 
         @Override

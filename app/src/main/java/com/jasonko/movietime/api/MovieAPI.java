@@ -91,6 +91,91 @@ public class MovieAPI {
         return newses;
     }
 
+    public static Movie getSingleMovie(int movie_id){
+        Movie theMovie = null;
+        String url = host + "/api/movie/movies?movie_id="+ Integer.toString(movie_id);
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            theMovie = parseSingleMovie(theMovie, message);
+        }
+        return theMovie;
+    }
+
+    private static Movie parseSingleMovie(Movie mMovie, String message) {
+        try {
+            JSONObject movieObject = new JSONObject(message);
+
+            String title = "";
+            String title_eng = "";
+            String movie_class = "";
+            String movie_type = "";
+            String movie_length = "";
+            String publish_date = "";
+            String director = "";
+            String editors = "";
+            String actors = "";
+            String official = "";
+            String movie_info = "";
+            String small_pic = "";
+            String large_pic = "";
+
+            Date publish_date_date = null;
+            int  movie_round = 0;
+            int movie_id = 0;
+
+            try {
+                title = movieObject.getString("title");
+                title_eng = movieObject.getString("title_eng");
+                movie_class = movieObject.getString("movie_class");
+                movie_type = movieObject.getString("movie_type");
+                movie_length = movieObject.getString("movie_length");
+                publish_date = movieObject.getString("publish_date");
+                director = movieObject.getString("director");
+            }catch (Exception e){
+
+            }
+
+            try {
+                editors = movieObject.getString("editors");
+            }catch (Exception e){
+
+            }
+
+            try {
+                actors = movieObject.getString("actors");
+            }catch (Exception e){
+
+            }
+
+            try {
+                official = movieObject.getString("official");
+                small_pic = movieObject.getString("small_pic");
+                large_pic = movieObject.getString("large_pic");
+            }catch (Exception e){
+
+            }
+
+            try {
+                movie_info = movieObject.getString("movie_info");
+            }catch (Exception e){
+
+            }
+
+            try {
+                movie_round = movieObject.getInt("movie_round");
+                movie_id = movieObject.getInt("movie_id");
+            }catch (Exception e){
+
+            }
+            mMovie = new Movie(title,title_eng,movie_class,movie_type,movie_length,publish_date,director,editors,actors,official,movie_info,small_pic,large_pic,publish_date_date,movie_round,movie_id);
+        }catch (Exception e){
+
+        }
+        return mMovie;
+    }
+
     public static ArrayList<Photo> getMoviePhotosByID(int movie_id){
         ArrayList<Photo> photos = new ArrayList<Photo>();
         String url = host + "/api/movie/photos?movie_id=" + Integer.toString(movie_id);
@@ -103,16 +188,27 @@ public class MovieAPI {
         return photos;
     }
 
-    public static ArrayList<MovieTime> getMovieTimes(int movie_id, int theater_id){
+    public static ArrayList<MovieTime> getTheaterMovieTimes(int theater_id){
         ArrayList<MovieTime> times = new ArrayList<MovieTime>();
         String url = host;
-        if ( movie_id != 0 && theater_id != 0) {
-            url = url + "/api/movie/movietimes?movie_id=" + Integer.toString(movie_id) + "&theater_id=" + Integer.toString(theater_id);
-        }else if (movie_id != 0){
-            url = url + "/api/movie/movietimes?movie_id=" + Integer.toString(movie_id);
-        }else if (theater_id != 0){
-            url = url + "/api/movie/movietimes?theater_id=" + Integer.toString(theater_id);
+        if (theater_id != 0){
+            url = url + "/api/movie/movietimes?theater=" + Integer.toString(theater_id);
         }
+
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            parseMovieTimes(times, message);
+        }
+        return times;
+    }
+
+    public static ArrayList<MovieTime> getAreaMovieTimes(int movie_id, int area_id) {
+        ArrayList<MovieTime> times = new ArrayList<MovieTime>();
+        String url = host;
+
+        url = url + "/api/movie/movietimes?movie=" + Integer.toString(movie_id) + "&area=" + Integer.toString(area_id);
 
         String message = getMessageFromServer("GET", null, null, url);
         if (message == null) {
