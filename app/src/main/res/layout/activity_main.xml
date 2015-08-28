@@ -254,7 +254,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
-                    android:paddingRight="20dp">
+                    android:paddingRight="20dp"
+                    android:gravity="center_vertical"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -262,7 +264,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="票房排行"
                         android:id="@+id/textView"
-                        android:textSize="20sp"
+                        android:textSize="20dp"
                         android:layout_weight="1" />
 
                     <android.support.v7.widget.CardView
@@ -312,7 +314,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingLeft="20dp"
-                    android:paddingRight="20dp">
+                    android:paddingRight="20dp"
+                    android:gravity="center_vertical"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -320,7 +324,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="為您推薦影片"
                         android:id="@+id/textView2"
-                        android:textSize="20sp"
+                        android:textSize="20dp"
                         android:layout_weight="1" />
 
                     <android.support.v7.widget.CardView

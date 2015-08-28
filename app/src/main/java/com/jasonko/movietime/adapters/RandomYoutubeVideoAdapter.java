@@ -62,7 +62,7 @@ public static class ViewHolder extends RecyclerView.ViewHolder {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.textVideoTitle.setText(mVideos.get(position).getTitle());
-        mImageLoader.DisplayImage("https://i.ytimg.com/vi/"+ mVideos.get(position).getYoutubeID()+"/mqdefault.jpg", holder.imageVideo);
+        mImageLoader.DisplayImage(mVideos.get(position).getPicLink(), holder.imageVideo);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

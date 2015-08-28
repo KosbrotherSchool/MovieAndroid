@@ -150,7 +150,8 @@ public class MainActivity extends Activity {
         moreRecommendVideoCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent newIntent = new Intent(MainActivity.this, RecommendColumnActivity.class);
+                startActivity(newIntent);
             }
         });
     }

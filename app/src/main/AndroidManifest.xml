@@ -59,6 +59,14 @@
             android:screenOrientation="portrait"
             />
 
+        <activity android:name=".RecommendColumnActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".RecommendColumnVideosActivity"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 
 </manifest>

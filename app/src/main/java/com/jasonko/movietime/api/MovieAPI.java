@@ -6,6 +6,7 @@ import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.model.MovieNews;
 import com.jasonko.movietime.model.MovieRank;
 import com.jasonko.movietime.model.MovieTime;
+import com.jasonko.movietime.model.MyYoutubeColumn;
 import com.jasonko.movietime.model.MyYoutubeVideo;
 import com.jasonko.movietime.model.Photo;
 
@@ -187,7 +188,7 @@ public class MovieAPI {
 
     public static ArrayList<MyYoutubeVideo> getRandomYoutubeVideos(){
         ArrayList<MyYoutubeVideo> videos = new ArrayList<MyYoutubeVideo>();
-        String url = host + "/api/movie/youtubes";
+        String url = host + "/api/movie/youtubes?random=true";
         String message = getMessageFromServer("GET", null, null, url);
         if (message == null) {
             return null;
@@ -195,6 +196,53 @@ public class MovieAPI {
             parseMyYoutubeVideos(videos, message);
         }
         return videos;
+    }
+
+    public static ArrayList<MyYoutubeVideo> getColumnYoutubeVideos(int youtube_column_id){
+        ArrayList<MyYoutubeVideo> videos = new ArrayList<MyYoutubeVideo>();
+        String url = host + "/api/movie/youtubes?column_id=" + Integer.toString(youtube_column_id);
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            parseMyYoutubeVideos(videos, message);
+        }
+        return videos;
+    }
+
+    public static ArrayList<MyYoutubeColumn> getYoutubeColumns(int page){
+        ArrayList<MyYoutubeColumn> columns = new ArrayList<>();
+        String url = host + "/api/movie/youtubes?page=" + Integer.toString(page);
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            parseMyYoutubeColumns(columns, message);
+        }
+        return columns;
+    }
+
+    private static void parseMyYoutubeColumns(ArrayList<MyYoutubeColumn> columns, String message) {
+        try {
+            JSONArray columnArray = new JSONArray(message);
+            for (int i = 0; i < columnArray.length(); i++){
+                JSONObject columnObject = columnArray.getJSONObject(i);
+                String title = "";
+                int column_id = 0;
+                String image_link = "";
+                try {
+                    title = columnObject.getString("title");
+                    column_id = columnObject.getInt("id");
+                    image_link = columnObject.getString("image_link");
+                }catch (Exception e){
+
+                }
+                MyYoutubeColumn newColumn = new MyYoutubeColumn(title,column_id, image_link);
+                columns.add(newColumn);
+            }
+        }catch (Exception e){
+
+        }
     }
 
     private static void parseMyYoutubeVideos(ArrayList<MyYoutubeVideo> videos, String message) {
@@ -206,6 +254,7 @@ public class MovieAPI {
                 String youtube_id = "";
                 int youtube_column_id = 0;
                 int youtube_sub_column_id = 0;
+                String subColumnName = "";
                 try {
                     title = videoObject.getString("title");
                     youtube_id = videoObject.getString("youtube_id");
@@ -214,7 +263,12 @@ public class MovieAPI {
                 }catch (Exception e){
 
                 }
-                MyYoutubeVideo newVideo = new MyYoutubeVideo(title, youtube_id, youtube_column_id, youtube_sub_column_id);
+                try {
+                    subColumnName = videoObject.getString("name");
+                }catch (Exception e){
+
+                }
+                MyYoutubeVideo newVideo = new MyYoutubeVideo(title, youtube_id, youtube_column_id, youtube_sub_column_id, subColumnName);
                 videos.add(newVideo);
             }
         }catch (Exception e){
