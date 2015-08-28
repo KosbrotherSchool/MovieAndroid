@@ -5,27 +5,22 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.jasonko.movietime.fragments.MovieInfoFragment;
-import com.jasonko.movietime.fragments.MovieTimeFragment;
+import com.jasonko.movietime.fragments.MovieGridFragment;
+import com.jasonko.movietime.fragments.MovieListFragment;
 
 /**
- * Created by kolichung on 8/26/15.
+ * Created by kolichung on 8/28/15.
  */
-public class MovieActivity extends FragmentActivity {
-
-    private int mMovieID;
-    private int mAreaID;
+public class MovieListActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pagers);
-        mMovieID = getIntent().getIntExtra("movie_id", 1);
-        mAreaID = getIntent().getIntExtra("area_id", 1);
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -35,12 +30,13 @@ public class MovieActivity extends FragmentActivity {
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
-        tabsStrip.setIndicatorColor(Color.parseColor("#ffFF9245"));
+        tabsStrip.setIndicatorColor(Color.parseColor("#ff2EB9FF"));
     }
 
-    public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
-        final int PAGE_COUNT = 2;
-        private String tabTitles[] = new String[]{"簡介", "電影時刻"};
+    public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
+
+        final int PAGE_COUNT = 3;
+        private String tabTitles[] = new String[] { "本週新片", "上映中", "即將上映"};
 
         public SampleFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -53,11 +49,17 @@ public class MovieActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Fragment newFragment;
-            if (position == 0){
-                newFragment = MovieInfoFragment.newInstance(mMovieID);
-            }else {
-                newFragment = MovieTimeFragment.newInstance(mMovieID, mAreaID);
+            Fragment newFragment = null;
+            switch (position){
+                case 0:
+                    newFragment = MovieListFragment.newInstance();
+                    break;
+                case 1:
+                    newFragment = MovieGridFragment.newInstance(1);
+                    break;
+                case 2:
+                    newFragment = MovieGridFragment.newInstance(3);
+                    break;
             }
             return newFragment;
         }
@@ -68,4 +70,5 @@ public class MovieActivity extends FragmentActivity {
             return tabTitles[position];
         }
     }
+
 }

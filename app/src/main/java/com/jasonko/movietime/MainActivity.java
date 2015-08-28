@@ -46,6 +46,8 @@ public class MainActivity extends Activity {
     private CardView movieCardView;
     private CardView creditCardView;
     private CardView ticketCardView;
+    private CardView moreRankCardView;
+    private CardView moreRecommendVideoCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +93,8 @@ public class MainActivity extends Activity {
         movieCardView = (CardView) findViewById(R.id.movie_card_view);
         creditCardView = (CardView) findViewById(R.id.credit_card_view);
         ticketCardView = (CardView) findViewById(R.id.ticket_card_view);
+        moreRankCardView = (CardView) findViewById(R.id.more_rank_card_view);
+        moreRecommendVideoCardView = (CardView) findViewById(R.id.more_recommend_video_card_view);
 
         //設定drawer中的listview的選項
         listview_drawer.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, drawer_menu_items));
@@ -122,7 +126,7 @@ public class MainActivity extends Activity {
         movieCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newIntent = new Intent(MainActivity.this, MovieActivity.class);
+                Intent newIntent = new Intent(MainActivity.this, MovieListActivity.class);
                 startActivity(newIntent);
             }
         });
@@ -132,6 +136,21 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent newIntent = new Intent(MainActivity.this, CreditCardActivity.class);
                 startActivity(newIntent);
+            }
+        });
+
+        moreRankCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(MainActivity.this, MovieRankActivity.class);
+                startActivity(newIntent);
+            }
+        });
+
+        moreRecommendVideoCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

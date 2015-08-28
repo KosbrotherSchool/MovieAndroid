@@ -25,13 +25,11 @@ public class Movie {
     int  movie_round;
     int movie_id;
 
-    public Movie(){
-        this("","","","","","","","","","","","","",new Date(), 0,0);
-    }
+    MovieRank movieRank;
 
     public Movie(String title, String title_eng, String movie_class, String movie_type, String movie_length,
                  String publish_date, String director, String editors, String actors, String official, String movie_info,
-                 String small_pic, String large_pic, Date publish_date_date, int movie_round, int movie_id){
+                 String small_pic, String large_pic, Date publish_date_date, int movie_round, int movie_id, MovieRank movieRank){
         this.title = title;
         this.title_eng = title_eng;
         this.movie_class = movie_class;
@@ -48,6 +46,11 @@ public class Movie {
         this.publish_date_date = publish_date_date;
         this.movie_round = movie_round;
         this.movie_id = movie_id;
+        this.movieRank = movieRank;
+    }
+
+    public MovieRank getMovieRank() {
+        return movieRank;
     }
 
     public String getTitle(){

@@ -5,27 +5,21 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.jasonko.movietime.fragments.MovieInfoFragment;
-import com.jasonko.movietime.fragments.MovieTimeFragment;
+import com.jasonko.movietime.fragments.MovieRankFragment;
 
 /**
- * Created by kolichung on 8/26/15.
+ * Created by kolichung on 8/27/15.
  */
-public class MovieActivity extends FragmentActivity {
-
-    private int mMovieID;
-    private int mAreaID;
+public class MovieRankActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pagers);
-        mMovieID = getIntent().getIntExtra("movie_id", 1);
-        mAreaID = getIntent().getIntExtra("area_id", 1);
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -35,12 +29,13 @@ public class MovieActivity extends FragmentActivity {
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
-        tabsStrip.setIndicatorColor(Color.parseColor("#ffFF9245"));
+        tabsStrip.setIndicatorColor(Color.parseColor("#ff2EB9FF"));
     }
 
-    public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
-        final int PAGE_COUNT = 2;
-        private String tabTitles[] = new String[]{"簡介", "電影時刻"};
+    public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
+
+        final int PAGE_COUNT = 5;
+        private String tabTitles[] = new String[] { "台北票房", "北美票房", "周冠軍", "期待榜", "滿意榜" };
 
         public SampleFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -53,11 +48,23 @@ public class MovieActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Fragment newFragment;
-            if (position == 0){
-                newFragment = MovieInfoFragment.newInstance(mMovieID);
-            }else {
-                newFragment = MovieTimeFragment.newInstance(mMovieID, mAreaID);
+            Fragment newFragment = null;
+            switch (position){
+                case 0:
+                    newFragment = MovieRankFragment.newInstance(position + 1);
+                    break;
+                case 1:
+                    newFragment = MovieRankFragment.newInstance(position + 1);
+                    break;
+                case 2:
+                    newFragment = MovieRankFragment.newInstance(position + 1);
+                    break;
+                case 3:
+                    newFragment = MovieRankFragment.newInstance(position + 2);
+                    break;
+                case 4:
+                    newFragment = MovieRankFragment.newInstance(position + 2);
+                    break;
             }
             return newFragment;
         }
@@ -68,4 +75,5 @@ public class MovieActivity extends FragmentActivity {
             return tabTitles[position];
         }
     }
+
 }

@@ -51,6 +51,14 @@
             android:screenOrientation="portrait"
             />
 
+        <activity android:name=".MovieRankActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".MovieListActivity"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 
 </manifest>

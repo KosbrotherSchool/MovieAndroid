@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.model.MovieNews;
+import com.jasonko.movietime.model.MovieRank;
 import com.jasonko.movietime.model.MovieTime;
 import com.jasonko.movietime.model.MyYoutubeVideo;
 import com.jasonko.movietime.model.Photo;
@@ -30,6 +31,18 @@ public class MovieAPI {
     public static final String  TAG   = "MOVIE_API";
     public static final boolean DEBUG = true;
     public static final String host = "http://106.185.27.30";
+
+    public static ArrayList<Movie> getMoviesByRoundID(int movie_round){
+        ArrayList<Movie> movies = new ArrayList<Movie>();
+        String url = host + "/api/movie/movies?movie_round="+ Integer.toString(movie_round);
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            parseMovie(movies, message);
+        }
+        return movies;
+    }
 
     public static ArrayList<Movie> getTaipeiRankMovies(){
         ArrayList<Movie> movies = new ArrayList<Movie>();
@@ -79,6 +92,30 @@ public class MovieAPI {
         return movies;
     }
 
+    public static ArrayList<Movie> getExpectRankMovies(){
+        ArrayList<Movie> movies = new ArrayList<Movie>();
+        String url = host + "/api/movie/rank_movies?rank_type=5";
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            parseMovie(movies, message);
+        }
+        return movies;
+    }
+
+    public static ArrayList<Movie> getSatisfyRankMovies(){
+        ArrayList<Movie> movies = new ArrayList<Movie>();
+        String url = host + "/api/movie/rank_movies?rank_type=6";
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            parseMovie(movies, message);
+        }
+        return movies;
+    }
+
     public static ArrayList<MovieNews> getMovieNews(int news_type, int page){
         ArrayList<MovieNews> newses = new ArrayList<MovieNews>();
         String url = host + "/api/movie/news?news_type="+Integer.toString(news_type) + "&page=" +Integer.toString(page);
@@ -103,78 +140,7 @@ public class MovieAPI {
         return theMovie;
     }
 
-    private static Movie parseSingleMovie(Movie mMovie, String message) {
-        try {
-            JSONObject movieObject = new JSONObject(message);
 
-            String title = "";
-            String title_eng = "";
-            String movie_class = "";
-            String movie_type = "";
-            String movie_length = "";
-            String publish_date = "";
-            String director = "";
-            String editors = "";
-            String actors = "";
-            String official = "";
-            String movie_info = "";
-            String small_pic = "";
-            String large_pic = "";
-
-            Date publish_date_date = null;
-            int  movie_round = 0;
-            int movie_id = 0;
-
-            try {
-                title = movieObject.getString("title");
-                title_eng = movieObject.getString("title_eng");
-                movie_class = movieObject.getString("movie_class");
-                movie_type = movieObject.getString("movie_type");
-                movie_length = movieObject.getString("movie_length");
-                publish_date = movieObject.getString("publish_date");
-                director = movieObject.getString("director");
-            }catch (Exception e){
-
-            }
-
-            try {
-                editors = movieObject.getString("editors");
-            }catch (Exception e){
-
-            }
-
-            try {
-                actors = movieObject.getString("actors");
-            }catch (Exception e){
-
-            }
-
-            try {
-                official = movieObject.getString("official");
-                small_pic = movieObject.getString("small_pic");
-                large_pic = movieObject.getString("large_pic");
-            }catch (Exception e){
-
-            }
-
-            try {
-                movie_info = movieObject.getString("movie_info");
-            }catch (Exception e){
-
-            }
-
-            try {
-                movie_round = movieObject.getInt("movie_round");
-                movie_id = movieObject.getInt("movie_id");
-            }catch (Exception e){
-
-            }
-            mMovie = new Movie(title,title_eng,movie_class,movie_type,movie_length,publish_date,director,editors,actors,official,movie_info,small_pic,large_pic,publish_date_date,movie_round,movie_id);
-        }catch (Exception e){
-
-        }
-        return mMovie;
-    }
 
     public static ArrayList<Photo> getMoviePhotosByID(int movie_id){
         ArrayList<Photo> photos = new ArrayList<Photo>();
@@ -368,7 +334,80 @@ public class MovieAPI {
         }
     }
 
-    public static void parseMovie(ArrayList<Movie> movies, String message){
+    private static Movie parseSingleMovie(Movie mMovie, String message) {
+        try {
+            JSONObject movieObject = new JSONObject(message);
+
+            String title = "";
+            String title_eng = "";
+            String movie_class = "";
+            String movie_type = "";
+            String movie_length = "";
+            String publish_date = "";
+            String director = "";
+            String editors = "";
+            String actors = "";
+            String official = "";
+            String movie_info = "";
+            String small_pic = "";
+            String large_pic = "";
+
+            Date publish_date_date = null;
+            int  movie_round = 0;
+            int movie_id = 0;
+
+            try {
+                title = movieObject.getString("title");
+                title_eng = movieObject.getString("title_eng");
+                movie_class = movieObject.getString("movie_class");
+                movie_type = movieObject.getString("movie_type");
+                movie_length = movieObject.getString("movie_length");
+                publish_date = movieObject.getString("publish_date");
+                director = movieObject.getString("director");
+            }catch (Exception e){
+
+            }
+
+            try {
+                editors = movieObject.getString("editors");
+            }catch (Exception e){
+
+            }
+
+            try {
+                actors = movieObject.getString("actors");
+            }catch (Exception e){
+
+            }
+
+            try {
+                official = movieObject.getString("official");
+                small_pic = movieObject.getString("small_pic");
+                large_pic = movieObject.getString("large_pic");
+            }catch (Exception e){
+
+            }
+
+            try {
+                movie_info = movieObject.getString("movie_info");
+            }catch (Exception e){
+
+            }
+
+            try {
+                movie_round = movieObject.getInt("movie_round");
+                movie_id = movieObject.getInt("movie_id");
+            }catch (Exception e){
+
+            }
+            mMovie = new Movie(title,title_eng,movie_class,movie_type,movie_length,publish_date,director,editors,actors,official,movie_info,small_pic,large_pic,publish_date_date,movie_round,movie_id, null);
+        }catch (Exception e){
+
+        }
+        return mMovie;
+    }
+
+    private static void parseMovie(ArrayList<Movie> movies, String message){
         try {
             JSONArray movieArray = new JSONArray(message);
             for (int i = 0; i < movieArray.length(); i++){
@@ -393,6 +432,14 @@ public class MovieAPI {
                 int  movie_round = 0;
                 int movie_id = 0;
 
+                MovieRank movieRank;
+
+                try {
+                    movie_length = movieObject.getString("movie_length");
+                }catch (Exception e){
+
+                }
+
                 try {
                     title = movieObject.getString("title");
                 }catch (Exception e){
@@ -412,7 +459,7 @@ public class MovieAPI {
                 }
 
                 try {
-                    movie_type = movieObject.getString("moive_type");
+                    movie_type = movieObject.getString("movie_type");
                 }catch (Exception e){
 
                 }
@@ -480,12 +527,77 @@ public class MovieAPI {
 
 
                 try {
-                    movie_id = movieObject.getInt("movie_id");
+                    movie_id = movieObject.getInt("id");
                 }catch (Exception e){
 
                 }
 
-                Movie newMoive = new Movie(title,title_eng,movie_class,movie_type, movie_length, publish_date, director, editors, actors, official, movie_info, small_pic, large_pic, publish_date_date, movie_round, movie_id);
+                int rank_type = 0;
+                int current_rank = 0;
+                int last_week_rank = 0;
+                int publish_weeks = 0;
+                int the_week = 0;
+                String static_duration = "";
+                int expect_people = 0;
+                int total_people = 0;
+                String satisfied_num = "";
+
+                try {
+                    rank_type = movieObject.getInt("rank_type");
+                }catch (Exception e){
+
+                }
+
+                try {
+                    current_rank = movieObject.getInt("current_rank");
+                }catch (Exception e){
+
+                }
+
+                try {
+                    last_week_rank = movieObject.getInt("last_week_rank");
+                }catch (Exception e){
+
+                }
+
+                try {
+                    publish_weeks = movieObject.getInt("publish_weeks");
+                }catch (Exception e){
+
+                }
+
+                try {
+                    the_week = movieObject.getInt("the_week");
+                }catch (Exception e){
+
+                }
+
+                try {
+                    static_duration = movieObject.getString("static_duration");
+                }catch (Exception e){
+
+                }
+
+                try {
+                    expect_people = movieObject.getInt("expect_people");
+                }catch (Exception e){
+
+                }
+
+                try {
+                    total_people = movieObject.getInt("total_people");
+                }catch (Exception e){
+
+                }
+
+                try {
+                    satisfied_num = movieObject.getString("satisfied_num");
+                }catch (Exception e){
+
+                }
+                movieRank = new MovieRank(rank_type,movie_id,current_rank,last_week_rank,publish_weeks,the_week,static_duration,expect_people,total_people,satisfied_num);
+
+                Movie newMoive = new Movie(title,title_eng,movie_class,movie_type, movie_length, publish_date, director, editors, actors, official, movie_info, small_pic, large_pic, publish_date_date, movie_round, movie_id,movieRank);
                 movies.add(newMoive);
             }
         }catch (Exception e){
