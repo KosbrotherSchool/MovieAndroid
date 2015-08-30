@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardBackgroundColor="#FFFFFF"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardElevation="5dp"
+    card_view:cardCornerRadius="3dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            >
+            <TextView
+                android:id="@+id/movietime_theater_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="誠品戲院"
+                android:textSize="18dp"
+                />
+            <TextView
+                android:id="@+id/movietime_remark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="數位"
+                android:textSize="15dp"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/movietime_theater_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="台北市松山區長安東路二段219號3樓"
+            android:textSize="13dp"
+            android:layout_marginTop="3dp"
+            />
+
+        <com.jasonko.movietime.tool.ExpandableHeightGridView
+            android:id="@+id/movietime_theater_movietime_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            >
+        </com.jasonko.movietime.tool.ExpandableHeightGridView>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

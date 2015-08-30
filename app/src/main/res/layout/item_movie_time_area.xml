@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <TextView
+        android:id="@+id/movietime_area_text"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:text="台北"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:textColor="@color/movie_indicator"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        />
+
+    
+</LinearLayout>

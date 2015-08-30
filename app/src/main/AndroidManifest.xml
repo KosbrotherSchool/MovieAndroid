@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jasonko.movietime" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +12,9 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,11 +23,56 @@
         </activity>
         <activity
             android:name=".TheatersActivity"
+
             android:label="全台戲院" />
         <activity
             android:name=".TheatersOfArea"
             android:label="@string/title_activity_theaters_of_area" >
         </activity>
+
+            android:screenOrientation="portrait"
+            android:label="全台戲院"/>
+
+        <activity
+            android:name=".NewsActivity"
+            android:screenOrientation="portrait"
+            android:label="熱門新聞"/>
+
+        <activity
+            android:name=".MovieActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name=".CreditCardActivity"
+            android:screenOrientation="portrait"
+            android:label="信用卡優惠"/>
+
+        <activity
+            android:name=".TicketActivity"
+            android:screenOrientation="portrait"
+            android:label="訂票"/>
+
+        <activity android:name=".NewsArticleActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".MovieRankActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".MovieListActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".RecommendColumnActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".RecommendColumnVideosActivity"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 
 </manifest>

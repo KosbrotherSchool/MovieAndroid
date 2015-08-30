@@ -23,6 +23,7 @@
         android:layout_height="match_parent"
         android:id="@+id/scrollView" >
 
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -40,93 +41,206 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal" >
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    >
 
-                    <Button
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/movie_card_view"
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="各大戲院"
-                        android:id="@+id/btn_theaters"
-                        android:textSize="22sp"
+                        card_view:cardBackgroundColor="#2CA300"
+                        card_view:cardUseCompatPadding="true"
+                        card_view:cardElevation="0dp"
+                        card_view:cardCornerRadius="2dp"
                         android:layout_weight="1"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:nestedScrollingEnabled="false"
-                        android:background="#ff6a0dff"
-                        android:layout_margin="5dp" />
+                        >
 
-                    <Button
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/icon_movie"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginLeft="5dp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="電影"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="40dp"
+                            />
+
+                    </android.support.v7.widget.CardView>
+
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/theater_card_view"
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="上映中"
-                        android:id="@+id/btn_movie_comming"
+                        card_view:cardBackgroundColor="#2CA300"
+                        card_view:cardUseCompatPadding="true"
+                        card_view:cardElevation="0dp"
+                        card_view:cardCornerRadius="2dp"
                         android:layout_weight="1"
-                        android:textSize="22sp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:background="#ff6a0dff"
-                        android:layout_margin="5dp" />
+                        >
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/icon_theater"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginLeft="8dp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="各大戲城"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="40dp"
+                            />
+
+                    </android.support.v7.widget.CardView>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal" >
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    >
 
-                    <Button
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/credit_card_view"
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="訂票"
-                        android:id="@+id/btn_movie_playing"
+                        card_view:cardBackgroundColor="#FF3030"
+                        card_view:cardUseCompatPadding="true"
+                        card_view:cardElevation="0dp"
+                        card_view:cardCornerRadius="2dp"
                         android:layout_weight="1"
-                        android:textSize="22sp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:background="#ff6a0dff"
-                        android:layout_margin="5dp" />
+                        >
 
-                    <Button
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/icon_credit_card"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginLeft="8dp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="信用卡優惠"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="40dp"
+                            />
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/ticket_card_view"
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="即將上映"
-                        android:id="@+id/btn_movie_weekly"
+                        card_view:cardBackgroundColor="#8838FF"
+                        card_view:cardUseCompatPadding="true"
+                        card_view:cardElevation="0dp"
+                        card_view:cardCornerRadius="3dp"
                         android:layout_weight="1"
-                        android:textSize="22sp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:background="#ff6a0dff"
-                        android:layout_margin="5dp" />
+                        >
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/icon_ticket"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginLeft="8dp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="訂票"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="40dp"
+                            />
+
+                    </android.support.v7.widget.CardView>
+
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2"
+                    >
 
-                    <Button
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/news_card_view"
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="熱門新聞"
-                        android:id="@+id/btn_hotnews"
+                        card_view:cardBackgroundColor="#2EB9FF"
+                        card_view:cardUseCompatPadding="true"
+                        card_view:cardElevation="0dp"
+                        card_view:cardCornerRadius="2dp"
                         android:layout_weight="1"
-                        android:textSize="22sp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:background="#ff6a0dff"
-                        android:layout_margin="5dp" />
+                        >
 
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="信用卡優惠"
-                        android:id="@+id/btn_creditcard_treat"
-                        android:layout_weight="1"
-                        android:textSize="22sp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:background="#ff6a0dff"
-                        android:layout_margin="5dp" />
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/icon_news"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginLeft="8dp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="新聞"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="40dp"
+                            />
+
+                    </android.support.v7.widget.CardView>
+
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -143,7 +257,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
-                    android:paddingRight="20dp">
+                    android:paddingRight="20dp"
+                    android:gravity="center_vertical"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -151,60 +267,42 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="票房排行"
                         android:id="@+id/textView"
-                        android:textSize="20sp"
+                        android:textSize="20dp"
                         android:layout_weight="1" />
 
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/more_rank_card_view"
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="更多"
-                        android:id="@+id/btn_more_one" />
+                        card_view:cardBackgroundColor="#2CA300"
+                        card_view:cardUseCompatPadding="true"
+                        card_view:cardElevation="0dp"
+                        card_view:cardCornerRadius="2dp"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="更多排行"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="3dp"
+                            />
+
+                    </android.support.v7.widget.CardView>
                 </LinearLayout>
 
-                <HorizontalScrollView
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_rank"
+                    android:scrollbars="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/horizontalScrollView" >
+                    android:layout_height="190dp"/>
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="130dp"
-                            android:layout_height="130dp"
-                            android:id="@+id/imageView"
-                            android:layout_gravity="left"
-                            android:src="@mipmap/ic_launcher" />
-
-                        <ImageView
-                            android:layout_width="130dp"
-                            android:layout_height="130dp"
-                            android:id="@+id/imageView3"
-                            android:src="@mipmap/ic_launcher" />
-
-                        <ImageView
-                            android:layout_width="130dp"
-                            android:layout_height="130dp"
-                            android:id="@+id/imageView2"
-                            android:src="@mipmap/ic_launcher" />
-
-                        <ImageView
-                            android:layout_width="130dp"
-                            android:layout_height="130dp"
-                            android:id="@+id/imageView4"
-                            android:src="@mipmap/ic_launcher" />
-
-                        <ImageView
-                            android:layout_width="130dp"
-                            android:layout_height="130dp"
-                            android:id="@+id/imageView5"
-                            android:layout_gravity="right"
-                            android:src="@mipmap/ic_launcher" />
-                    </LinearLayout>
-                </HorizontalScrollView>
             </LinearLayout>
 
             <LinearLayout
@@ -219,7 +317,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingLeft="20dp"
-                    android:paddingRight="20dp">
+                    android:paddingRight="20dp"
+                    android:gravity="center_vertical"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -227,58 +327,41 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="為您推薦影片"
                         android:id="@+id/textView2"
-                        android:textSize="20sp"
+                        android:textSize="20dp"
                         android:layout_weight="1" />
 
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/more_recommend_video_card_view"
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="更多"
-                        android:id="@+id/btn_more_two" />
+                        card_view:cardBackgroundColor="#2CA300"
+                        card_view:cardUseCompatPadding="true"
+                        card_view:cardElevation="0dp"
+                        card_view:cardCornerRadius="2dp"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="更多影片"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="3dp"
+                            />
+                    </android.support.v7.widget.CardView>
                 </LinearLayout>
 
-                <HorizontalScrollView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/horizontalScrollView2" >
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_recommend"
+                    android:scrollbars="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"/>
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
 
-                        <ImageView
-                            android:layout_width="130dp"
-                            android:layout_height="130dp"
-                            android:id="@+id/imageView6"
-                            android:src="@mipmap/ic_launcher" />
-
-                        <ImageView
-                            android:layout_width="130dp"
-                            android:layout_height="130dp"
-                            android:id="@+id/imageView7"
-                            android:src="@mipmap/ic_launcher" />
-
-                        <ImageView
-                            android:layout_width="130dp"
-                            android:layout_height="130dp"
-                            android:id="@+id/imageView8"
-                            android:src="@mipmap/ic_launcher" />
-
-                        <ImageView
-                            android:layout_width="130dp"
-                            android:layout_height="130dp"
-                            android:id="@+id/imageView9"
-                            android:src="@mipmap/ic_launcher" />
-
-                        <ImageView
-                            android:layout_width="130dp"
-                            android:layout_height="130dp"
-                            android:id="@+id/imageView10"
-                            android:src="@mipmap/ic_launcher" />
-                    </LinearLayout>
-                </HorizontalScrollView>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -294,6 +377,12 @@
     android:layout_gravity="start"
     android:orientation="vertical"
     android:background="#FFF">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/movie_time"
+        />
 
     <ListView
         android:id="@+id/listview_drawer"
