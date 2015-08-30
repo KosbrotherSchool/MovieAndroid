@@ -52,18 +52,18 @@
                         xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        card_view:cardBackgroundColor="#FF9245"
+                        card_view:cardBackgroundColor="#2CA300"
                         card_view:cardUseCompatPadding="true"
                         card_view:cardElevation="0dp"
-                        card_view:cardCornerRadius="3dp"
+                        card_view:cardCornerRadius="2dp"
                         android:layout_weight="1"
                         >
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:src="@drawable/icon_movie"
-                            android:layout_marginTop="3dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginLeft="5dp"
                             />
 
@@ -72,10 +72,10 @@
                             android:layout_height="wrap_content"
                             android:text="電影"
                             android:textColor="#FFFFFF"
-                            android:textSize="22sp"
-                            android:layout_marginTop="10dp"
+                            android:textSize="18dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="50dp"
+                            android:layout_marginLeft="40dp"
                             />
 
                     </android.support.v7.widget.CardView>
@@ -87,18 +87,18 @@
                         xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        card_view:cardBackgroundColor="#8838FF"
+                        card_view:cardBackgroundColor="#2CA300"
                         card_view:cardUseCompatPadding="true"
                         card_view:cardElevation="0dp"
-                        card_view:cardCornerRadius="3dp"
+                        card_view:cardCornerRadius="2dp"
                         android:layout_weight="1"
                         >
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:src="@drawable/icon_theater"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginLeft="8dp"
                             />
 
@@ -107,10 +107,10 @@
                             android:layout_height="wrap_content"
                             android:text="各大戲城"
                             android:textColor="#FFFFFF"
-                            android:textSize="22sp"
-                            android:layout_marginTop="10dp"
+                            android:textSize="18dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="53dp"
+                            android:layout_marginLeft="40dp"
                             />
 
                     </android.support.v7.widget.CardView>
@@ -127,40 +127,6 @@
                     >
 
                     <android.support.v7.widget.CardView
-                        android:id="@+id/ticket_card_view"
-                        xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        card_view:cardBackgroundColor="#80C912"
-                        card_view:cardUseCompatPadding="true"
-                        card_view:cardElevation="0dp"
-                        card_view:cardCornerRadius="3dp"
-                        android:layout_weight="1"
-                        >
-
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:src="@drawable/icon_ticket"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginLeft="8dp"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="訂票"
-                            android:textColor="#FFFFFF"
-                            android:textSize="22sp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="53dp"
-                            />
-
-                    </android.support.v7.widget.CardView>
-
-                    <android.support.v7.widget.CardView
                         android:id="@+id/credit_card_view"
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -169,15 +135,15 @@
                         card_view:cardBackgroundColor="#FF3030"
                         card_view:cardUseCompatPadding="true"
                         card_view:cardElevation="0dp"
-                        card_view:cardCornerRadius="3dp"
+                        card_view:cardCornerRadius="2dp"
                         android:layout_weight="1"
                         >
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:src="@drawable/icon_credit_card"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginLeft="8dp"
                             />
 
@@ -186,13 +152,49 @@
                             android:layout_height="wrap_content"
                             android:text="信用卡優惠"
                             android:textColor="#FFFFFF"
-                            android:textSize="22sp"
-                            android:layout_marginTop="10dp"
+                            android:textSize="18dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="53dp"
+                            android:layout_marginLeft="40dp"
                             />
 
                     </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/ticket_card_view"
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        card_view:cardBackgroundColor="#8838FF"
+                        card_view:cardUseCompatPadding="true"
+                        card_view:cardElevation="0dp"
+                        card_view:cardCornerRadius="3dp"
+                        android:layout_weight="1"
+                        >
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/icon_ticket"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginLeft="8dp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="訂票"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="40dp"
+                            />
+
+                    </android.support.v7.widget.CardView>
+
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -201,6 +203,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
+                    android:weightSum="2"
                     >
 
                     <android.support.v7.widget.CardView
@@ -212,27 +215,27 @@
                         card_view:cardBackgroundColor="#2EB9FF"
                         card_view:cardUseCompatPadding="true"
                         card_view:cardElevation="0dp"
-                        card_view:cardCornerRadius="3dp"
+                        card_view:cardCornerRadius="2dp"
                         android:layout_weight="1"
                         >
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:src="@drawable/icon_news"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginLeft="8dp"
                             />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="熱門新聞"
+                            android:text="新聞"
                             android:textColor="#FFFFFF"
-                            android:textSize="22sp"
-                            android:layout_marginTop="10dp"
+                            android:textSize="18dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginBottom="10dp"
-                            android:layout_marginLeft="53dp"
+                            android:layout_marginLeft="40dp"
                             />
 
                     </android.support.v7.widget.CardView>
@@ -273,17 +276,17 @@
                         xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        card_view:cardBackgroundColor="#FF9245"
+                        card_view:cardBackgroundColor="#2CA300"
                         card_view:cardUseCompatPadding="true"
                         card_view:cardElevation="0dp"
-                        card_view:cardCornerRadius="3dp"
+                        card_view:cardCornerRadius="2dp"
                         >
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="更多排行"
                             android:textColor="#FFFFFF"
-                            android:textSize="18dp"
+                            android:textSize="16dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
                             android:layout_marginLeft="3dp"
@@ -333,17 +336,17 @@
                         xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        card_view:cardBackgroundColor="#FF9245"
+                        card_view:cardBackgroundColor="#2CA300"
                         card_view:cardUseCompatPadding="true"
                         card_view:cardElevation="0dp"
-                        card_view:cardCornerRadius="3dp"
+                        card_view:cardCornerRadius="2dp"
                         >
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="更多"
+                            android:text="更多影片"
                             android:textColor="#FFFFFF"
-                            android:textSize="18dp"
+                            android:textSize="16dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
                             android:layout_marginLeft="3dp"
