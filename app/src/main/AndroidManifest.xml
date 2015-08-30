@@ -16,10 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".TheatersActivity"
-            android:label="全台戲院"/>
+            android:label="全台戲院" />
+        <activity
+            android:name=".TheatersOfArea"
+            android:label="@string/title_activity_theaters_of_area" >
+        </activity>
     </application>
 
 </manifest>
