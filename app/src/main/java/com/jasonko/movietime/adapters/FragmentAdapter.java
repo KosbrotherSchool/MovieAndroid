@@ -1,4 +1,4 @@
-package com.jasonko.movietime;
+package com.jasonko.movietime.adapters;
 
 
 import android.support.v4.app.Fragment;
