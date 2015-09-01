@@ -1,31 +1,124 @@
 package com.jasonko.movietime;
 
-import android.app.ListActivity;
+
+import android.graphics.Color;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * Created by larry on 2015/8/12.
- */
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class TheatersActivity extends ListActivity {
+
+public class TheatersActivity extends FragmentActivity {
+
+
+    private List<Fragment> mFragmentList = new ArrayList<Fragment>();
+    private FragmentAdapter mFragmentAdapter;
+    private ViewPager mViewPager;
+
+    //tab底下的引導線
+    private ImageView iv_tab_line;
+    private TextView tv_tab_area, tv_tab_theaters_lately;
+
+    private AreaFragment mAreaFragment;
+    private TheaterLatelyFragment mTheaterLatelyFragment;
+
+
+    //ViewPager的當前選中頁面
+    private int currentIndex;
+    private int screenWidth;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_theaters);
 
-        setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mStrings));
+        processViews();
+        init();
+
+    }
+
+
+    //處理元件id的設定
+    protected void processViews(){
+        iv_tab_line = (ImageView) findViewById(R.id.iv_tab_line);
+        mViewPager = (ViewPager) findViewById(R.id.viewPager_theaters);
+        tv_tab_area = (TextView) findViewById(R.id.tv_tab_area);
+        tv_tab_theaters_lately = (TextView) findViewById(R.id.tv_tab_theaters_lately);
+
+    }
+
+
+
+    //設定Fragment
+    protected void init(){
+        mAreaFragment = new AreaFragment();
+        mTheaterLatelyFragment = new TheaterLatelyFragment();
+
+
+        mFragmentList.add(mAreaFragment);
+        mFragmentList.add(mTheaterLatelyFragment);
+
+        mFragmentAdapter = new FragmentAdapter(this.getSupportFragmentManager(), mFragmentList);
+        mViewPager.setAdapter(mFragmentAdapter);
+        mViewPager.setCurrentItem(0);
+
+        //是在哪把最近瀏覽戲院的文字調整為藍色的呢？
+        tv_tab_theaters_lately.setTextColor(Color.BLACK);
+
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                /**
+                 * position :当前页面，及你点击滑动的页面 offset:当前页面偏移的百分比
+                 * offsetPixels:当前页面偏移的像素位置
+                 */
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                tv_tab_area.setTextColor(Color.BLACK);
+                tv_tab_theaters_lately.setTextColor(Color.BLACK);
+
+
+                switch (position) {
+                    case 0:
+                        tv_tab_area.setTextColor(Color.BLUE);
+                        break;
+                    case 1:
+                        tv_tab_theaters_lately.setTextColor(Color.BLUE);
+                        break;
+                }
+                currentIndex = position;
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                /**
+                 * state滑动中的状态 有三种状态（0，1，2） 1：正在滑动 2：滑动完毕 0：什么都没做。
+                 */
+            }
+        });
 
 
 
 
     }
 
-    private static final String[] mStrings = new String[] {
-            "基隆","台北東區","台北西區","台北北區","台北南區","新北市","桃園","新竹","苗栗","台中","彰化",
-            "南投","雲林","嘉義","台南","高雄","屏東","宜蘭","花蓮","台東","澎湖","金門"
-    };
 
 }
