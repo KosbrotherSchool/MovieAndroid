@@ -10,7 +10,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/content_layout"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/gray_background"
+    >
 
     <com.quinny898.library.persistentsearch.SearchBox
         android:layout_width="wrap_content"
@@ -268,6 +270,7 @@
                         android:text="票房排行"
                         android:id="@+id/textView"
                         android:textSize="20dp"
+                        android:textColor="@color/white"
                         android:layout_weight="1" />
 
                     <android.support.v7.widget.CardView
@@ -328,7 +331,9 @@
                         android:text="為您推薦影片"
                         android:id="@+id/textView2"
                         android:textSize="20dp"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        />
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/more_recommend_video_card_view"

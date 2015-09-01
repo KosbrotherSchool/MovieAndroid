@@ -5,4 +5,5 @@
     <color name="movie_indicator">#ffFF9245</color>
     <color name="gray_line">#ff8A8A8A</color>
     <color name="white">#ffFFFFFF</color>
+    <color name="gray_background">#ff4D4D4D</color>
 </resources>
