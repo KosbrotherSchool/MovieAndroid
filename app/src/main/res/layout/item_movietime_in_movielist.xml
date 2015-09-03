@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardBackgroundColor="#cccccc"
+    card_view:cardCornerRadius="10dp"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true"
+    android:layout_margin="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="120dp"
+            android:id="@+id/iv_movie_cover"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="玩命快遞：肆意橫行"
+                android:id="@+id/tv_movie_title"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:text="數位"
+                android:id="@+id/tv_movie_remark"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10:00  12:50  15:40  18:30"
+                android:id="@+id/tv_movie_time"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

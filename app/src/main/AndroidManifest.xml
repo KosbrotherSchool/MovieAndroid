@@ -13,8 +13,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,56 +22,47 @@
         </activity>
         <activity
             android:name=".TheatersActivity"
-
             android:label="全台戲院" />
         <activity
             android:name=".TheatersOfArea"
             android:label="@string/title_activity_theaters_of_area" >
         </activity>
-
             android:screenOrientation="portrait"
             android:label="全台戲院"/>
-
         <activity
             android:name=".NewsActivity"
-            android:screenOrientation="portrait"
-            android:label="熱門新聞"/>
-
+            android:label="熱門新聞"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MovieActivity"
-            android:screenOrientation="portrait"
-            />
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CreditCardActivity"
-            android:screenOrientation="portrait"
-            android:label="信用卡優惠"/>
-
+            android:label="信用卡優惠"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TicketActivity"
-            android:screenOrientation="portrait"
-            android:label="訂票"/>
-
-        <activity android:name=".NewsArticleActivity"
-            android:screenOrientation="portrait"
-            />
-
-        <activity android:name=".MovieRankActivity"
-            android:screenOrientation="portrait"
-            />
-
-        <activity android:name=".MovieListActivity"
-            android:screenOrientation="portrait"
-            />
-
-        <activity android:name=".RecommendColumnActivity"
-            android:screenOrientation="portrait"
-            />
-
-        <activity android:name=".RecommendColumnVideosActivity"
-            android:screenOrientation="portrait"
-            />
-
+            android:label="訂票"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewsArticleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MovieRankActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MovieListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RecommendColumnActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RecommendColumnVideosActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MovieListOfTheaterInAreaActivity"
+            android:label="@string/title_activity_movie_list_of_theater_in_area" >
+        </activity>
     </application>
 
 </manifest>

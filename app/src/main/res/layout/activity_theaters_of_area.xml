@@ -25,7 +25,8 @@
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:scrollbars="none"
-        android:id="@+id/recycler_view_theaters_of_area"/>
+        android:id="@+id/recycler_view_theaters_of_area"
+        android:background="@color/gray_background" />
 
 
 

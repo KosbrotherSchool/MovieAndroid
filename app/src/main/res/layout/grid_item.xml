@@ -15,9 +15,9 @@
             android:id="@+id/textArea"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:background="#ff16a9ff"
+            android:background="#ffffffff"
             android:gravity="center"
             android:textSize="20sp"
-            android:textColor="#ffffff" />
+            android:textColor="#000000" />
     </RelativeLayout>
 </LinearLayout>
