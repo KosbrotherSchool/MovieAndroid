@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    >
 
     <ImageView
         android:id="@+id/activity_recommend_video_image"
@@ -19,7 +21,7 @@
         app:pstsShouldExpand="true"
         app:pstsTextAllCaps="true"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="36dp"
         >
     </com.astuetz.PagerSlidingTabStrip>
 
@@ -28,7 +30,7 @@
         android:layout_below="@id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white" />
+        />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

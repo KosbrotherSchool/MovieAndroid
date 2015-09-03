@@ -1,6 +1,5 @@
 package com.jasonko.movietime;
 
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -64,7 +63,10 @@ public class RecommendColumnVideosActivity extends AppCompatActivity {
 
         // Give the PagerSlidingTabStrip the ViewPager
         tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        tabsStrip.setIndicatorColor(Color.parseColor("#ffFF0000"));
+        tabsStrip.setIndicatorColor(getResources().getColor(R.color.white));
+        tabsStrip.setIndicatorHeight(10);
+        tabsStrip.setBackgroundColor(getResources().getColor(R.color.movie_indicator));
+        tabsStrip.setTextColorResource(R.color.white);
 
         imageView = (ImageView) findViewById(R.id.activity_recommend_video_image);
         imageLoader = new ImageLoader(this, 300);
