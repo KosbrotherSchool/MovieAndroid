@@ -10,11 +10,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.jasonko.movietime.adapters.DrawerListAdapter;
 import com.jasonko.movietime.adapters.RandomYoutubeVideoAdapter;
 import com.jasonko.movietime.adapters.RankMovieAdapter;
 import com.jasonko.movietime.api.MovieAPI;
@@ -37,9 +37,6 @@ public class MainActivity extends Activity {
 
     private ArrayList<Movie> rankMovies = new ArrayList<>();
     private ArrayList<MyYoutubeVideo> randomVideos = new ArrayList<>();
-
-    private static final String[] drawer_menu_items = new String[]{
-            "最近瀏覽", "我的追蹤", "我要訂票", "問題回報", "好用給個讚", "分享給好友", "關於我們", "我的設定"};
 
     private CardView newsCardView;
     private CardView theaterCardView;
@@ -97,7 +94,8 @@ public class MainActivity extends Activity {
         moreRecommendVideoCardView = (CardView) findViewById(R.id.more_recommend_video_card_view);
 
         //設定drawer中的listview的選項
-        listview_drawer.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, drawer_menu_items));
+        DrawerListAdapter mAdapter = new DrawerListAdapter(this, AppParams.drawerItems);
+        listview_drawer.setAdapter(mAdapter);
 
         newsCardView.setOnClickListener(new View.OnClickListener() {
             @Override

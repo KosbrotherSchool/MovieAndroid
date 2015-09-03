@@ -1,5 +1,6 @@
 package com.jasonko.movietime;
 
+import com.jasonko.movietime.model.DrawerItem;
 import com.jasonko.movietime.model.OrderTheater;
 
 /**
@@ -20,6 +21,17 @@ public class AppParams {
             new OrderTheater("樂聲影城", "http://tix.luxcinema.com.tw/Booking/index.php/login", R.drawable.theater_icon_1),
             new OrderTheater("博客來訂票", "http://www.ezding.com.tw/mmb.do", R.drawable.theater_icon_8),
     };
+
+   public static final DrawerItem[] drawerItems={
+           new DrawerItem("最近瀏覽", R.drawable.drawer_recent_read),
+           new DrawerItem("我的追蹤", R.drawable.drawer_follow),
+           new DrawerItem("我要訂票", R.drawable.drawer_ticket),
+           new DrawerItem("問題回報", R.drawable.drawer_problem),
+           new DrawerItem("好用給個讚", R.drawable.drawer_thumb),
+           new DrawerItem("分享給好友", R.drawable.drawer_share),
+           new DrawerItem("關於我們", R.drawable.drawer_about),
+           new DrawerItem("我的設定", R.drawable.drawer_setting),
+   };
 
 
 }

@@ -1,10 +1,13 @@
 package com.jasonko.movietime;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.jasonko.movietime.adapters.YoutubeColumnAdapter;
 import com.jasonko.movietime.api.MovieAPI;
@@ -15,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by kolichung on 8/28/15.
  */
-public class RecommendColumnActivity extends Activity {
+public class RecommendColumnActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ArrayList<MyYoutubeColumn> mColumns;
@@ -24,7 +27,16 @@ public class RecommendColumnActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_recyclerview);
+        setContentView(R.layout.activity_recommend_column);
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.icon_back_white);
+        toolbar.setTitleTextColor(0xFFFFFFFF);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("選擇電影專欄");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_fragment);
         recyclerView.setHasFixedSize(true);
@@ -48,6 +60,19 @@ public class RecommendColumnActivity extends Activity {
             youtubeColumnAdapter = new YoutubeColumnAdapter(RecommendColumnActivity.this, mColumns);
             recyclerView.setAdapter(youtubeColumnAdapter);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(menuItem);
     }
 
 }

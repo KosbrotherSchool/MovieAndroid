@@ -4,10 +4,13 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -22,7 +25,7 @@ import java.util.HashMap;
 /**
  * Created by kolichung on 8/28/15.
  */
-public class RecommendColumnVideosActivity extends FragmentActivity {
+public class RecommendColumnVideosActivity extends AppCompatActivity {
 
     private ArrayList<String> tabTitles = new ArrayList<>();
     private ArrayList<String> keys = new ArrayList<>();
@@ -42,12 +45,26 @@ public class RecommendColumnVideosActivity extends FragmentActivity {
         column_id = getIntent().getIntExtra("column_id", 0);
         image_link = getIntent().getStringExtra("image_link");
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.icon_back_white);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("cek", "home selected");
+//            }
+//        });
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("");
+
+
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         // Give the PagerSlidingTabStrip the ViewPager
         tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        tabsStrip.setIndicatorColor(Color.parseColor("#ff2EB9FF"));
+        tabsStrip.setIndicatorColor(Color.parseColor("#ffFF0000"));
 
         imageView = (ImageView) findViewById(R.id.activity_recommend_video_image);
         imageLoader = new ImageLoader(this, 300);
@@ -101,9 +118,25 @@ public class RecommendColumnVideosActivity extends FragmentActivity {
                 }
             }
 
-            viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager()));
-            tabsStrip.setViewPager(viewPager);
+            if (tabTitles.size()>0) {
+                viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager()));
+                tabsStrip.setViewPager(viewPager);
+            }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == android.R.id.home) {
+            finish();
+//            Toast.makeText(this,"toast",Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(menuItem);
     }
 
 }

@@ -2,8 +2,12 @@
 <resources>
     <color name="cardview_initial_background">#ff71C3DE</color>
     <color name="news_indicator">#ff2EB9FF</color>
-    <color name="movie_indicator">#ffFF9245</color>
+    <color name="movie_indicator">#fff47721</color>
     <color name="gray_line">#ff8A8A8A</color>
     <color name="white">#ffFFFFFF</color>
     <color name="gray_background">#ff4D4D4D</color>
+    <color name="deep_green">#ff2CA300</color>
+    <color name="red_color">#ffFC0000</color>
+    <color name="pink_color">#ffEC7095</color>
+    <color name="background_color">#ffF6E19B</color>
 </resources>
