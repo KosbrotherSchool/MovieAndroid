@@ -30,13 +30,11 @@
             android:label="@string/title_activity_theaters_of_area" >
         </activity>
 
-            android:screenOrientation="portrait"
-            android:label="全台戲院"/>
 
         <activity
             android:name=".NewsActivity"
             android:screenOrientation="portrait"
-            android:label="熱門新聞"/>
+            android:theme="@style/CustomTheme"/>
 
         <activity
             android:name=".MovieActivity"
@@ -46,23 +44,28 @@
         <activity
             android:name=".CreditCardActivity"
             android:screenOrientation="portrait"
-            android:label="信用卡優惠"/>
+            android:theme="@style/CustomTheme"
+            />
 
         <activity
             android:name=".TicketActivity"
             android:screenOrientation="portrait"
-            android:label="訂票"/>
+            android:theme="@style/CustomTheme"
+            />
 
         <activity android:name=".NewsArticleActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme"
             />
 
         <activity android:name=".MovieRankActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme"
             />
 
         <activity android:name=".MovieListActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme"
             />
 
         <activity android:name=".RecommendColumnActivity"
