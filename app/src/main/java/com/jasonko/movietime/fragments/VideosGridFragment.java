@@ -41,7 +41,7 @@ public class VideosGridFragment extends Fragment {
     // Set the associated text for the title
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_grid, container, false);
+        View view = inflater.inflate(R.layout.fragment_grid_two_column, container, false);
 
         mGridView = (GridView) view.findViewById(R.id.fragment_gridview);
         videoGridAdapter = new VideoGridAdapter(getActivity(), mVideos);

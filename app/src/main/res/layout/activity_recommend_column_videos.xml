@@ -1,30 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    >
 
     <ImageView
         android:id="@+id/activity_recommend_video_image"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
         android:src="@mipmap/ic_launcher"
         />
 
     <com.astuetz.PagerSlidingTabStrip
         android:id="@+id/tabs"
+        android:layout_below="@id/activity_recommend_video_image"
         app:pstsShouldExpand="true"
         app:pstsTextAllCaps="true"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="36dp"
         >
     </com.astuetz.PagerSlidingTabStrip>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
+        android:layout_below="@id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white" />
+        />
 
-</LinearLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#77636363"
+        app:contentInsetEnd="0dp"
+        app:contentInsetStart="0dp"
+        android:layout_alignParentTop="true"
+        ></android.support.v7.widget.Toolbar>
+
+</RelativeLayout>
