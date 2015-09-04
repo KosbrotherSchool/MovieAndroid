@@ -58,7 +58,6 @@ public class MainActivity extends Activity {
         //設定各個元件的對應id
         processViews();
 
-        searchBox = (SearchBox) findViewById(R.id.searchbox);
         setSearchBar();
 
         rankRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_rank);

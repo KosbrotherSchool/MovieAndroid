@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    >
 
     <com.quinny898.library.persistentsearch.SearchBox
         android:layout_width="wrap_content"
@@ -17,12 +19,24 @@
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:textSize="20dp"
+        android:textColor="@color/movie_indicator"
         />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_search_result"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/my_progress_bar"
+            style="@android:style/Widget.ProgressBar.Large"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_search_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </RelativeLayout>
 
 </LinearLayout>
