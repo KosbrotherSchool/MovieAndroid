@@ -1,4 +1,4 @@
-package com.jasonko.movietime;
+package com.jasonko.movietime.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.jasonko.movietime.R;
+import com.jasonko.movietime.TheatersOfArea;
 import com.jasonko.movietime.model.Area;
 
 import java.util.ArrayList;
@@ -52,22 +54,26 @@ public class AreaFragment extends Fragment {
     public void onStart(){
         super.onStart();
         //set gridView
-        gridView = (GridView)getActivity().findViewById(R.id.gridViewArea);
-        //取得areas物件arraylist
-        areas = Area.getAreas();
+
+        if(gridView == null){
+            gridView = (GridView)getActivity().findViewById(R.id.gridViewArea);
+            //取得areas物件arraylist
+            areas = Area.getAreas();
+
+            for(int i = 0; i < areas.size(); i++){
+                Area tempArea = areas.get(i);
+                HashMap<String,String> item = new HashMap<String,String>();
+                item.put("areaName", tempArea.getName());
+                areaNameList.add(item);
+            }
+    
 
 
-        for(int i = 0; i < areas.size(); i++){
-            Area tempArea = areas.get(i);
-            HashMap<String,String> item = new HashMap<String,String>();
-            item.put("areaName", tempArea.getName());
-            areaNameList.add(item);
+            adapter = new SimpleAdapter(getActivity(),areaNameList,R.layout.grid_item,
+                    new String[]{"areaName"}, new int[]{R.id.textArea});
+            gridView.setAdapter(adapter);
+            gridView.setNumColumns(3);
         }
-
-        adapter = new SimpleAdapter(getActivity(),areaNameList,R.layout.grid_item,
-                new String[]{"areaName"}, new int[]{R.id.textArea});
-        gridView.setAdapter(adapter);
-        gridView.setNumColumns(3);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

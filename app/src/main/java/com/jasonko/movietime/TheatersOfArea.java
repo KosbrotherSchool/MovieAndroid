@@ -7,7 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jasonko.movietime.model.Theater;
 
@@ -28,6 +30,8 @@ public class TheatersOfArea extends Activity {
 
         tv_area_of_theaters = (TextView)findViewById(R.id.tv_area_of_theaters);
 
+
+
         Intent intent = getIntent();
         //getIntExtra的第二個參數指的是，若取不到數值，就以第二個參數當預設值
         int area_id = intent.getIntExtra("area_id", 0);
@@ -43,6 +47,21 @@ public class TheatersOfArea extends Activity {
         mRecyclerView.setLayoutManager(layoutManager);
 
         mAdapter = new TheatersListAdapter(this, mData);
+        mAdapter.setOnItemClickListener(new TheatersListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Theater theater = mData.get(position);
+                Intent intent1 = new Intent(TheatersOfArea.this, MovieListOfTheaterInAreaActivity.class);
+                intent1.putExtra("theater_name", theater.getName());
+                intent1.putExtra("theater_phone", theater.getPhone());
+                intent1.putExtra("theater_address", theater.getAddress());
+                intent1.putExtra("theater_id", theater.getTheater_id());
+                startActivity(intent1);
+
+            }
+        });
+
+
         mRecyclerView.setAdapter(mAdapter);
 
 

@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -85,8 +86,20 @@ public class MovieAPI {
     }
 
     public static ArrayList<Movie> getWeekRankMovies(){
-        ArrayList<Movie> movies = new ArrayList<Movie>();
+        ArrayList<Movie> movies = new ArrayList<>();
         String url = host + "/api/movie/rank_movies?rank_type=3";
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            parseMovie(movies, message);
+        }
+        return movies;
+    }
+
+    public static ArrayList<Movie> getSearchedMovies(String query, int page){
+        ArrayList<Movie> movies = new ArrayList<>();
+        String url = host + "/api/movie/search?query=" + URLEncoder.encode(query) + "&page=" + Integer.toString(page);
         String message = getMessageFromServer("GET", null, null, url);
         if (message == null) {
             return null;
@@ -756,7 +769,7 @@ public class MovieAPI {
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder lines = new StringBuilder();
-            ;
+
             String tempStr;
 
             while ((tempStr = reader.readLine()) != null) {

@@ -6,7 +6,6 @@
     <RelativeLayout
         android:layout_width="100sp"
         android:layout_height="100sp"
-        android:layout_margin="5sp"
         android:padding="5sp">
 
         <TextView
@@ -16,9 +15,9 @@
             android:id="@+id/textArea"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:background="#ff16a9ff"
+            android:background="#ffffffff"
             android:gravity="center"
             android:textSize="20sp"
-            android:textColor="#ff020202" />
+            android:textColor="#000000" />
     </RelativeLayout>
 </LinearLayout>

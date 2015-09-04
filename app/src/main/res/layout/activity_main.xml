@@ -11,8 +11,7 @@
     android:layout_height="match_parent"
     android:id="@+id/content_layout"
     android:orientation="vertical"
-    android:background="@color/background_color"
-    >
+    android:background="@color/background_color">
 
     <com.quinny898.library.persistentsearch.SearchBox
         android:layout_width="wrap_content"

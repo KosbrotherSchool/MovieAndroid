@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by larry on 2015/8/30.
+ * 實作TheatersOfArea中的RecyclerView內容
  */
 public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapter.ViewHolder>{
 
@@ -21,10 +22,26 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
     private ArrayList<Theater> mData;
 
 
+
+    //RecyclerView不能直接製作onItemClickListener
+    //只好自己來
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+
+
+    private OnItemClickListener mOnItemClickListener;
+    public void setOnItemClickListener (OnItemClickListener mOnItemClickListener){
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
+
+
     public TheatersListAdapter(Context context, ArrayList<Theater> data){
         layoutInflater = LayoutInflater.from(context);
         mData = data;
     }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public ViewHolder(View arg0){
@@ -56,10 +73,21 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int i){
+
         Theater mTheater = mData.get(i);
         viewHolder.tv_theater_name.setText(mTheater.getName());
         viewHolder.tv_theater_address.setText(mTheater.getAddress());
         viewHolder.tv_theater_phone.setText(mTheater.getPhone());
+
+
+        if(mOnItemClickListener != null){
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(viewHolder.itemView, i);
+                }
+            });
+        }
 
     }
 }
