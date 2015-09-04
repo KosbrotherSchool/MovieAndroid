@@ -2,6 +2,7 @@ package com.jasonko.movietime.api;
 
 import android.util.Log;
 
+import com.jasonko.movietime.model.Area;
 import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.model.MovieNews;
 import com.jasonko.movietime.model.MovieRank;
@@ -107,6 +108,41 @@ public class MovieAPI {
             parseMovie(movies, message);
         }
         return movies;
+    }
+
+    public static ArrayList<Area> getMovieAreasByMovieID(int movie_id){
+        ArrayList<Area> areas = new ArrayList<>();
+        String url = host + "/api/movie/areas?movie_id="+Integer.toString(movie_id);
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            parseAreas(areas, message);
+        }
+        return areas;
+    }
+
+    private static void parseAreas(ArrayList<Area> areas, String message) {
+        try {
+            JSONArray areaArray = new JSONArray(message);
+            for (int i = 0; i < areaArray.length(); i++){
+                JSONObject areaObject = areaArray.getJSONObject(i);
+
+                String name = "";
+                int area_id = 0;
+
+                try {
+                    name = areaObject.getString("name");
+                    area_id = areaObject.getInt("id");
+                }catch (Exception e){
+
+                }
+                Area newArea = new Area(name, area_id);
+                areas.add(newArea);
+            }
+        }catch (Exception e){
+
+        }
     }
 
     public static ArrayList<Movie> getYearRankMovies(){

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.adapters.MovieTimeAdapter;
@@ -24,18 +25,19 @@ import java.util.ArrayList;
 public class MovieTimeFragment extends Fragment {
 
     public static final String ARG_MOVIE_ID = "MOVIE_ID";
-    public static final String ARG_AREA_ID = "AREA_ID";
+
     private int mMovieID;
     private int mAreaID;
 
     private ArrayList<MovieTime> mMovieTimes;
+    private ArrayList<Area> mAreas;
     private RecyclerView areaRecycler;
     private RecyclerView theaterRecycler;
+    private TextView noTheaterText;
 
-    public static MovieTimeFragment newInstance(int movie_id, int area_id) {
+    public static MovieTimeFragment newInstance(int movie_id) {
         Bundle args = new Bundle();
         args.putInt(ARG_MOVIE_ID, movie_id);
-        args.putInt(ARG_AREA_ID, area_id);
         MovieTimeFragment fragment = new MovieTimeFragment();
         fragment.setArguments(args);
         return fragment;
@@ -45,7 +47,6 @@ public class MovieTimeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMovieID = getArguments().getInt(ARG_MOVIE_ID);
-        mAreaID = getArguments().getInt(ARG_AREA_ID);
     }
 
     @Override
@@ -53,6 +54,7 @@ public class MovieTimeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_movie_time, container, false);
         areaRecycler = (RecyclerView) view.findViewById(R.id.movietime_area_recycler_view);
         theaterRecycler = (RecyclerView) view.findViewById(R.id.movietime_theater_recycler_view);
+        noTheaterText = (TextView) view.findViewById(R.id.movietime_no_theater_text);
 
         areaRecycler.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -64,16 +66,37 @@ public class MovieTimeFragment extends Fragment {
         mLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
         theaterRecycler.setLayoutManager(mLayoutManager2);
 
-        MovieTimeAreaAdapter areaAdapter = new MovieTimeAreaAdapter(Area.getAreas(), mAreaID, this);
-        areaRecycler.setAdapter(areaAdapter);
 
-        new getMovieTimesTask().execute();
+        new getMovieAreaTask().execute();
+
         return view;
     }
 
     public void runGetMovieTimesTask(int area_id){
         mAreaID = area_id;
         new getMovieTimesTask().execute();
+    }
+
+
+    private class getMovieAreaTask extends AsyncTask {
+        @Override
+        protected Object doInBackground(Object[] params) {
+            mAreas = MovieAPI.getMovieAreasByMovieID(mMovieID);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object result) {
+            if (mAreas != null && mAreas.size() > 0) {
+                mAreaID = mAreas.get(0).getArea_id();
+                MovieTimeAreaAdapter areaAdapter = new MovieTimeAreaAdapter(mAreas, mAreas.get(0).getArea_id(), MovieTimeFragment.this);
+                areaRecycler.setAdapter(areaAdapter);
+                new getMovieTimesTask().execute();
+            }else {
+                noTheaterText.setVisibility(View.VISIBLE);
+                areaRecycler.setBackgroundResource(R.color.background_color);
+            }
+        }
     }
 
     private class getMovieTimesTask extends AsyncTask {

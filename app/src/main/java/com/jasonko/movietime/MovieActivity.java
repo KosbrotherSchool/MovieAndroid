@@ -67,7 +67,7 @@ public class MovieActivity extends AppCompatActivity {
             if (position == 0){
                 newFragment = MovieInfoFragment.newInstance(mMovieID);
             }else {
-                newFragment = MovieTimeFragment.newInstance(mMovieID, mAreaID);
+                newFragment = MovieTimeFragment.newInstance(mMovieID);
             }
             return newFragment;
         }
