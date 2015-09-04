@@ -1,5 +1,6 @@
 package com.jasonko.movietime.fragments;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,9 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.jasonko.movietime.MoviePhotosActivity;
 import com.jasonko.movietime.R;
+import com.jasonko.movietime.TrailersActivity;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.imageloader.ImageLoader;
 import com.jasonko.movietime.model.Movie;
@@ -44,6 +49,8 @@ public class MovieInfoFragment extends Fragment{
     private ImageView mImage;
 
     private ImageLoader mImageLoader;
+    private ProgressBar mProgressBar;
+    private LinearLayout mLinearLayout;
 
     public static MovieInfoFragment newInstance(int movie_id) {
         Bundle args = new Bundle();
@@ -64,6 +71,8 @@ public class MovieInfoFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie_info, container, false);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.my_progress_bar);
+        mLinearLayout = (LinearLayout) view.findViewById(R.id.movieinfo_layout);
         photoCardView = (CardView) view.findViewById(R.id.movie_photos_card_view);
         trailerCardView = (CardView) view.findViewById(R.id.movie_trailers_card_view);
         readmoreTextView = (TextView) view.findViewById(R.id.textview_movie_info_readmore);
@@ -126,7 +135,30 @@ public class MovieInfoFragment extends Fragment{
             actorText.setText("演員:\n" + mMovie.getActors());
             officerText.setText("出品公司:\n" +mMovie.getOfficial());
 
-            mImageLoader.DisplayImage(mMovie.getSmall_pic(),mImage);
+            mImageLoader.DisplayImage(mMovie.getSmall_pic(), mImage);
+
+            photoCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent newIntent = new Intent(getActivity(), MoviePhotosActivity.class);
+                    newIntent.putExtra("photo_size", mMovie.getPhoto_size());
+                    newIntent.putExtra("movie_id", mMovie.getMovie_id());
+                    newIntent.putExtra("big_photo_url", mMovie.getLarge_pic());
+                    getActivity().startActivity(newIntent);
+                }
+            });
+
+            trailerCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent newIntent = new Intent(getActivity(), TrailersActivity.class);
+                    newIntent.putExtra("movie_id", mMovie.getMovie_id());
+                    newIntent.putExtra("movie_title", mMovie.getTitle());
+                    getActivity().startActivity(newIntent);
+                }
+            });
+            mProgressBar.setVisibility(View.GONE);
+            mLinearLayout.setVisibility(View.VISIBLE);
         }
     }
 }

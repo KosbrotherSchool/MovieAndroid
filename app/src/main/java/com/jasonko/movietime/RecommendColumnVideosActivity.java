@@ -10,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.jasonko.movietime.api.MovieAPI;
@@ -37,12 +39,16 @@ public class RecommendColumnVideosActivity extends AppCompatActivity {
     private ImageLoader imageLoader;
     private ImageView imageView;
 
+    private ProgressBar mProgressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommend_column_videos);
         column_id = getIntent().getIntExtra("column_id", 0);
         image_link = getIntent().getStringExtra("image_link");
+        mProgressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
@@ -124,6 +130,8 @@ public class RecommendColumnVideosActivity extends AppCompatActivity {
                 viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager()));
                 tabsStrip.setViewPager(viewPager);
             }
+
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 

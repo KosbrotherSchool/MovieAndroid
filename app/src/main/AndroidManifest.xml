@@ -21,9 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".TheatersActivity"
-
             android:label="全台戲院" />
         <activity
             android:name=".TheatersOfArea"
@@ -39,6 +39,7 @@
         <activity
             android:name=".MovieActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme"
             />
 
         <activity
@@ -77,6 +78,17 @@
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme"
             />
+
+        <activity android:name=".MoviePhotosActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme"
+            />
+
+        <activity android:name=".TrailersActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme"
+            />
+
 
     </application>
 

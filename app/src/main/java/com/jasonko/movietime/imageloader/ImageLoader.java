@@ -7,8 +7,6 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.jasonko.movietime.R;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -48,7 +46,7 @@ public class ImageLoader
 		REQUIRED_SIZE = size;
 	}
 
-	final int stub_id = R.mipmap.ic_launcher;
+	final int stub_id = 0;
 
 	public void DisplayImage(String url, ImageView imageView)
 	{

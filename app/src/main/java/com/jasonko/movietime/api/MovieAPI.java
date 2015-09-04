@@ -9,6 +9,7 @@ import com.jasonko.movietime.model.MovieTime;
 import com.jasonko.movietime.model.MyYoutubeColumn;
 import com.jasonko.movietime.model.MyYoutubeVideo;
 import com.jasonko.movietime.model.Photo;
+import com.jasonko.movietime.model.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,9 +34,23 @@ public class MovieAPI {
     public static final boolean DEBUG = true;
     public static final String host = "http://106.185.27.30";
 
-    public static ArrayList<Movie> getMoviesByRoundID(int movie_round){
+    public static ArrayList<Trailer> getMovieTrailersByID(int movie_id){
+        ArrayList<Trailer> trailers = new ArrayList<>();
+        String url = host + "/api/movie/trailers?movie_id="+ Integer.toString(movie_id);
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            parseMovieTrailers(trailers, message);
+        }
+        return trailers;
+    }
+
+
+
+    public static ArrayList<Movie> getMoviesByRoundID(int movie_round, int page){
         ArrayList<Movie> movies = new ArrayList<Movie>();
-        String url = host + "/api/movie/movies?movie_round="+ Integer.toString(movie_round);
+        String url = host + "/api/movie/movies?movie_round="+ Integer.toString(movie_round)+ "&page="+ Integer.toString(page);
         String message = getMessageFromServer("GET", null, null, url);
         if (message == null) {
             return null;
@@ -276,6 +291,34 @@ public class MovieAPI {
         }
     }
 
+    private static void parseMovieTrailers(ArrayList<Trailer> trailers, String message) {
+        try {
+            JSONArray videoArray = new JSONArray(message);
+            for (int i = 0; i < videoArray.length(); i++){
+                JSONObject videoObject = videoArray.getJSONObject(i);
+                String title = "";
+                String youtube_id = "";
+                String youtube_link = "";
+                int movie_id = 0;
+                int trailer_id = 0;
+                try {
+                    title = videoObject.getString("title");
+                    youtube_id = videoObject.getString("youtube_id");
+                    youtube_link = videoObject.getString("youtube_link");
+                    movie_id = videoObject.getInt("movie_id");
+                    trailer_id = videoObject.getInt("id");
+                }catch (Exception e){
+
+                }
+                Trailer newTrailer = new Trailer(title, youtube_id,youtube_link,movie_id,trailer_id);
+                trailers.add(newTrailer);
+            }
+        }catch (Exception e){
+
+        }
+    }
+
+
     private static void parseMovieTimes(ArrayList<MovieTime> times, String message) {
         try {
             JSONArray timesArray = new JSONArray(message);
@@ -410,6 +453,9 @@ public class MovieAPI {
             int  movie_round = 0;
             int movie_id = 0;
 
+            int photo_size = 0;
+            int trailer_size = 0;
+
             try {
                 title = movieObject.getString("title");
                 title_eng = movieObject.getString("title_eng");
@@ -450,11 +496,19 @@ public class MovieAPI {
 
             try {
                 movie_round = movieObject.getInt("movie_round");
-                movie_id = movieObject.getInt("movie_id");
+                movie_id = movieObject.getInt("id");
             }catch (Exception e){
 
             }
-            mMovie = new Movie(title,title_eng,movie_class,movie_type,movie_length,publish_date,director,editors,actors,official,movie_info,small_pic,large_pic,publish_date_date,movie_round,movie_id, null);
+
+            try {
+                photo_size = movieObject.getInt("photo_size");
+                trailer_size = movieObject.getInt("trailer_size");
+            }catch (Exception e){
+
+            }
+
+            mMovie = new Movie(title,title_eng,movie_class,movie_type,movie_length,publish_date,director,editors,actors,official,movie_info,small_pic,large_pic,publish_date_date,movie_round,movie_id, null, photo_size, trailer_size);
         }catch (Exception e){
 
         }
@@ -487,6 +541,9 @@ public class MovieAPI {
                 int movie_id = 0;
 
                 MovieRank movieRank;
+
+                int photo_size = 0;
+                int trailer_size = 0;
 
                 try {
                     movie_length = movieObject.getString("movie_length");
@@ -649,9 +706,17 @@ public class MovieAPI {
                 }catch (Exception e){
 
                 }
+
+                try {
+                    photo_size = movieObject.getInt("photo_size");
+                    trailer_size = movieObject.getInt("trailer_size");
+                }catch (Exception e){
+
+                }
+
                 movieRank = new MovieRank(rank_type,movie_id,current_rank,last_week_rank,publish_weeks,the_week,static_duration,expect_people,total_people,satisfied_num);
 
-                Movie newMoive = new Movie(title,title_eng,movie_class,movie_type, movie_length, publish_date, director, editors, actors, official, movie_info, small_pic, large_pic, publish_date_date, movie_round, movie_id,movieRank);
+                Movie newMoive = new Movie(title,title_eng,movie_class,movie_type, movie_length, publish_date, director, editors, actors, official, movie_info, small_pic, large_pic, publish_date_date, movie_round, movie_id,movieRank, photo_size, trailer_size);
                 movies.add(newMoive);
             }
         }catch (Exception e){

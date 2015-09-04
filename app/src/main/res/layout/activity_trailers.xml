@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/background_color"
     >
 
@@ -16,24 +16,14 @@
         app:contentInsetStart="0dp"
         ></android.support.v7.widget.Toolbar>
 
-
-    <RelativeLayout
+    <GridView
+        android:id="@+id/activity_gridview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-        <ProgressBar
-            android:id="@+id/my_progress_bar"
-            style="@android:style/Widget.ProgressBar.Large"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            />
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-    </RelativeLayout>
-
+        android:layout_height="match_parent"
+        android:numColumns="2"
+        android:gravity="center"
+        android:columnWidth="5dp"
+        android:stretchMode="columnWidth"
+        />
 
 </LinearLayout>

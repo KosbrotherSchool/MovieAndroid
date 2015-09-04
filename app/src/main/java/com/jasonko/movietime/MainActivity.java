@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.jasonko.movietime.adapters.DrawerListAdapter;
@@ -45,6 +46,9 @@ public class MainActivity extends Activity {
     private CardView ticketCardView;
     private CardView moreRankCardView;
     private CardView moreRecommendVideoCardView;
+
+    private ProgressBar movieProgress;
+    private ProgressBar videoProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,9 @@ public class MainActivity extends Activity {
         ticketCardView = (CardView) findViewById(R.id.ticket_card_view);
         moreRankCardView = (CardView) findViewById(R.id.more_rank_card_view);
         moreRecommendVideoCardView = (CardView) findViewById(R.id.more_recommend_video_card_view);
+        movieProgress = (ProgressBar) findViewById(R.id.main_movie_progress);
+        videoProgress = (ProgressBar) findViewById(R.id.main_video_progress);
+
 
         //設定drawer中的listview的選項
         DrawerListAdapter mAdapter = new DrawerListAdapter(this, AppParams.drawerItems);
@@ -166,6 +173,7 @@ public class MainActivity extends Activity {
         protected void onPostExecute(Object result) {
             RankMovieAdapter videoAdapter = new RankMovieAdapter(MainActivity.this, rankMovies);
             rankRecyclerView.setAdapter(videoAdapter);
+            movieProgress.setVisibility(View.GONE);
         }
     }
 
@@ -181,6 +189,7 @@ public class MainActivity extends Activity {
         protected void onPostExecute(Object result) {
             RandomYoutubeVideoAdapter videoAdapter = new RandomYoutubeVideoAdapter(MainActivity.this, randomVideos);
             recommendRecyclerView.setAdapter(videoAdapter);
+            videoProgress.setVisibility(View.GONE);
         }
     }
 

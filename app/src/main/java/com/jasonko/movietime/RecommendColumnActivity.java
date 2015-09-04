@@ -8,10 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.jasonko.movietime.adapters.YoutubeColumnAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.MyYoutubeColumn;
+import com.jasonko.movietime.tool.EndlessRecyclerOnScrollListener;
 
 import java.util.ArrayList;
 
@@ -21,14 +25,17 @@ import java.util.ArrayList;
 public class RecommendColumnActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private ArrayList<MyYoutubeColumn> mColumns;
+    private ArrayList<MyYoutubeColumn> mColumns = new ArrayList<>();
     private YoutubeColumnAdapter youtubeColumnAdapter;
+
+    private ProgressBar mProgressBar;
+    private int mPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommend_column);
-
+        mProgressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
@@ -43,6 +50,12 @@ public class RecommendColumnActivity extends AppCompatActivity {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                new NewsTask().execute();
+            }
+        });
 
         new NewsTask().execute();
     }
@@ -51,14 +64,30 @@ public class RecommendColumnActivity extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object[] params) {
-            mColumns  = MovieAPI.getYoutubeColumns(1);
-            return null;
+
+            ArrayList<MyYoutubeColumn> feedBackColumns = MovieAPI.getYoutubeColumns(mPage);
+            if (feedBackColumns != null && feedBackColumns.size()>0){
+                mColumns.addAll(feedBackColumns);
+                mPage = mPage + 1;
+                return true;
+            }
+            return false;
         }
 
         @Override
         protected void onPostExecute(Object result) {
-            youtubeColumnAdapter = new YoutubeColumnAdapter(RecommendColumnActivity.this, mColumns);
-            recyclerView.setAdapter(youtubeColumnAdapter);
+            if ((boolean) result){
+                if (youtubeColumnAdapter == null) {
+                    youtubeColumnAdapter = new YoutubeColumnAdapter(RecommendColumnActivity.this, mColumns);
+                    recyclerView.setAdapter(youtubeColumnAdapter);
+                    mProgressBar.setVisibility(View.GONE);
+                }else {
+                    youtubeColumnAdapter.notifyDataSetChanged();
+                }
+            }else {
+                Toast.makeText(RecommendColumnActivity.this, "無其他資料", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 

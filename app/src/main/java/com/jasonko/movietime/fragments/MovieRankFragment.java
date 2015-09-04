@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.adapters.RankMovieExpectAdpter;
@@ -33,6 +34,8 @@ public class MovieRankFragment extends Fragment {
     private RankMovieExpectAdpter movieExpectAdpter;
     private RankMovieSatisfyAdapter movieSatisfyAdapter;
 
+    private ProgressBar mProgressBar;
+
     public static MovieRankFragment newInstance(int rank_type_id) {
         Bundle args = new Bundle();
         args.putInt(ARG_RANK_TYPE, rank_type_id);
@@ -52,6 +55,7 @@ public class MovieRankFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.my_progress_bar);
 
         moviesRecylerView = (RecyclerView) view.findViewById(R.id.recycler_fragment);
         moviesRecylerView.setHasFixedSize(true);
@@ -149,7 +153,7 @@ public class MovieRankFragment extends Fragment {
                     moviesRecylerView.setAdapter(movieSatisfyAdapter);
                     break;
             }
-
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 }
