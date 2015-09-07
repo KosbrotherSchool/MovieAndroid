@@ -11,21 +11,22 @@ import android.widget.TextView;
 
 import com.jasonko.movietime.MovieActivity;
 import com.jasonko.movietime.R;
+import com.jasonko.movietime.dao.FollowMovie;
 import com.jasonko.movietime.imageloader.ImageLoader;
-import com.jasonko.movietime.model.Movie;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
- * Created by kolichung on 8/28/15.
+ * Created by kolichung on 9/6/15.
  */
-public class MovieGridAdapter extends BaseAdapter {
+public class FollowMovieGridAdapter extends BaseAdapter {
 
     private Activity mActivity;
-    private ArrayList<Movie> mMovies;
+    private ArrayList<FollowMovie> mMovies;
     private ImageLoader mImageLoader;
 
-    public MovieGridAdapter(Activity activity, ArrayList<Movie> movies) {
+    public FollowMovieGridAdapter(Activity activity, ArrayList<FollowMovie> movies) {
         mActivity = activity;
         mMovies = movies;
         mImageLoader = new ImageLoader(this.mActivity, 80);
@@ -51,14 +52,20 @@ public class MovieGridAdapter extends BaseAdapter {
 
         if (convertView == null) {
             // If convertView is null then inflate the appropriate layout file
-            convertView = LayoutInflater.from(mActivity).inflate(R.layout.item_grid_movie, null);
+            convertView = LayoutInflater.from(mActivity).inflate(R.layout.item_grid_movie_follow, null);
         }
         ImageView gridImage = (ImageView) convertView.findViewById(R.id.movie_grid_image);
         TextView gridTitle = (TextView) convertView.findViewById(R.id.movie_grid_title_text);
         TextView gridClass = (TextView) convertView.findViewById(R.id.movie_grid_class_text);
+        TextView gridPublish = (TextView) convertView.findViewById(R.id.movie_grid_publish_text);
 
         mImageLoader.DisplayImage(mMovies.get(position).getSmall_pic(), gridImage);
         gridTitle.setText(mMovies.get(position).getTitle());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String datString = sdf.format(mMovies.get(position).getPublish_day());
+        gridPublish.setText(datString);
+
         gridClass.setText(mMovies.get(position).getMovie_class());
 
         convertView.setOnClickListener(new View.OnClickListener() {

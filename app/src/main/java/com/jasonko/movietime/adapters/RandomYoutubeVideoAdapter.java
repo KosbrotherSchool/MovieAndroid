@@ -1,6 +1,8 @@
 package com.jasonko.movietime.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,9 +62,18 @@ public static class ViewHolder extends RecyclerView.ViewHolder {
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.textVideoTitle.setText(mVideos.get(position).getTitle());
         mImageLoader.DisplayImage(mVideos.get(position).getPicLink(), holder.imageVideo);
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = mVideos.get(position).getYoutbeLink();
+                Intent intentGood = new Intent(Intent.ACTION_VIEW);
+                intentGood.setData(Uri.parse(url));
+                mActivity.startActivity(intentGood);
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -13,13 +13,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jasonko.movietime.MoviePhotosActivity;
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.TrailersActivity;
 import com.jasonko.movietime.api.MovieAPI;
+import com.jasonko.movietime.dao.DaoMaster;
+import com.jasonko.movietime.dao.DaoSession;
+import com.jasonko.movietime.dao.FollowMovie;
+import com.jasonko.movietime.dao.FollowMovieDao;
+import com.jasonko.movietime.dao.RecentMovie;
+import com.jasonko.movietime.dao.RecentMovieDao;
 import com.jasonko.movietime.imageloader.ImageLoader;
 import com.jasonko.movietime.model.Movie;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by kolichung on 8/27/15.
@@ -51,6 +62,14 @@ public class MovieInfoFragment extends Fragment{
     private ImageLoader mImageLoader;
     private ProgressBar mProgressBar;
     private LinearLayout mLinearLayout;
+
+    private ImageView follow_bottom_image;
+    private ImageView follow_image;
+    private LinearLayout linearAddFollow;
+    private LinearLayout linearShare;
+    private LinearLayout linearResponse;
+
+    private DaoMaster.DevOpenHelper helper;
 
     public static MovieInfoFragment newInstance(int movie_id) {
         Bundle args = new Bundle();
@@ -90,6 +109,10 @@ public class MovieInfoFragment extends Fragment{
         diretorText = (TextView) view.findViewById(R.id.movieinfo_text_director);
         actorText = (TextView) view.findViewById(R.id.movieinfo_text_actors);
         officerText = (TextView) view.findViewById(R.id.movieinfo_text_officier);
+
+        follow_image = (ImageView) view.findViewById(R.id.follow_movie_up_image);
+        linearAddFollow = (LinearLayout) view.findViewById(R.id.linearLayout_movie_add_follow);
+        follow_bottom_image = (ImageView) view.findViewById(R.id.follow_movie_bottom_image);
 
         mImageLoader = new ImageLoader(getActivity());
         readmoreTextView.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +157,8 @@ public class MovieInfoFragment extends Fragment{
             diretorText.setText("導演:\n" + mMovie.getDirector());
             actorText.setText("演員:\n" + mMovie.getActors());
             officerText.setText("出品公司:\n" +mMovie.getOfficial());
+            photoText.setText("圖集("+ Integer.toString(mMovie.getPhoto_size())+")");
+            trailerText.setText("影片("+ Integer.toString(mMovie.getTrailer_size())+")");
 
             mImageLoader.DisplayImage(mMovie.getSmall_pic(), mImage);
 
@@ -159,6 +184,122 @@ public class MovieInfoFragment extends Fragment{
             });
             mProgressBar.setVisibility(View.GONE);
             mLinearLayout.setVisibility(View.VISIBLE);
+
+            follow_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (checkFollow()) {
+                        deleteFollow();
+                        follow_image.setImageResource(R.drawable.icon_tag);
+                        follow_bottom_image.setImageResource(R.drawable.icon_tag);
+                        Toast.makeText(getActivity(), "取消追蹤", Toast.LENGTH_SHORT).show();
+                    } else {
+                        addFollow();
+                        follow_image.setImageResource(R.drawable.icon_tag_full);
+                        follow_bottom_image.setImageResource(R.drawable.icon_tag_full);
+                        Toast.makeText(getActivity(), "追蹤此電影", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            linearAddFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (checkFollow()) {
+                        deleteFollow();
+                        follow_image.setImageResource(R.drawable.icon_tag);
+                        follow_bottom_image.setImageResource(R.drawable.icon_tag);
+                        Toast.makeText(getActivity(), "取消追蹤", Toast.LENGTH_SHORT).show();
+                    } else {
+                        addFollow();
+                        follow_image.setImageResource(R.drawable.icon_tag_full);
+                        follow_bottom_image.setImageResource(R.drawable.icon_tag_full);
+                        Toast.makeText(getActivity(), "追蹤此電影", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            addThisMovieToRecentMovie();
+
+            if (checkFollow()){
+                follow_image.setImageResource(R.drawable.icon_tag_full);
+                follow_bottom_image.setImageResource(R.drawable.icon_tag_full);
+            }
         }
     }
+
+    private void addFollow() {
+
+        DaoMaster daoMaster = new DaoMaster(helper.getWritableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        FollowMovieDao followMovieDao = daoSession.getFollowMovieDao();
+
+        Date publish_date_date = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            publish_date_date = sdf.parse(mMovie.getPublish_date());
+        }catch (Exception e){
+
+        }
+
+
+        FollowMovie newFollowMovie = new FollowMovie(null, mMovie.getTitle(), mMovie.getMovie_class(), mMovie.getSmall_pic(), mMovie.getMovie_id(), publish_date_date, new Date());
+        followMovieDao.insert(newFollowMovie);
+
+    }
+
+    private void deleteFollow() {
+
+        DaoMaster daoMaster = new DaoMaster(helper.getWritableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        FollowMovieDao followMovieDao = daoSession.getFollowMovieDao();
+        List followMovieList = followMovieDao.queryBuilder().where(FollowMovieDao.Properties.Movie_id.eq(mMovie.getMovie_id())).list();
+        followMovieDao.delete((FollowMovie)followMovieList.get(0));
+
+    }
+
+    private boolean checkFollow() {
+
+        if (helper!=null){
+            DaoMaster daoMaster = new DaoMaster(helper.getWritableDatabase());
+            DaoSession daoSession = daoMaster.newSession();
+            FollowMovieDao followMovieDao = daoSession.getFollowMovieDao();
+            List followMovieList = followMovieDao.queryBuilder().where(FollowMovieDao.Properties.Movie_id.eq(mMovie.getMovie_id())).list();
+            if (followMovieList.size() > 0){
+                return true;
+            }else {
+                return false;
+            }
+        }
+        return false;
+
+    }
+
+    private void addThisMovieToRecentMovie() {
+
+        helper = new DaoMaster.DevOpenHelper(getActivity(), "expense", null);
+        DaoMaster daoMaster = new DaoMaster(helper.getWritableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+
+        RecentMovieDao movieDao = daoSession.getRecentMovieDao();
+        List recentMovies = movieDao.queryBuilder()
+                .where(RecentMovieDao.Properties.Movie_id.eq(mMovie.getMovie_id()))
+                .list();
+        if (recentMovies.size() == 0) {
+            RecentMovie newRencentMovie = new RecentMovie(null, mMovie.getTitle(), mMovie.getMovie_class(),
+                    mMovie.getMovie_type(), mMovie.getActors(), mMovie.getPublish_date(), mMovie.getSmall_pic(), mMovie.getMovie_id(), new Date());
+            movieDao.insert(newRencentMovie);
+        }else {
+            RecentMovie theMovie = (RecentMovie)recentMovies.get(0);
+            theMovie.setUpdate_date(new Date());
+            movieDao.update(theMovie);
+        }
+
+        List allRecentMovies = movieDao.queryBuilder().orderAsc(RecentMovieDao.Properties.Update_date).list();
+        if (allRecentMovies.size()> 10){
+            movieDao.delete((RecentMovie)allRecentMovies.get(0));
+        }
+
+    }
+
 }

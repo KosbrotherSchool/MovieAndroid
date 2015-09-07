@@ -10,7 +10,7 @@
     </style>
 
     <style name="CardViewStyle" parent="CardView.Light">
-        <item name="android:foreground">@drawable/orange_cardview_selector</item>
+        <item name="android:foreground">@drawable/drawer_list_selector</item>
     </style>
 
 </resources>

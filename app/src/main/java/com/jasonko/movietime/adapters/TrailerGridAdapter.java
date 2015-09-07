@@ -1,6 +1,8 @@
 package com.jasonko.movietime.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +47,7 @@ public class TrailerGridAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
             // If convertView is null then inflate the appropriate layout file
@@ -57,6 +59,15 @@ public class TrailerGridAdapter extends BaseAdapter {
         mImageLoader.DisplayImage(mTrailers.get(position).getPicLink(), gridImage);
         gridTitle.setText(mTrailers.get(position).getTitle());
 
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = mTrailers.get(position).getYoutube_link();
+                Intent intentGood = new Intent(Intent.ACTION_VIEW);
+                intentGood.setData(Uri.parse(url));
+                mActivity.startActivity(intentGood);
+            }
+        });
         return convertView;
     }
 }
