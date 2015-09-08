@@ -29,12 +29,11 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
         void onItemClick(View view, int position);
     }
 
-
-
     private OnItemClickListener mOnItemClickListener;
     public void setOnItemClickListener (OnItemClickListener mOnItemClickListener){
         this.mOnItemClickListener = mOnItemClickListener;
     }
+
 
 
     public TheatersListAdapter(Context context, ArrayList<Theater> data){
