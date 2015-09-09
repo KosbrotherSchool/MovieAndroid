@@ -6,10 +6,21 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/testText"
-        android:text="最近瀏覽戲院測試"
-        android:textColor="#000000"/>
+        android:text="最近瀏覽過的戲院"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:gravity="center_vertical|center_horizontal" />
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:scrollbars="none"
+        android:id="@+id/recycler_view_theaters_lately"
+        android:background="@color/gray_background">
+
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

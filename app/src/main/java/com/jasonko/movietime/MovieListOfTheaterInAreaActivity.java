@@ -2,6 +2,7 @@ package com.jasonko.movietime;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,13 +27,15 @@ public class MovieListOfTheaterInAreaActivity extends Activity {
     private TextView tv_name_of_theater;
     private TextView tv_phone_of_theater;
     private TextView tv_address_of_theater;
+    private ImageView iv_movie_cover;
 
 
 
     private RecyclerView mRecyclerView;
     private MoviesListOfTheaterAdapter mAdapter;
     private ArrayList<MovieTime> mData;
-    private ArrayList<MovieTime> testData = new ArrayList<MovieTime>();
+    private ArrayList<String> movieCovers;
+    int theater_id;
 
 
 
@@ -46,6 +50,7 @@ public class MovieListOfTheaterInAreaActivity extends Activity {
         tv_name_of_theater = (TextView)findViewById(R.id.tv_name_of_theater);
         tv_phone_of_theater = (TextView)findViewById(R.id.tv_phone_of_theater);
         tv_address_of_theater = (TextView)findViewById(R.id.tv_address_of_theater);
+        iv_movie_cover = (ImageView)findViewById(R.id.iv_movie_cover);
 
 
         //set basic data of the clicked theater
@@ -53,31 +58,40 @@ public class MovieListOfTheaterInAreaActivity extends Activity {
         tv_name_of_theater.setText(intent.getStringExtra("theater_name"));
         tv_phone_of_theater.setText(intent.getStringExtra("theater_phone"));
         tv_address_of_theater.setText(intent.getStringExtra("theater_address"));
-        int theater_id = intent.getIntExtra("theater_id", 0);
+        theater_id = intent.getIntExtra("theater_id", 0);
 
 
-        Log.d("MovieListActivity", "before MovieAPI");
-        //set RecyclerView & Adapter
-        mData = MovieAPI.getTheaterMovieTimes(theater_id) ;
 
-        Log.d("MovieListActivity", "after MovieAPI");
 
-        if(mData == null)
-            Toast.makeText(MovieListOfTheaterInAreaActivity.this, "null pointer", Toast.LENGTH_SHORT).show();
-        else {
-            Toast.makeText(MovieListOfTheaterInAreaActivity.this, "not null pointer", Toast.LENGTH_SHORT).show();
-            /*
-            mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_movielist_of_theater);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_movielist_of_theater);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(layoutManager);
 
-            mAdapter = new MoviesListOfTheaterAdapter(MovieListOfTheaterInAreaActivity.this, mData);
-            mRecyclerView.setAdapter(mAdapter);
-            */
-        }
+        new GetMoviesTask().execute();
 
     }
 
+
+    private class GetMoviesTask extends AsyncTask{
+
+        @Override
+        protected Object doInBackground(Object[] params){
+            mData = MovieAPI.getTheaterMovieTimes(theater_id);
+            movieCovers = new ArrayList<>();
+            int movie_id;
+            for(int i=0; i < mData.size(); i++){
+                movie_id = mData.get(i).getMovie_id();
+                movieCovers.add(MovieAPI.getSingleMovie(movie_id).getSmall_pic());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object result){
+            mAdapter = new MoviesListOfTheaterAdapter(MovieListOfTheaterInAreaActivity.this, mData, movieCovers);
+            mRecyclerView.setAdapter(mAdapter);
+        }
+    }
 
 }
