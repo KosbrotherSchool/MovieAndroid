@@ -62,9 +62,12 @@ public class MovieAPI {
         return movies;
     }
 
-    public static ArrayList<Movie> getTaipeiRankMovies(){
+    public static ArrayList<Movie> getTaipeiRankMovies(int page){
         ArrayList<Movie> movies = new ArrayList<Movie>();
         String url = host + "/api/movie/rank_movies?rank_type=1";
+        if (page != -1){
+            url = url + "&page=" + Integer.toString(page);
+        }
         String message = getMessageFromServer("GET", null, null, url);
         if (message == null) {
             return null;

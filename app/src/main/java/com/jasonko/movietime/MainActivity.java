@@ -166,7 +166,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected Object doInBackground(Object[] params) {
-            rankMovies = MovieAPI.getTaipeiRankMovies();
+            rankMovies = MovieAPI.getTaipeiRankMovies(1);
             return null;
         }
 
