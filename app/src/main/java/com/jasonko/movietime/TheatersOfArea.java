@@ -62,59 +62,6 @@ public class TheatersOfArea extends Activity {
                 intent1.putExtra("theater_address", theater.getAddress());
                 intent1.putExtra("theater_id", theater.getTheater_id());
 
-
-
-                //save the theater_id when any theater is viewed
-                ////////////////////////////////////////////////
-                SharedPreferences preferences = getSharedPreferences("RECENTLY_THEATERS", Context.MODE_PRIVATE);
-                int count = preferences.getInt("COUNT", 0);
-                int finalone = preferences.getInt("FINALONE", 1);
-                int theater_id = theater.getTheater_id();
-
-                if(count>0){
-                    //check if the clicked theater is in the list already
-                    Boolean notInList = true;
-                    for(int i=1;i<=count; i++){
-                        if(theater_id == preferences.getInt("THEATER"+i, 0)){
-                            notInList = false;
-                            break;}
-                    }
-
-                    //if in list already, do nothing.
-                    //if not in list, add it
-                    if(notInList){
-                        if(count<10){
-                            finalone++;
-                            preferences.edit()
-                                    .putInt("COUNT", count +1)
-                                    .putInt("FINALONE", finalone)
-                                    .putInt("THEATER"+finalone, theater_id).apply();
-                        }
-                        else if(count == 10){
-                            if(finalone == 10) {
-                                finalone = 1;
-                            }
-                            else {
-                                finalone++;
-                            }
-
-                            preferences.edit()
-                                    .putInt("FINALONE", finalone)
-                                    .putInt("THEATER"+finalone, theater_id).apply();
-                        }
-                    }
-
-                }
-                else{
-                    preferences.edit()
-                            .putInt("THEATER1", theater_id)
-                            .putInt("COUNT", 1).apply();
-                }
-
-                //the saving is done
-                ////////////////////////////////////////////////
-
-
                 startActivity(intent1);
 
             }
