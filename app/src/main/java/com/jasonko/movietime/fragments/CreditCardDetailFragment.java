@@ -41,7 +41,7 @@ public class CreditCardDetailFragment extends Fragment {
     // Set the associated text for the title
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_news_article, container, false);
+        View view = inflater.inflate(R.layout.fragment_credit_detail, container, false);
         webView = (WebView) view.findViewById(R.id.news_webview);
         progress = (ProgressBar) view.findViewById(R.id.progressBar);
         progress.setMax(100);

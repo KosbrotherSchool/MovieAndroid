@@ -39,4 +39,8 @@ public class Trailer {
         return trailer_id;
     }
 
+    public String getPicLink(){
+        return "https://i.ytimg.com/vi/"+ youtube_id+"/mqdefault.jpg";
+    }
+
 }

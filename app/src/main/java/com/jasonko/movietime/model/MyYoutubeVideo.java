@@ -46,6 +46,10 @@ public class MyYoutubeVideo implements Parcelable {
         return "https://i.ytimg.com/vi/"+ youtube_id+"/mqdefault.jpg";
     }
 
+    public String getYoutbeLink(){
+        return "https://www.youtube.com/watch?v="+youtube_id;
+    }
+
     @Override
     public int describeContents() {
         return 0;

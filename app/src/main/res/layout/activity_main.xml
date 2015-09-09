@@ -58,6 +58,9 @@
                         card_view:cardElevation="0dp"
                         card_view:cardCornerRadius="2dp"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:selectableItemBackground"
                         >
 
                         <ImageView
@@ -93,6 +96,9 @@
                         card_view:cardElevation="0dp"
                         card_view:cardCornerRadius="2dp"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:selectableItemBackground"
                         >
 
                         <ImageView
@@ -138,6 +144,9 @@
                         card_view:cardElevation="0dp"
                         card_view:cardCornerRadius="2dp"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:selectableItemBackground"
                         >
 
                         <ImageView
@@ -172,6 +181,9 @@
                         card_view:cardElevation="0dp"
                         card_view:cardCornerRadius="3dp"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:selectableItemBackground"
                         >
 
                         <ImageView
@@ -218,6 +230,9 @@
                         card_view:cardElevation="0dp"
                         card_view:cardCornerRadius="2dp"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:selectableItemBackground"
                         >
 
                         <ImageView
@@ -249,7 +264,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp">
 
@@ -282,6 +297,9 @@
                         card_view:cardUseCompatPadding="true"
                         card_view:cardElevation="0dp"
                         card_view:cardCornerRadius="2dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:selectableItemBackground"
                         >
                         <TextView
                             android:layout_width="wrap_content"
@@ -299,18 +317,31 @@
                 </LinearLayout>
 
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view_rank"
-                    android:scrollbars="horizontal"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="190dp"/>
+                    android:layout_height="wrap_content"
+                    >
+                    <ProgressBar
+                        android:id="@+id/main_movie_progress"
+                        style="@android:style/Widget.ProgressBar.Large"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerInParent="true"
+                        />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view_rank"
+                        android:scrollbars="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="190dp"
+                        />
+                </RelativeLayout>
 
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp">
 
@@ -344,6 +375,9 @@
                         card_view:cardUseCompatPadding="true"
                         card_view:cardElevation="0dp"
                         card_view:cardCornerRadius="2dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:selectableItemBackground"
                         >
                         <TextView
                             android:layout_width="wrap_content"
@@ -359,11 +393,23 @@
                     </android.support.v7.widget.CardView>
                 </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view_recommend"
-                    android:scrollbars="horizontal"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="190dp"/>
+                    android:layout_height="wrap_content"
+                    >
+                    <ProgressBar
+                        android:id="@+id/main_video_progress"
+                        style="@android:style/Widget.ProgressBar.Large"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerInParent="true"
+                        />
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recycler_view_recommend"
+                            android:scrollbars="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="190dp"/>
+                </RelativeLayout>
 
 
             </LinearLayout>

@@ -34,7 +34,7 @@ public class MovieListOfTheaterInAreaActivity extends Activity {
     private RecyclerView mRecyclerView;
     private MoviesListOfTheaterAdapter mAdapter;
     private ArrayList<MovieTime> mData;
-    private ArrayList<MovieTime> testData = new ArrayList<MovieTime>();
+    private ArrayList<String> movieCovers;
     int theater_id;
 
 
@@ -78,12 +78,18 @@ public class MovieListOfTheaterInAreaActivity extends Activity {
         @Override
         protected Object doInBackground(Object[] params){
             mData = MovieAPI.getTheaterMovieTimes(theater_id);
+            movieCovers = new ArrayList<>();
+            int movie_id;
+            for(int i=0; i < mData.size(); i++){
+                movie_id = mData.get(i).getMovie_id();
+                movieCovers.add(MovieAPI.getSingleMovie(movie_id).getSmall_pic());
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Object result){
-            mAdapter = new MoviesListOfTheaterAdapter(MovieListOfTheaterInAreaActivity.this, mData);
+            mAdapter = new MoviesListOfTheaterAdapter(MovieListOfTheaterInAreaActivity.this, mData, movieCovers);
             mRecyclerView.setAdapter(mAdapter);
         }
     }

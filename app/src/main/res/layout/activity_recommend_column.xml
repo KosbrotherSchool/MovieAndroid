@@ -16,11 +16,24 @@
         app:contentInsetStart="0dp"
         ></android.support.v7.widget.Toolbar>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_fragment"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="wrap_content"
+        >
+        <ProgressBar
+            android:id="@+id/my_progress_bar"
+            style="@android:style/Widget.ProgressBar.Large"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </RelativeLayout>
 
 
 </LinearLayout>

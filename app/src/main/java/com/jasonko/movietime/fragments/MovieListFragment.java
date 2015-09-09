@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.adapters.ThisWeekMovieAdapter;
@@ -25,6 +26,8 @@ public class MovieListFragment extends Fragment {
     private RecyclerView newsRecylerView;
     private ThisWeekMovieAdapter weekMovieAdapter;
 
+    private ProgressBar mProgressBar;
+
     public static MovieListFragment newInstance() {
         MovieListFragment fragment = new MovieListFragment();
         return fragment;
@@ -40,6 +43,7 @@ public class MovieListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.my_progress_bar);
 
         newsRecylerView = (RecyclerView) view.findViewById(R.id.recycler_fragment);
         newsRecylerView.setHasFixedSize(true);
@@ -60,7 +64,7 @@ public class MovieListFragment extends Fragment {
 
         @Override
         protected Object doInBackground(Object[] params) {
-            mMovies = MovieAPI.getMoviesByRoundID(4);
+            mMovies = MovieAPI.getMoviesByRoundID(4,1);
             return null;
         }
 
@@ -68,6 +72,7 @@ public class MovieListFragment extends Fragment {
         protected void onPostExecute(Object result) {
             weekMovieAdapter = new ThisWeekMovieAdapter(getActivity(), mMovies);
             newsRecylerView.setAdapter(weekMovieAdapter);
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 }

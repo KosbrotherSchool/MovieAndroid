@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -20,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".TheatersActivity"
             android:label="全台戲院" />
@@ -36,7 +38,10 @@
 
         <activity
             android:name=".MovieActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme"
+            />
+
         <activity
             android:name=".CreditCardActivity"
             android:label="信用卡優惠"
@@ -75,6 +80,51 @@
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme"
             />
+
+        <activity android:name=".MoviePhotosActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme"
+            />
+
+        <activity android:name=".TrailersActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme"
+            />
+
+        <activity android:name=".SearchResultActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme"
+            />
+
+        <activity android:name=".RecentMovieActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme"
+            />
+
+        <activity android:name=".FollowMovieActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme"
+            />
+
+        <activity android:name=".SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme"
+            />
+
+        <activity android:name=".AboutUsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme"
+            />
+
+        <service android:name=".services.FollowMovieService"
+            android:exported="false"/>
+
+        <receiver android:name=".services.MovieBootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
 
     </application>
 

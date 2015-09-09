@@ -1,14 +1,22 @@
 package com.jasonko.movietime.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.jasonko.movietime.AboutUsActivity;
+import com.jasonko.movietime.FollowMovieActivity;
 import com.jasonko.movietime.R;
+import com.jasonko.movietime.RecentMovieActivity;
+import com.jasonko.movietime.SettingActivity;
+import com.jasonko.movietime.TicketActivity;
 import com.jasonko.movietime.model.DrawerItem;
 
 /**
@@ -55,6 +63,58 @@ public class DrawerListAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                switch (position) {
+                    case 0:
+                        Intent newIntent = new Intent(mActivity, RecentMovieActivity.class);
+                        mActivity.startActivity(newIntent);
+                        break;
+                    case 1:
+                        Intent intentFollow = new Intent(mActivity, FollowMovieActivity.class);
+                        mActivity.startActivity(intentFollow);
+                        break;
+                    case 2:
+                        Intent intentTicket = new Intent(mActivity, TicketActivity.class);
+                        mActivity.startActivity(intentTicket);
+                        break;
+                    case 3:
+                        Intent intentReport = new Intent(Intent.ACTION_SEND);
+                        intentReport.setType("text/plain");
+                        intentReport.putExtra(Intent.EXTRA_EMAIL, new String[]{"kosbrotherschool@gmail.com"});
+                        intentReport.putExtra(Intent.EXTRA_SUBJECT, "問題回報：(from 電影即時通 APP)");
+                        try {
+                            mActivity.startActivity(Intent.createChooser(intentReport, "傳送 mail..."));
+                        } catch (android.content.ActivityNotFoundException ex) {
+                            Toast.makeText(mActivity, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case 4:
+                        String url = "http://www.example.com";
+                        Intent intentGood = new Intent(Intent.ACTION_VIEW);
+                        intentGood.setData(Uri.parse(url));
+                        mActivity.startActivity(intentGood);
+                        break;
+                    case 5:
+                        Intent intentShare = new Intent(Intent.ACTION_SEND);
+                        intentShare.setType("text/plain");
+                        intentShare.putExtra(Intent.EXTRA_SUBJECT, "電影即時通 APP !");
+                        intentShare.putExtra(Intent.EXTRA_TEXT, "電影即時通 APP 推薦給您 ~");
+                        try {
+                            mActivity.startActivity(Intent.createChooser(intentShare, "分享 ..."));
+                        } catch (android.content.ActivityNotFoundException ex) {
+                            Toast.makeText(mActivity, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case 6:
+                        Intent intentAbout = new Intent(mActivity, AboutUsActivity.class);
+                        mActivity.startActivity(intentAbout);
+                        break;
+                    case 7:
+                        Intent intentSetting = new Intent(mActivity, SettingActivity.class);
+                        mActivity.startActivity(intentSetting);
+                        break;
+                }
+
 
             }
         });

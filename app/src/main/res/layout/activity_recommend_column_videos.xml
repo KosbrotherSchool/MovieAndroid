@@ -7,12 +7,19 @@
     android:background="@color/background_color"
     >
 
+    <ProgressBar
+        android:id="@+id/my_progress_bar"
+        style="@android:style/Widget.ProgressBar.Large"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        />
+
     <ImageView
         android:id="@+id/activity_recommend_video_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:src="@mipmap/ic_launcher"
         />
 
     <com.astuetz.PagerSlidingTabStrip

@@ -1,6 +1,7 @@
 package com.jasonko.movietime.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jasonko.movietime.MovieActivity;
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.imageloader.ImageLoader;
 import com.jasonko.movietime.model.Movie;
@@ -45,7 +47,7 @@ public class MovieGridAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
             // If convertView is null then inflate the appropriate layout file
@@ -58,6 +60,15 @@ public class MovieGridAdapter extends BaseAdapter {
         mImageLoader.DisplayImage(mMovies.get(position).getSmall_pic(), gridImage);
         gridTitle.setText(mMovies.get(position).getTitle());
         gridClass.setText(mMovies.get(position).getMovie_class());
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(mActivity, MovieActivity.class);
+                newIntent.putExtra("movie_id", mMovies.get(position).getMovie_id());
+                mActivity.startActivity(newIntent);
+            }
+        });
 
         return convertView;
     }

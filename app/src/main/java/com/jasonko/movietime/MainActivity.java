@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.jasonko.movietime.adapters.DrawerListAdapter;
@@ -21,7 +23,6 @@ import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.model.MyYoutubeVideo;
 import com.quinny898.library.persistentsearch.SearchBox;
-import com.quinny898.library.persistentsearch.SearchResult;
 
 import java.util.ArrayList;
 
@@ -46,6 +47,9 @@ public class MainActivity extends Activity {
     private CardView moreRankCardView;
     private CardView moreRecommendVideoCardView;
 
+    private ProgressBar movieProgress;
+    private ProgressBar videoProgress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +58,6 @@ public class MainActivity extends Activity {
         //設定各個元件的對應id
         processViews();
 
-        searchBox = (SearchBox) findViewById(R.id.searchbox);
         setSearchBar();
 
         rankRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_rank);
@@ -92,6 +95,9 @@ public class MainActivity extends Activity {
         ticketCardView = (CardView) findViewById(R.id.ticket_card_view);
         moreRankCardView = (CardView) findViewById(R.id.more_rank_card_view);
         moreRecommendVideoCardView = (CardView) findViewById(R.id.more_recommend_video_card_view);
+        movieProgress = (ProgressBar) findViewById(R.id.main_movie_progress);
+        videoProgress = (ProgressBar) findViewById(R.id.main_video_progress);
+
 
         //設定drawer中的listview的選項
         DrawerListAdapter mAdapter = new DrawerListAdapter(this, AppParams.drawerItems);
@@ -154,6 +160,8 @@ public class MainActivity extends Activity {
         });
     }
 
+
+
     private class RankMoviesTask extends AsyncTask {
 
         @Override
@@ -166,6 +174,7 @@ public class MainActivity extends Activity {
         protected void onPostExecute(Object result) {
             RankMovieAdapter videoAdapter = new RankMovieAdapter(MainActivity.this, rankMovies);
             rankRecyclerView.setAdapter(videoAdapter);
+            movieProgress.setVisibility(View.GONE);
         }
     }
 
@@ -181,20 +190,20 @@ public class MainActivity extends Activity {
         protected void onPostExecute(Object result) {
             RandomYoutubeVideoAdapter videoAdapter = new RandomYoutubeVideoAdapter(MainActivity.this, randomVideos);
             recommendRecyclerView.setAdapter(videoAdapter);
+            videoProgress.setVisibility(View.GONE);
         }
     }
 
 
     private void setSearchBar(){
-        searchBox.enableVoiceRecognition(this);
         searchBox = (SearchBox) findViewById(R.id.searchbox);
-        for(int x = 0; x < 10; x++){
-            SearchResult option = new SearchResult("Result " + Integer.toString(x), getResources().getDrawable(R.drawable.ic_action_mic));
-            searchBox.addSearchable(option);
-        }
-        searchBox.setLogoText("My App");
+        searchBox.enableVoiceRecognition(this);
+//        for(int x = 0; x < 10; x++){
+//            SearchResult option = new SearchResult("Result " + Integer.toString(x), getResources().getDrawable(R.drawable.ic_action_mic));
+//            searchBox.addSearchable(option);
+//        }
+        searchBox.setLogoText("電影即時通");
         searchBox.setMenuListener(new SearchBox.MenuListener() {
-
             @Override
             public void onMenuClick() {
                 //Hamburger has been clicked
@@ -223,7 +232,9 @@ public class MainActivity extends Activity {
             @Override
             public void onSearch(String searchTerm) {
                 Toast.makeText(MainActivity.this, searchTerm + " Searched", Toast.LENGTH_LONG).show();
-
+                Intent newIntent = new Intent(MainActivity.this, SearchResultActivity.class);
+                newIntent.putExtra("query", searchTerm);
+                startActivity(newIntent);
             }
 
             @Override
@@ -235,15 +246,24 @@ public class MainActivity extends Activity {
     }
 
 
-    //需要處理語音搜尋時，再回來coding
-    /*@Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (isAdded() && requestCode == SearchBox.VOICE_RECOGNITION_CODE && resultCode == getActivity().RESULT_OK) {
+        if (isAdded() && requestCode == SearchBox.VOICE_RECOGNITION_CODE && resultCode == this.RESULT_OK) {
+            // get first match and move to search result activity
             ArrayList<String> matches = data
                     .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            searchBox.populateEditText(matches);
+            Toast.makeText(MainActivity.this, matches.get(0) + " Searched", Toast.LENGTH_LONG).show();
+            Intent newIntent = new Intent(MainActivity.this, SearchResultActivity.class);
+            newIntent.putExtra("query",matches.get(0));
+            startActivity(newIntent);
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }*/
+    }
+
+    private boolean isAdded() {
+        searchBox.clearResults();
+        return true;
+    }
+
 
 }

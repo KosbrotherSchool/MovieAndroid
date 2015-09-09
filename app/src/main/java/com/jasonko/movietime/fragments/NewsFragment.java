@@ -8,11 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.adapters.NewsAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.MovieNews;
+import com.jasonko.movietime.tool.EndlessRecyclerOnScrollListener;
 
 import java.util.ArrayList;
 
@@ -23,10 +26,12 @@ public class NewsFragment extends Fragment {
     public static final String ARG_NEWS = "NEWS_TYPE_ID";
 
     private int mNewsTypeID;
-    private ArrayList<MovieNews> mNews;
+    private ArrayList<MovieNews> mNews = new ArrayList<>();
     private int mPage = 1;
     private RecyclerView newsRecylerView;
     private NewsAdapter videoAdapter;
+
+    private ProgressBar mProgressBar;
 
     public static NewsFragment newInstance(int news_type_id) {
         Bundle args = new Bundle();
@@ -49,12 +54,19 @@ public class NewsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.my_progress_bar);
 
         newsRecylerView = (RecyclerView) view.findViewById(R.id.recycler_fragment);
         newsRecylerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         newsRecylerView.setLayoutManager(mLayoutManager);
+        newsRecylerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                new NewsTask().execute();
+            }
+        });
 
         if (videoAdapter != null){
             newsRecylerView.setAdapter(videoAdapter);
@@ -69,15 +81,29 @@ public class NewsFragment extends Fragment {
 
         @Override
         protected Object doInBackground(Object[] params) {
-            mNews = MovieAPI.getMovieNews(mNewsTypeID,mPage);
+            ArrayList<MovieNews> feedBackNews = MovieAPI.getMovieNews(mNewsTypeID,mPage);
+            if (feedBackNews != null && feedBackNews.size() > 0){
+                mNews.addAll(feedBackNews);
+            }else {
+                return false;
+            }
             mPage = mPage + 1;
-            return null;
+            return true;
         }
 
         @Override
         protected void onPostExecute(Object result) {
-            videoAdapter = new NewsAdapter(getActivity(), mNews);
-            newsRecylerView.setAdapter(videoAdapter);
+            if ((boolean)result) {
+                if (videoAdapter == null) {
+                    videoAdapter = new NewsAdapter(getActivity(), mNews);
+                    newsRecylerView.setAdapter(videoAdapter);
+                    mProgressBar.setVisibility(View.GONE);
+                }else {
+                    videoAdapter.notifyDataSetChanged();
+                }
+            }else {
+                Toast.makeText(getActivity(),"無其他資料", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

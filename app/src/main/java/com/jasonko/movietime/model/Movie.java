@@ -24,12 +24,23 @@ public class Movie {
     Date publish_date_date;
     int  movie_round;
     int movie_id;
+    int photo_size;
+    int trailer_size;
 
     MovieRank movieRank;
 
+    public int getPhoto_size() {
+        return photo_size;
+    }
+
+    public int getTrailer_size() {
+        return trailer_size;
+    }
+
     public Movie(String title, String title_eng, String movie_class, String movie_type, String movie_length,
                  String publish_date, String director, String editors, String actors, String official, String movie_info,
-                 String small_pic, String large_pic, Date publish_date_date, int movie_round, int movie_id, MovieRank movieRank){
+                 String small_pic, String large_pic, Date publish_date_date, int movie_round, int movie_id, MovieRank movieRank,
+                 int photo_size, int trailer_size){
         this.title = title;
         this.title_eng = title_eng;
         this.movie_class = movie_class;
@@ -47,6 +58,8 @@ public class Movie {
         this.movie_round = movie_round;
         this.movie_id = movie_id;
         this.movieRank = movieRank;
+        this.photo_size = photo_size;
+        this.trailer_size = trailer_size;
     }
 
     public MovieRank getMovieRank() {

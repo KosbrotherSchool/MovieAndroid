@@ -28,5 +28,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.+'
     compile 'com.quinny898.library.persistentsearch:library:1.0.0-SNAPSHOT'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
-
+    compile 'de.greenrobot:greendao:2.0.0'
 }
