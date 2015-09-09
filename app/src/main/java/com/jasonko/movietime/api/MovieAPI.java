@@ -382,6 +382,7 @@ public class MovieAPI {
                 String movie_time = "";
                 int movie_id = 0;
                 int theater_id = 0;
+                String movie_photo="";
 
                 try {
                     remark = timesObject.getString("remark");
@@ -413,7 +414,13 @@ public class MovieAPI {
 
                 }
 
-                MovieTime newTime = new MovieTime(remark, movie_title, movie_time, movie_id, theater_id);
+                try {
+                    movie_photo = timesObject.getString("movie_photo");
+                }catch (Exception e){
+
+                }
+
+                MovieTime newTime = new MovieTime(remark, movie_title, movie_time, movie_id, theater_id, movie_photo);
                 times.add(newTime);
             }
         }catch (Exception e){
