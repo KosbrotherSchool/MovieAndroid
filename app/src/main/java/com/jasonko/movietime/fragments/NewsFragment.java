@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jasonko.movietime.R;
@@ -16,6 +17,7 @@ import com.jasonko.movietime.adapters.NewsAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.MovieNews;
 import com.jasonko.movietime.tool.EndlessRecyclerOnScrollListener;
+import com.jasonko.movietime.tool.NetworkUtil;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,7 @@ public class NewsFragment extends Fragment {
     private NewsAdapter videoAdapter;
 
     private ProgressBar mProgressBar;
+    private TextView noNetText;
 
     public static NewsFragment newInstance(int news_type_id) {
         Bundle args = new Bundle();
@@ -55,6 +58,7 @@ public class NewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
         mProgressBar = (ProgressBar) view.findViewById(R.id.my_progress_bar);
+        noNetText = (TextView) view.findViewById(R.id.no_network_text);
 
         newsRecylerView = (RecyclerView) view.findViewById(R.id.recycler_fragment);
         newsRecylerView.setHasFixedSize(true);
@@ -71,7 +75,12 @@ public class NewsFragment extends Fragment {
         if (videoAdapter != null){
             newsRecylerView.setAdapter(videoAdapter);
         }else {
-            new NewsTask().execute();
+            if (NetworkUtil.getConnectivityStatus(getActivity()) != 0) {
+                new NewsTask().execute();
+            }else {
+                noNetText.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.GONE);
+            }
         }
 
         return view;

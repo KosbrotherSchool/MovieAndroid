@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jasonko.movietime.R;
@@ -15,6 +16,7 @@ import com.jasonko.movietime.adapters.MovieGridAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.tool.EndlessScrollListener;
+import com.jasonko.movietime.tool.NetworkUtil;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,7 @@ public class MovieGridFragment extends Fragment {
     private MovieGridAdapter movieGridAdapter;
 
     private ProgressBar mProgressBar;
+    private TextView noNetText;
 
     public static MovieGridFragment newInstance(int movie_round) {
         Bundle args = new Bundle();
@@ -54,6 +57,7 @@ public class MovieGridFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_grid, container, false);
         mProgressBar = (ProgressBar) view.findViewById(R.id.my_progress_bar);
         mGridView = (GridView) view.findViewById(R.id.fragment_gridview);
+        noNetText = (TextView) view.findViewById(R.id.no_network_text);
 
         mGridView.setOnScrollListener(new EndlessScrollListener() {
             @Override
@@ -65,7 +69,12 @@ public class MovieGridFragment extends Fragment {
         if (movieGridAdapter != null){
             mGridView.setAdapter(movieGridAdapter);
         }else {
-            new NewsTask().execute();
+            if (NetworkUtil.getConnectivityStatus(getActivity()) != 0) {
+                new NewsTask().execute();
+            }else {
+                noNetText.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.GONE);
+            }
         }
         return view;
     }

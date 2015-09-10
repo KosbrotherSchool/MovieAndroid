@@ -10,12 +10,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jasonko.movietime.adapters.YoutubeColumnAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.MyYoutubeColumn;
 import com.jasonko.movietime.tool.EndlessRecyclerOnScrollListener;
+import com.jasonko.movietime.tool.NetworkUtil;
 
 import java.util.ArrayList;
 
@@ -29,6 +31,7 @@ public class RecommendColumnActivity extends AppCompatActivity {
     private YoutubeColumnAdapter youtubeColumnAdapter;
 
     private ProgressBar mProgressBar;
+    private TextView noNetText;
     private int mPage = 1;
 
     @Override
@@ -36,6 +39,7 @@ public class RecommendColumnActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommend_column);
         mProgressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
+        noNetText = (TextView) findViewById(R.id.no_network_text);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
@@ -57,7 +61,13 @@ public class RecommendColumnActivity extends AppCompatActivity {
             }
         });
 
-        new NewsTask().execute();
+        if (NetworkUtil.getConnectivityStatus(RecommendColumnActivity.this) != 0) {
+            new NewsTask().execute();
+        }else{
+            mProgressBar.setVisibility(View.GONE);
+            noNetText.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private class NewsTask extends AsyncTask {
@@ -86,6 +96,7 @@ public class RecommendColumnActivity extends AppCompatActivity {
                 }
             }else {
                 Toast.makeText(RecommendColumnActivity.this, "無其他資料", Toast.LENGTH_SHORT).show();
+                mProgressBar.setVisibility(View.GONE);
             }
 
         }
