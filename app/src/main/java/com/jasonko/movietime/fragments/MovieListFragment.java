@@ -9,11 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.adapters.ThisWeekMovieAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.Movie;
+import com.jasonko.movietime.tool.NetworkUtil;
 
 import java.util.ArrayList;
 
@@ -27,6 +29,7 @@ public class MovieListFragment extends Fragment {
     private ThisWeekMovieAdapter weekMovieAdapter;
 
     private ProgressBar mProgressBar;
+    private TextView noNetText;
 
     public static MovieListFragment newInstance() {
         MovieListFragment fragment = new MovieListFragment();
@@ -44,6 +47,7 @@ public class MovieListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
         mProgressBar = (ProgressBar) view.findViewById(R.id.my_progress_bar);
+        noNetText = (TextView) view.findViewById(R.id.no_network_text);
 
         newsRecylerView = (RecyclerView) view.findViewById(R.id.recycler_fragment);
         newsRecylerView.setHasFixedSize(true);
@@ -54,7 +58,12 @@ public class MovieListFragment extends Fragment {
         if (weekMovieAdapter != null){
             newsRecylerView.setAdapter(weekMovieAdapter);
         }else {
-            new NewsTask().execute();
+            if (NetworkUtil.getConnectivityStatus(getActivity()) != 0) {
+                new NewsTask().execute();
+            }else {
+                noNetText.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.GONE);
+            }
         }
 
         return view;
@@ -70,9 +79,14 @@ public class MovieListFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Object result) {
-            weekMovieAdapter = new ThisWeekMovieAdapter(getActivity(), mMovies);
-            newsRecylerView.setAdapter(weekMovieAdapter);
-            mProgressBar.setVisibility(View.GONE);
+            if (mMovies != null && mMovies.size() > 0) {
+                weekMovieAdapter = new ThisWeekMovieAdapter(getActivity(), mMovies);
+                newsRecylerView.setAdapter(weekMovieAdapter);
+                mProgressBar.setVisibility(View.GONE);
+            }else {
+                mProgressBar.setVisibility(View.GONE);
+                noNetText.setVisibility(View.VISIBLE);
+            }
         }
     }
 }

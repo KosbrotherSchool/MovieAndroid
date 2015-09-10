@@ -25,6 +25,16 @@
             android:textColor="@color/movie_indicator"
             android:visibility="gone"
             />
+        <TextView
+            android:id="@+id/no_network_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="無網路連線"
+            android:textSize="17dp"
+            android:textColor="@color/gray_background"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            />
         <android.support.v7.widget.RecyclerView
             android:id="@+id/movietime_theater_recycler_view"
             android:scrollbars="horizontal"

@@ -9,12 +9,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jasonko.movietime.adapters.SearchMovieAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.tool.EndlessRecyclerOnScrollListener;
+import com.jasonko.movietime.tool.NetworkUtil;
 import com.quinny898.library.persistentsearch.SearchBox;
 
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class SearchResultActivity extends AppCompatActivity {
     private int mPage = 1;
     private String queryString;
     private ProgressBar mProgressBar;
+    private TextView noNetText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class SearchResultActivity extends AppCompatActivity {
         queryString = getIntent().getStringExtra("query");
 
         mProgressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
+        noNetText = (TextView) findViewById(R.id.no_network_text);
         searchBox = (SearchBox) findViewById(R.id.searchbox);
         setSearchBar();
 
@@ -56,7 +60,12 @@ public class SearchResultActivity extends AppCompatActivity {
             }
         });
 
-        new NewsTask().execute();
+        if (NetworkUtil.getConnectivityStatus(SearchResultActivity.this) != 0) {
+            new NewsTask().execute();
+        }else {
+            mProgressBar.setVisibility(View.GONE);
+            noNetText.setVisibility(View.VISIBLE);
+        }
     }
 
     private class NewsTask extends AsyncTask {

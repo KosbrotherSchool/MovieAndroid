@@ -16,6 +16,7 @@ import com.jasonko.movietime.adapters.MovieTimeAreaAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.Area;
 import com.jasonko.movietime.model.MovieTime;
+import com.jasonko.movietime.tool.NetworkUtil;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,7 @@ public class MovieTimeFragment extends Fragment {
     private RecyclerView areaRecycler;
     private RecyclerView theaterRecycler;
     private TextView noTheaterText;
+    private TextView noNetText;
 
     public static MovieTimeFragment newInstance(int movie_id) {
         Bundle args = new Bundle();
@@ -55,6 +57,7 @@ public class MovieTimeFragment extends Fragment {
         areaRecycler = (RecyclerView) view.findViewById(R.id.movietime_area_recycler_view);
         theaterRecycler = (RecyclerView) view.findViewById(R.id.movietime_theater_recycler_view);
         noTheaterText = (TextView) view.findViewById(R.id.movietime_no_theater_text);
+        noNetText = (TextView) view.findViewById(R.id.no_network_text);
 
         areaRecycler.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -67,7 +70,11 @@ public class MovieTimeFragment extends Fragment {
         theaterRecycler.setLayoutManager(mLayoutManager2);
 
 
-        new getMovieAreaTask().execute();
+        if (NetworkUtil.getConnectivityStatus(getActivity()) != 0 ) {
+            new getMovieAreaTask().execute();
+        }else {
+            noNetText.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }

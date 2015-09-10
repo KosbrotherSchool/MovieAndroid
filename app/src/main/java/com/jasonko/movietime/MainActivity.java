@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.jasonko.movietime.adapters.DrawerListAdapter;
 import com.jasonko.movietime.adapters.RandomYoutubeVideoAdapter;
@@ -22,6 +22,7 @@ import com.jasonko.movietime.adapters.RankMovieAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.model.MyYoutubeVideo;
+import com.jasonko.movietime.tool.NetworkUtil;
 import com.quinny898.library.persistentsearch.SearchBox;
 
 import java.util.ArrayList;
@@ -49,6 +50,8 @@ public class MainActivity extends Activity {
 
     private ProgressBar movieProgress;
     private ProgressBar videoProgress;
+    private TextView movieText;
+    private TextView videoText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +75,15 @@ public class MainActivity extends Activity {
         mLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
         recommendRecyclerView.setLayoutManager(mLayoutManager2);
 
-        new RankMoviesTask().execute();
-        new RandomVideosTask().execute();
+        if (NetworkUtil.getConnectivityStatus(MainActivity.this) != 0) {
+            new RankMoviesTask().execute();
+            new RandomVideosTask().execute();
+        }else {
+            movieProgress.setVisibility(View.GONE);
+            videoProgress.setVisibility(View.GONE);
+            movieText.setVisibility(View.VISIBLE);
+            videoText.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -97,7 +107,8 @@ public class MainActivity extends Activity {
         moreRecommendVideoCardView = (CardView) findViewById(R.id.more_recommend_video_card_view);
         movieProgress = (ProgressBar) findViewById(R.id.main_movie_progress);
         videoProgress = (ProgressBar) findViewById(R.id.main_video_progress);
-
+        movieText = (TextView) findViewById(R.id.main_movie_text);
+        videoText = (TextView) findViewById(R.id.main_video_text);
 
         //設定drawer中的listview的選項
         DrawerListAdapter mAdapter = new DrawerListAdapter(this, AppParams.drawerItems);
@@ -172,9 +183,14 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPostExecute(Object result) {
-            RankMovieAdapter videoAdapter = new RankMovieAdapter(MainActivity.this, rankMovies);
-            rankRecyclerView.setAdapter(videoAdapter);
-            movieProgress.setVisibility(View.GONE);
+            if (rankMovies != null && rankMovies.size() > 0) {
+                RankMovieAdapter videoAdapter = new RankMovieAdapter(MainActivity.this, rankMovies);
+                rankRecyclerView.setAdapter(videoAdapter);
+                movieProgress.setVisibility(View.GONE);
+            }else{
+                movieProgress.setVisibility(View.GONE);
+                movieText.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -188,9 +204,14 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPostExecute(Object result) {
-            RandomYoutubeVideoAdapter videoAdapter = new RandomYoutubeVideoAdapter(MainActivity.this, randomVideos);
-            recommendRecyclerView.setAdapter(videoAdapter);
-            videoProgress.setVisibility(View.GONE);
+            if (randomVideos!=null && randomVideos.size() > 0) {
+                RandomYoutubeVideoAdapter videoAdapter = new RandomYoutubeVideoAdapter(MainActivity.this, randomVideos);
+                recommendRecyclerView.setAdapter(videoAdapter);
+                videoProgress.setVisibility(View.GONE);
+            }else {
+                videoProgress.setVisibility(View.GONE);
+                videoText.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -231,7 +252,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onSearch(String searchTerm) {
-                Toast.makeText(MainActivity.this, searchTerm + " Searched", Toast.LENGTH_LONG).show();
+//                Toast.makeText(MainActivity.this, searchTerm + " Searched", Toast.LENGTH_LONG).show();
                 Intent newIntent = new Intent(MainActivity.this, SearchResultActivity.class);
                 newIntent.putExtra("query", searchTerm);
                 startActivity(newIntent);
@@ -252,7 +273,7 @@ public class MainActivity extends Activity {
             // get first match and move to search result activity
             ArrayList<String> matches = data
                     .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            Toast.makeText(MainActivity.this, matches.get(0) + " Searched", Toast.LENGTH_LONG).show();
+//            Toast.makeText(MainActivity.this, matches.get(0) + " Searched", Toast.LENGTH_LONG).show();
             Intent newIntent = new Intent(MainActivity.this, SearchResultActivity.class);
             newIntent.putExtra("query",matches.get(0));
             startActivity(newIntent);

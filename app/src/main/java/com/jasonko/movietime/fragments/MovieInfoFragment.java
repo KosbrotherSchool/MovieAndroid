@@ -27,6 +27,7 @@ import com.jasonko.movietime.dao.RecentMovie;
 import com.jasonko.movietime.dao.RecentMovieDao;
 import com.jasonko.movietime.imageloader.ImageLoader;
 import com.jasonko.movietime.model.Movie;
+import com.jasonko.movietime.tool.NetworkUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -62,6 +63,7 @@ public class MovieInfoFragment extends Fragment{
     private ImageLoader mImageLoader;
     private ProgressBar mProgressBar;
     private LinearLayout mLinearLayout;
+    private TextView noNetWorkText;
 
     private ImageView follow_bottom_image;
     private ImageView follow_image;
@@ -92,6 +94,8 @@ public class MovieInfoFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_movie_info, container, false);
         mProgressBar = (ProgressBar) view.findViewById(R.id.my_progress_bar);
         mLinearLayout = (LinearLayout) view.findViewById(R.id.movieinfo_layout);
+        noNetWorkText = (TextView) view.findViewById(R.id.no_network_text);
+
         photoCardView = (CardView) view.findViewById(R.id.movie_photos_card_view);
         trailerCardView = (CardView) view.findViewById(R.id.movie_trailers_card_view);
         readmoreTextView = (TextView) view.findViewById(R.id.textview_movie_info_readmore);
@@ -118,12 +122,12 @@ public class MovieInfoFragment extends Fragment{
         readmoreTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (readmoreTextView.getTag() == null ||  (int) readmoreTextView.getTag() == 0){
+                if (readmoreTextView.getTag() == null || (int) readmoreTextView.getTag() == 0) {
                     infoText.setMaxLines(Integer.MAX_VALUE);
                     infoText.setText(Html.fromHtml(mMovie.getMovie_info()));
                     readmoreTextView.setTag(1);
                     readmoreTextView.setText("收起簡介內容");
-                }else{
+                } else {
                     infoText.setMaxLines(4);
                     infoText.setText(Html.fromHtml(mMovie.getMovie_info()));
                     readmoreTextView.setTag(0);
@@ -132,7 +136,13 @@ public class MovieInfoFragment extends Fragment{
             }
         });
 
-        new SingleMovieTask().execute();
+        if (NetworkUtil.getConnectivityStatus(getActivity()) != 0 ){
+            new SingleMovieTask().execute();
+        }else {
+            noNetWorkText.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.GONE);
+        }
+
         return view;
     }
 
@@ -147,83 +157,89 @@ public class MovieInfoFragment extends Fragment{
         @Override
         protected void onPostExecute(Object result) {
 
-            titleText.setText(mMovie.getTitle());
-            titleEngText.setText(mMovie.getTitle_eng());
-            classText.setText(mMovie.getMovie_class()+ " 片長：" + mMovie.getMovie_length());
-            publishDateText.setText("上映日期：" + mMovie.getPublish_date());
+            if (mMovie != null) {
+                titleText.setText(mMovie.getTitle());
+                titleEngText.setText(mMovie.getTitle_eng());
+                classText.setText(mMovie.getMovie_class() + " 片長：" + mMovie.getMovie_length());
+                publishDateText.setText("上映日期：" + mMovie.getPublish_date());
 
-            infoText.setText(Html.fromHtml(mMovie.getMovie_info()));
-            typeText.setText("類型:\n" + mMovie.getMovie_type());
-            diretorText.setText("導演:\n" + mMovie.getDirector());
-            actorText.setText("演員:\n" + mMovie.getActors());
-            officerText.setText("出品公司:\n" +mMovie.getOfficial());
-            photoText.setText("圖集("+ Integer.toString(mMovie.getPhoto_size())+")");
-            trailerText.setText("影片("+ Integer.toString(mMovie.getTrailer_size())+")");
+                infoText.setText(Html.fromHtml(mMovie.getMovie_info()));
+                typeText.setText("類型:\n" + mMovie.getMovie_type());
+                diretorText.setText("導演:\n" + mMovie.getDirector());
+                actorText.setText("演員:\n" + mMovie.getActors());
+                officerText.setText("出品公司:\n" + mMovie.getOfficial());
+                photoText.setText("圖集(" + Integer.toString(mMovie.getPhoto_size()) + ")");
+                trailerText.setText("影片(" + Integer.toString(mMovie.getTrailer_size()) + ")");
 
-            mImageLoader.DisplayImage(mMovie.getSmall_pic(), mImage);
+                mImageLoader.DisplayImage(mMovie.getSmall_pic(), mImage);
 
-            photoCardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent newIntent = new Intent(getActivity(), MoviePhotosActivity.class);
-                    newIntent.putExtra("photo_size", mMovie.getPhoto_size());
-                    newIntent.putExtra("movie_id", mMovie.getMovie_id());
-                    newIntent.putExtra("big_photo_url", mMovie.getLarge_pic());
-                    getActivity().startActivity(newIntent);
-                }
-            });
-
-            trailerCardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent newIntent = new Intent(getActivity(), TrailersActivity.class);
-                    newIntent.putExtra("movie_id", mMovie.getMovie_id());
-                    newIntent.putExtra("movie_title", mMovie.getTitle());
-                    getActivity().startActivity(newIntent);
-                }
-            });
-            mProgressBar.setVisibility(View.GONE);
-            mLinearLayout.setVisibility(View.VISIBLE);
-
-            follow_image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (checkFollow()) {
-                        deleteFollow();
-                        follow_image.setImageResource(R.drawable.icon_tag);
-                        follow_bottom_image.setImageResource(R.drawable.icon_tag);
-                        Toast.makeText(getActivity(), "取消追蹤", Toast.LENGTH_SHORT).show();
-                    } else {
-                        addFollow();
-                        follow_image.setImageResource(R.drawable.icon_tag_full);
-                        follow_bottom_image.setImageResource(R.drawable.icon_tag_full);
-                        Toast.makeText(getActivity(), "追蹤此電影", Toast.LENGTH_SHORT).show();
+                photoCardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent newIntent = new Intent(getActivity(), MoviePhotosActivity.class);
+                        newIntent.putExtra("photo_size", mMovie.getPhoto_size());
+                        newIntent.putExtra("movie_id", mMovie.getMovie_id());
+                        newIntent.putExtra("big_photo_url", mMovie.getLarge_pic());
+                        getActivity().startActivity(newIntent);
                     }
-                }
-            });
+                });
 
-            linearAddFollow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (checkFollow()) {
-                        deleteFollow();
-                        follow_image.setImageResource(R.drawable.icon_tag);
-                        follow_bottom_image.setImageResource(R.drawable.icon_tag);
-                        Toast.makeText(getActivity(), "取消追蹤", Toast.LENGTH_SHORT).show();
-                    } else {
-                        addFollow();
-                        follow_image.setImageResource(R.drawable.icon_tag_full);
-                        follow_bottom_image.setImageResource(R.drawable.icon_tag_full);
-                        Toast.makeText(getActivity(), "追蹤此電影", Toast.LENGTH_SHORT).show();
+                trailerCardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent newIntent = new Intent(getActivity(), TrailersActivity.class);
+                        newIntent.putExtra("movie_id", mMovie.getMovie_id());
+                        newIntent.putExtra("movie_title", mMovie.getTitle());
+                        getActivity().startActivity(newIntent);
                     }
+                });
+
+                mProgressBar.setVisibility(View.GONE);
+                mLinearLayout.setVisibility(View.VISIBLE);
+
+                follow_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkFollow()) {
+                            deleteFollow();
+                            follow_image.setImageResource(R.drawable.icon_tag);
+                            follow_bottom_image.setImageResource(R.drawable.icon_tag);
+                            Toast.makeText(getActivity(), "取消追蹤", Toast.LENGTH_SHORT).show();
+                        } else {
+                            addFollow();
+                            follow_image.setImageResource(R.drawable.icon_tag_full);
+                            follow_bottom_image.setImageResource(R.drawable.icon_tag_full);
+                            Toast.makeText(getActivity(), "追蹤此電影", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                linearAddFollow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkFollow()) {
+                            deleteFollow();
+                            follow_image.setImageResource(R.drawable.icon_tag);
+                            follow_bottom_image.setImageResource(R.drawable.icon_tag);
+                            Toast.makeText(getActivity(), "取消追蹤", Toast.LENGTH_SHORT).show();
+                        } else {
+                            addFollow();
+                            follow_image.setImageResource(R.drawable.icon_tag_full);
+                            follow_bottom_image.setImageResource(R.drawable.icon_tag_full);
+                            Toast.makeText(getActivity(), "追蹤此電影", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                addThisMovieToRecentMovie();
+
+                if (checkFollow()) {
+                    follow_image.setImageResource(R.drawable.icon_tag_full);
+                    follow_bottom_image.setImageResource(R.drawable.icon_tag_full);
                 }
-            });
-
-            addThisMovieToRecentMovie();
-
-            if (checkFollow()){
-                follow_image.setImageResource(R.drawable.icon_tag_full);
-                follow_bottom_image.setImageResource(R.drawable.icon_tag_full);
+            }else {
+                noNetWorkText.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.GONE);
             }
         }
     }

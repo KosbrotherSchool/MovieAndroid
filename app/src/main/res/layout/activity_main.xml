@@ -328,6 +328,16 @@
                         android:layout_height="40dp"
                         android:layout_centerInParent="true"
                         />
+                    <TextView
+                        android:id="@+id/main_movie_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="無網路連線"
+                        android:textSize="17dp"
+                        android:textColor="@color/gray_background"
+                        android:layout_centerInParent="true"
+                        android:visibility="gone"
+                        />
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view_rank"
                         android:scrollbars="horizontal"
@@ -404,11 +414,21 @@
                         android:layout_height="40dp"
                         android:layout_centerInParent="true"
                         />
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/recycler_view_recommend"
-                            android:scrollbars="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="190dp"/>
+                    <TextView
+                        android:id="@+id/main_video_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="無網路連線"
+                        android:textSize="17dp"
+                        android:textColor="@color/gray_background"
+                        android:layout_centerInParent="true"
+                        android:visibility="gone"
+                        />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view_recommend"
+                        android:scrollbars="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="190dp"/>
                 </RelativeLayout>
 
 
