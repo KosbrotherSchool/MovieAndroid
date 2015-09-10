@@ -10,13 +10,15 @@ public class MovieTime {
     String movie_time;
     int movie_id;
     int theater_id;
+    String movie_photo;
 
-    public MovieTime(String remark, String movie_title, String movie_time, int movie_id, int theater_id){
+    public MovieTime(String remark, String movie_title, String movie_time, int movie_id, int theater_id, String movie_photo){
         this.remark = remark;
         this.movie_title = movie_title;
         this.movie_time = movie_time;
         this.movie_id = movie_id;
         this.theater_id = theater_id;
+        this.movie_photo = movie_photo;
     }
 
     public String getRemark() {
@@ -39,4 +41,7 @@ public class MovieTime {
         return theater_id;
     }
 
+    public String getMovie_photo(){
+        return movie_photo;
+    }
 }

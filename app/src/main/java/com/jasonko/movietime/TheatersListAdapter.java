@@ -1,6 +1,7 @@
 package com.jasonko.movietime;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +26,13 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
 
     //RecyclerView不能直接製作onItemClickListener
     //只好自己來
+    //2015.9.9 其實是可以的，請看最下面
+    //對每一個sub view都做一個listener
+    //說起來有點浪費資源，但是方便
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
     }
+
 
     private OnItemClickListener mOnItemClickListener;
     public void setOnItemClickListener (OnItemClickListener mOnItemClickListener){
@@ -45,8 +50,10 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public ViewHolder(View arg0){
             super(arg0);
+            mView = arg0;
         }
 
+        View mView;
         TextView tv_theater_name;
         TextView tv_theater_address;
         TextView tv_theater_phone;
@@ -73,12 +80,13 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int i){
 
-        Theater mTheater = mData.get(i);
+        final Theater mTheater = mData.get(i);
         viewHolder.tv_theater_name.setText(mTheater.getName());
         viewHolder.tv_theater_address.setText(mTheater.getAddress());
         viewHolder.tv_theater_phone.setText(mTheater.getPhone());
 
 
+        //一個有點麻煩的onClick
         if(mOnItemClickListener != null){
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -87,6 +95,23 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
                 }
             });
         }
+
+
+        //kerli的onCLick方法
+        //如果點擊了最近瀏覽的影院，就跳到MovieListOfTheaterInAreaActivity，用這個activity來幫忙展示資料
+        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MovieListOfTheaterInAreaActivity.class);
+                intent.putExtra("theater_name", mTheater.getName());
+                intent.putExtra("theater_phone", mTheater.getPhone());
+                intent.putExtra("theater_address", mTheater.getAddress());
+                intent.putExtra("theater_id", mTheater.getTheater_id());
+
+                v.getContext().startActivity(intent);
+
+            }
+        });
 
     }
 }

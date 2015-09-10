@@ -62,9 +62,12 @@ public class MovieAPI {
         return movies;
     }
 
-    public static ArrayList<Movie> getTaipeiRankMovies(){
+    public static ArrayList<Movie> getTaipeiRankMovies(int page){
         ArrayList<Movie> movies = new ArrayList<Movie>();
         String url = host + "/api/movie/rank_movies?rank_type=1";
+        if (page != -1){
+            url = url + "&page=" + Integer.toString(page);
+        }
         String message = getMessageFromServer("GET", null, null, url);
         if (message == null) {
             return null;
@@ -379,6 +382,7 @@ public class MovieAPI {
                 String movie_time = "";
                 int movie_id = 0;
                 int theater_id = 0;
+                String movie_photo="";
 
                 try {
                     remark = timesObject.getString("remark");
@@ -410,7 +414,13 @@ public class MovieAPI {
 
                 }
 
-                MovieTime newTime = new MovieTime(remark, movie_title, movie_time, movie_id, theater_id);
+                try {
+                    movie_photo = timesObject.getString("movie_photo");
+                }catch (Exception e){
+
+                }
+
+                MovieTime newTime = new MovieTime(remark, movie_title, movie_time, movie_id, theater_id, movie_photo);
                 times.add(newTime);
             }
         }catch (Exception e){

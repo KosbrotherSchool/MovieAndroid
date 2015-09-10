@@ -111,7 +111,7 @@ public class MovieRankFragment extends Fragment {
         protected Object doInBackground(Object[] params) {
             switch (mRankTypeID){
                 case 1:
-                    mMovies = MovieAPI.getTaipeiRankMovies();
+                    mMovies = MovieAPI.getTaipeiRankMovies(-1);
                     break;
                 case 2:
                     mMovies = MovieAPI.getUSRankMovies();

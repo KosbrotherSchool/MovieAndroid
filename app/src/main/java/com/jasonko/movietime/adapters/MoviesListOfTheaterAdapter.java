@@ -3,23 +3,18 @@ package com.jasonko.movietime.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.jasonko.movietime.MovieActivity;
 import com.jasonko.movietime.R;
-import com.jasonko.movietime.TheatersListAdapter;
-import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.imageloader.ImageLoader;
-import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.model.MovieTime;
-import com.jasonko.movietime.model.Photo;
 
 import java.util.ArrayList;
 
@@ -30,7 +25,6 @@ public class MoviesListOfTheaterAdapter extends RecyclerView.Adapter<MoviesListO
 
     private LayoutInflater layoutInflater;
     private ArrayList<MovieTime> mData;
-    private ArrayList<String> movieCovers;
     private MovieTime movieTime;
     private Activity mActivity;
     private ImageLoader mImageLoader;
@@ -39,10 +33,9 @@ public class MoviesListOfTheaterAdapter extends RecyclerView.Adapter<MoviesListO
 
 
 
-    public MoviesListOfTheaterAdapter(Context context, ArrayList<MovieTime> data, ArrayList<String> covers){
+    public MoviesListOfTheaterAdapter(Context context, ArrayList<MovieTime> data){
         layoutInflater = LayoutInflater.from(context);
         mData = data;
-        movieCovers = covers;
         mActivity = (Activity)context;
         mImageLoader = new ImageLoader(mActivity);
     }
@@ -93,7 +86,8 @@ public class MoviesListOfTheaterAdapter extends RecyclerView.Adapter<MoviesListO
         viewHolder.tv_movie_title.setText(movieTime.getMovie_title());
         viewHolder.tv_movie_remark.setText(movieTime.getRemark());
         viewHolder.tv_movie_time.setText(movieTime.getMovie_time());
-        mImageLoader.DisplayImage(movieCovers.get(position), viewHolder.iv_movie_cover);
+        mImageLoader.DisplayImage(movieTime.getMovie_photo(), viewHolder.iv_movie_cover);
+        Log.d("test movie photo",movieTime.getMovie_photo());
 
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

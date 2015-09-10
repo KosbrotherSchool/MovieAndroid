@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="影院：國家51區"
+        android:text="台北東區"
         android:textSize="30sp"
         android:id="@+id/tv_area_of_theaters"
         android:gravity="center" />

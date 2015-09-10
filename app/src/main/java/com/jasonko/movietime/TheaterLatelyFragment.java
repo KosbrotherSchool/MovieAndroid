@@ -24,7 +24,7 @@ public class TheaterLatelyFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private TheatersListAdapter mAdapter;
-    private ArrayList<Theater> mData = new ArrayList<Theater>();
+    public  static ArrayList<Theater> mData = new ArrayList<Theater>();
     private View theaterView;
     private TextView tv_no_lately_theater;
 
@@ -46,6 +46,9 @@ public class TheaterLatelyFragment extends Fragment {
         super.onStart();
 
 
+
+
+
         SharedPreferences preferences = getActivity().getSharedPreferences("RECENTLY_THEATERS", Context.MODE_PRIVATE);
         int finalone = preferences.getInt("FINALONE", 0);
         int count = preferences.getInt("COUNT", 0);
@@ -54,8 +57,12 @@ public class TheaterLatelyFragment extends Fragment {
         //check if there is some lately theater
         if(count == 0)
             tv_no_lately_theater.setText("您還未瀏覽過任何影院");
-        else
+        else {
             tv_no_lately_theater.setText("");
+            tv_no_lately_theater.setTextSize(0);
+        }
+
+        mData.clear();
 
         //取出最近被點擊的電影院的資料
         Theater tempTheater;
@@ -85,7 +92,7 @@ public class TheaterLatelyFragment extends Fragment {
         mAdapter = new TheatersListAdapter(getActivity(), mData);
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.notifyDataSetChanged();
+
 
 
 
@@ -94,4 +101,6 @@ public class TheaterLatelyFragment extends Fragment {
 
 
     }
+
+
 }
