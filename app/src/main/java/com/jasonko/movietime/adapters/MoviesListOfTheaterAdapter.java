@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.jasonko.movietime.MovieActivity;
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.imageloader.ImageLoader;
 import com.jasonko.movietime.model.MovieTime;
+import com.jasonko.movietime.tool.ExpandableHeightGridView;
 
 import java.util.ArrayList;
 
@@ -30,9 +32,6 @@ public class MoviesListOfTheaterAdapter extends RecyclerView.Adapter<MoviesListO
     private ImageLoader mImageLoader;
 
 
-
-
-
     public MoviesListOfTheaterAdapter(Context context, ArrayList<MovieTime> data){
         layoutInflater = LayoutInflater.from(context);
         mData = data;
@@ -45,8 +44,9 @@ public class MoviesListOfTheaterAdapter extends RecyclerView.Adapter<MoviesListO
         public View mView;
         public TextView tv_movie_title;
         public TextView tv_movie_remark;
-        public TextView tv_movie_time;
+//        public TextView tv_movie_time;
         public ImageView iv_movie_cover;
+        public ExpandableHeightGridView gridTheaterMovie;
 
         public ViewHolder(View arg0){
             super(arg0);
@@ -73,7 +73,8 @@ public class MoviesListOfTheaterAdapter extends RecyclerView.Adapter<MoviesListO
         viewHolder.iv_movie_cover = (ImageView)view.findViewById(R.id.iv_movie_cover);
         viewHolder.tv_movie_title = (TextView)view.findViewById(R.id.tv_movie_title);
         viewHolder.tv_movie_remark = (TextView) view.findViewById(R.id.tv_movie_remark);
-        viewHolder.tv_movie_time = (TextView)view.findViewById(R.id.tv_movie_time);
+//        viewHolder.tv_movie_time = (TextView)view.findViewById(R.id.tv_movie_time);
+        viewHolder.gridTheaterMovie = (ExpandableHeightGridView) view.findViewById(R.id.movietime_theater_movietime_grid);
 
         return viewHolder;
     }
@@ -85,9 +86,14 @@ public class MoviesListOfTheaterAdapter extends RecyclerView.Adapter<MoviesListO
         movieTime = mData.get(position);
         viewHolder.tv_movie_title.setText(movieTime.getMovie_title());
         viewHolder.tv_movie_remark.setText(movieTime.getRemark());
-        viewHolder.tv_movie_time.setText(movieTime.getMovie_time());
+//        viewHolder.tv_movie_time.setText(movieTime.getMovie_time());
         mImageLoader.DisplayImage(movieTime.getMovie_photo(), viewHolder.iv_movie_cover);
         Log.d("test movie photo",movieTime.getMovie_photo());
+
+        String[] mStrings = movieTime.getMovie_time().split(",");
+        ArrayAdapter arrayAdapter = new ArrayAdapter(mActivity, android.R.layout.simple_list_item_1, mStrings);
+        viewHolder.gridTheaterMovie.setExpanded(true);
+        viewHolder.gridTheaterMovie.setAdapter(arrayAdapter);
 
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
