@@ -1,14 +1,16 @@
 package com.jasonko.movietime;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ImageView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.jasonko.movietime.adapters.MoviesListOfTheaterAdapter;
@@ -18,19 +20,15 @@ import com.jasonko.movietime.model.MovieTime;
 import java.util.ArrayList;
 
 
-public class MovieListOfTheaterInAreaActivity extends Activity {
+public class MovieListOfTheaterInAreaActivity extends AppCompatActivity {
 
-    private TextView tv_name_of_theater;
     private TextView tv_phone_of_theater;
     private TextView tv_address_of_theater;
-    private ImageView iv_movie_cover;
-
 
 
     private RecyclerView mRecyclerView;
     private MoviesListOfTheaterAdapter mAdapter;
     private ArrayList<MovieTime> mData;
-    private ArrayList<String> movieCovers;
     int theater_id;
 
 
@@ -40,24 +38,24 @@ public class MovieListOfTheaterInAreaActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list_of_theater_in_area);
 
-
-
         //set views
-        tv_name_of_theater = (TextView)findViewById(R.id.tv_name_of_theater);
         tv_phone_of_theater = (TextView)findViewById(R.id.tv_phone_of_theater);
         tv_address_of_theater = (TextView)findViewById(R.id.tv_address_of_theater);
-        iv_movie_cover = (ImageView)findViewById(R.id.iv_movie_cover);
 
 
         //set basic data of the clicked theater
         Intent intent = getIntent();
-        tv_name_of_theater.setText(intent.getStringExtra("theater_name"));
         tv_phone_of_theater.setText(intent.getStringExtra("theater_phone"));
         tv_address_of_theater.setText(intent.getStringExtra("theater_address"));
         theater_id = intent.getIntExtra("theater_id", 0);
 
 
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.icon_back_white);
+        toolbar.setTitleTextColor(0xFFFFFFFF);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle(intent.getStringExtra("theater_name"));
 
         //save the theater_id when any theater is viewed
         ////////////////////////////////////////////////
@@ -137,9 +135,6 @@ public class MovieListOfTheaterInAreaActivity extends Activity {
 
         //the saving is done
         ////////////////////////////////////////////////
-
-
-
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_movielist_of_theater);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -148,10 +143,6 @@ public class MovieListOfTheaterInAreaActivity extends Activity {
         new GetMoviesTask().execute();
 
     }
-
-
-
-
 
 
     private class GetMoviesTask extends AsyncTask{
@@ -167,6 +158,20 @@ public class MovieListOfTheaterInAreaActivity extends Activity {
             mAdapter = new MoviesListOfTheaterAdapter(MovieListOfTheaterInAreaActivity.this, mData);
             mRecyclerView.setAdapter(mAdapter);
         }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(menuItem);
     }
 
 }
