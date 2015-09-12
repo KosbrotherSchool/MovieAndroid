@@ -1,118 +1,97 @@
 package com.jasonko.movietime;
 
 
-import android.graphics.Color;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import com.jasonko.movietime.adapters.FragmentAdapter;
+
+import com.astuetz.PagerSlidingTabStrip;
 import com.jasonko.movietime.fragments.AreaFragment;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
-public class TheatersActivity extends FragmentActivity {
-
-
-    private List<Fragment> mFragmentList = new ArrayList<Fragment>();
-    private FragmentAdapter mFragmentAdapter;
-    private ViewPager mViewPager;
-
-    //tab底下的引導線
-    private ImageView iv_tab_line;
-    private TextView tv_tab_area, tv_tab_theaters_lately;
-
-    private AreaFragment mAreaFragment;
-    private TheaterLatelyFragment mTheaterLatelyFragment;
-
-
-    //ViewPager的當前選中頁面
-    private int currentIndex;
-    private int screenWidth;
-
+public class TheatersActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_theaters);
+        setContentView(R.layout.activity_pagers);
 
-        processViews();
-        init();
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(new TheaterFragmentPagerAdapter(getSupportFragmentManager()));
+
+        //get the PagerSlidingTabStrip
+        PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabStrip.setViewPager(viewPager);
+        //indicator 指pager底下的那條白線
+        tabStrip.setIndicatorColor(getResources().getColor(R.color.white));
+        tabStrip.setIndicatorHeight(10);
+        tabStrip.setTextColorResource(R.color.white);
+
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.icon_back_white);
+        toolbar.setTitleTextColor(0xFFFFFFFF);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("戲院資訊");
+
+
+    }
+
+    public class TheaterFragmentPagerAdapter extends FragmentStatePagerAdapter{
+        final int PAGE_COUNT = 2;
+        private String tabTitles[] = new String[]{"地區", "最近瀏覽過的戲院"};
+
+        public TheaterFragmentPagerAdapter(FragmentManager fm){
+            super(fm);
+        }
+
+        @Override
+        public int getCount(){
+            return PAGE_COUNT;
+        }
+
+        @Override
+        public Fragment getItem(int position){
+            Fragment theaterFragment = null ;
+            if(position == 0)
+                theaterFragment = new AreaFragment();
+            else if(position == 1)
+                theaterFragment = new TheaterLatelyFragment();
+
+            return theaterFragment;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position){
+            return tabTitles[position];
+        }
 
     }
 
 
-    //處理元件id的設定
-    protected void processViews(){
-        iv_tab_line = (ImageView) findViewById(R.id.iv_tab_line);
-        mViewPager = (ViewPager) findViewById(R.id.viewPager_theaters);
-        tv_tab_area = (TextView) findViewById(R.id.tv_tab_area);
-        tv_tab_theaters_lately = (TextView) findViewById(R.id.tv_tab_theaters_lately);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(menuItem);
     }
 
 
-
-    //設定Fragment
-    protected void init(){
-        mAreaFragment = new AreaFragment();
-        mTheaterLatelyFragment = new TheaterLatelyFragment();
-
-
-        mFragmentList.add(mAreaFragment);
-        mFragmentList.add(mTheaterLatelyFragment);
-
-        mFragmentAdapter = new FragmentAdapter(this.getSupportFragmentManager(), mFragmentList);
-        mViewPager.setAdapter(mFragmentAdapter);
-        mViewPager.setCurrentItem(0);
-
-        //是在哪把最近瀏覽戲院的文字調整為藍色的呢？
-        tv_tab_theaters_lately.setTextColor(Color.BLACK);
-
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                /**
-                 * position :当前页面，及你点击滑动的页面 offset:当前页面偏移的百分比
-                 * offsetPixels:当前页面偏移的像素位置
-                 */
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                tv_tab_area.setTextColor(Color.BLACK);
-                tv_tab_theaters_lately.setTextColor(Color.BLACK);
-
-
-                switch (position) {
-                    case 0:
-                        tv_tab_area.setTextColor(Color.BLUE);
-                        break;
-                    case 1:
-                        tv_tab_theaters_lately.setTextColor(Color.BLUE);
-                        break;
-                }
-                currentIndex = position;
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                /**
-                 * state滑动中的状态 有三种状态（0，1，2） 1：正在滑动 2：滑动完毕 0：什么都没做。
-                 */
-            }
-        });
-
-
-
-
-    }
 
 
 }

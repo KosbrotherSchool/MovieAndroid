@@ -1,23 +1,29 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="100sp"
-        android:layout_height="100sp"
-        android:padding="5sp">
+    <android.support.v7.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="3dp"
+        >
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:text="New Text"
             android:id="@+id/textArea"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:background="#ffffffff"
+            android:background="#ffffff"
             android:gravity="center"
             android:textSize="20sp"
             android:textColor="#000000" />
-    </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
 </LinearLayout>
