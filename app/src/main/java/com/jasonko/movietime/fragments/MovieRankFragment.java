@@ -184,6 +184,7 @@ public class MovieRankFragment extends Fragment {
                         moviesRecylerView.setAdapter(movieSatisfyAdapter);
                         break;
                 }
+                mProgressBar.setVisibility(View.GONE);
             }else {
                 mProgressBar.setVisibility(View.GONE);
                 noNetText.setVisibility(View.VISIBLE);

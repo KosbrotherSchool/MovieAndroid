@@ -34,7 +34,7 @@ public class MovieAPI {
 
     public static final String  TAG   = "MOVIE_API";
     public static final boolean DEBUG = true;
-    public static final String host = "http://106.185.27.30";
+    public static final String host = "http://139.162.10.76";
 
     public static ArrayList<Trailer> getMovieTrailersByID(int movie_id){
         ArrayList<Trailer> trailers = new ArrayList<>();

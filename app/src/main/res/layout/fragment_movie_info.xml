@@ -52,7 +52,7 @@
                     android:id="@+id/movieinfo_image"
                     android:layout_width="110dp"
                     android:layout_height="150dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@drawable/icon_app"
                     />
                 <LinearLayout
                     android:layout_width="0dp"
