@@ -1,6 +1,6 @@
 package com.jasonko.movietime;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.jasonko.movietime.model.Theater;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by larry on 2015/8/30.
@@ -21,7 +23,7 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
 
     private LayoutInflater layoutInflater;
     private ArrayList<Theater> mData;
-
+    private Activity mActivity;
 
 
     //RecyclerView不能直接製作onItemClickListener
@@ -41,9 +43,10 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
 
 
 
-    public TheatersListAdapter(Context context, ArrayList<Theater> data){
-        layoutInflater = LayoutInflater.from(context);
+    public TheatersListAdapter(Activity activity, ArrayList<Theater> data){
+        layoutInflater = LayoutInflater.from(activity);
         mData = data;
+        mActivity = activity;
     }
 
 
@@ -102,6 +105,11 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (AppParams.isShowIntersitialAd(mActivity)){
+                    requestNewInterstitial();
+                }
+
                 Intent intent = new Intent(v.getContext(), MovieListOfTheaterInAreaActivity.class);
                 intent.putExtra("theater_name", mTheater.getName());
                 intent.putExtra("theater_phone", mTheater.getPhone());
@@ -114,4 +122,22 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
         });
 
     }
+
+    private InterstitialAd mInterstitialAd;
+    private void requestNewInterstitial() {
+        mInterstitialAd = new InterstitialAd(mActivity);
+        mInterstitialAd.setAdUnitId(mActivity.getResources().getString(R.string.intersitial_ad_unit_id));
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                mInterstitialAd.show();
+            }
+        });
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("9A6CCAB163B87B4531D8D6278B898D2C")
+                .build();
+        mInterstitialAd.loadAd(adRequest);
+    }
+
 }

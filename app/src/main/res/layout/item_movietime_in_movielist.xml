@@ -60,11 +60,14 @@
                 android:id="@+id/movietime_theater_movietime_grid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:numColumns="3"
+                android:numColumns="auto_fit"
                 android:verticalSpacing="10dp"
                 android:horizontalSpacing="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:clickable="false"
                 >
             </com.jasonko.movietime.tool.ExpandableHeightGridView>
 

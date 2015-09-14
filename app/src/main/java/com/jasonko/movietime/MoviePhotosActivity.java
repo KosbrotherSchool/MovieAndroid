@@ -9,6 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.fragments.PhotoFragment;
 import com.jasonko.movietime.model.Photo;
@@ -28,6 +31,8 @@ public class MoviePhotosActivity  extends AppCompatActivity {
     private ViewPager viewPager;
     private TextView textNum;
 
+    InterstitialAd mInterstitialAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +40,8 @@ public class MoviePhotosActivity  extends AppCompatActivity {
         photo_size = getIntent().getIntExtra("photo_size", 0);
         initial_photo_url = getIntent().getStringExtra("big_photo_url");
         movie_id = getIntent().getIntExtra("movie_id", 0);
+
+        requestNewInterstitial();
 
         textNum = (TextView) findViewById(R.id.photo_num_text);
 
@@ -59,6 +66,23 @@ public class MoviePhotosActivity  extends AppCompatActivity {
 
         new NewsTask().execute();
     }
+
+    private void requestNewInterstitial() {
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.intersitial_ad_unit_id));
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                mInterstitialAd.show();
+            }
+        });
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("9A6CCAB163B87B4531D8D6278B898D2C")
+                .build();
+        mInterstitialAd.loadAd(adRequest);
+    }
+
 
     public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
 

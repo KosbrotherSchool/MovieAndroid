@@ -10,6 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.jasonko.movietime.model.Theater;
 
 import java.util.ArrayList;
@@ -21,6 +24,8 @@ public class TheatersOfArea extends AppCompatActivity {
     private TheatersListAdapter mAdapter;
     private ArrayList<Theater> mData;
 
+    private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +35,8 @@ public class TheatersOfArea extends AppCompatActivity {
         //getIntExtra的第二個參數指的是，若取不到數值，就以第二個參數當預設值
         int area_id = intent.getIntExtra("area_id", 0);
         String area_name = intent.getStringExtra("area_name");
+
+//        setAdView();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
@@ -65,6 +72,42 @@ public class TheatersOfArea extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
 
+    }
+
+    private void setAdView() {
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                mAdView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                super.onAdFailedToLoad(errorCode);
+                mAdView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                super.onAdLeftApplication();
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+                mAdView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                mAdView.setVisibility(View.VISIBLE);
+            }
+        });
+        mAdView.loadAd(adRequest);
     }
 
     @Override

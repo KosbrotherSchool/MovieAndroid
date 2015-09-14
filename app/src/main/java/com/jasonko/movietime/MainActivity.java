@@ -16,6 +16,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.jasonko.movietime.adapters.DrawerListAdapter;
 import com.jasonko.movietime.adapters.RandomYoutubeVideoAdapter;
 import com.jasonko.movietime.adapters.RankMovieAdapter;
@@ -53,6 +56,8 @@ public class MainActivity extends Activity {
     private TextView movieText;
     private TextView videoText;
 
+    private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +67,7 @@ public class MainActivity extends Activity {
         processViews();
 
         setSearchBar();
+//        setAdView();
 
         rankRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_rank);
         rankRecyclerView.setHasFixedSize(true);
@@ -84,6 +90,42 @@ public class MainActivity extends Activity {
             movieText.setVisibility(View.VISIBLE);
             videoText.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void setAdView() {
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                mAdView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                super.onAdFailedToLoad(errorCode);
+                mAdView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                super.onAdLeftApplication();
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+                mAdView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                mAdView.setVisibility(View.VISIBLE);
+            }
+        });
+        mAdView.loadAd(adRequest);
     }
 
     @Override

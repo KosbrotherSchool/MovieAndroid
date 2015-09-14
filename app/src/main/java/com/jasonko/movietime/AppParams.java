@@ -1,5 +1,8 @@
 package com.jasonko.movietime;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+
 import com.jasonko.movietime.model.DrawerItem;
 import com.jasonko.movietime.model.OrderTheater;
 
@@ -33,5 +36,17 @@ public class AppParams {
            new DrawerItem("我的設定", R.drawable.drawer_setting),
    };
 
+   public static boolean isShowIntersitialAd(Activity activity){
+           SharedPreferences myPref = activity.getPreferences(0);
+           int click_count = myPref.getInt("click_count", 0);
+           click_count = click_count + 1;
+           if (click_count == 5){
+             myPref.edit().putInt("click_count", 0).commit();
+             return  true;
+           }else {
+             myPref.edit().putInt("click_count", click_count).commit();
+             return  false;
+           }
+   }
 
 }
