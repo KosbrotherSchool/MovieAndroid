@@ -3,31 +3,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_background">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="請選擇地區"
-        android:layout_margin="3dp"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="#ffffff"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="#ac30382c" />
+    android:background="@color/background_color">
 
     <GridView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/gridViewArea"
-        android:numColumns="auto_fit"
+        android:numColumns="3"
         android:gravity="center"
-        android:columnWidth="40dp"
+        android:columnWidth="10dp"
         android:stretchMode="columnWidth"
-        android:background="@color/gray_background"/>
+        android:scrollbars="none"
+        android:padding="5dp" />
 
 </LinearLayout>

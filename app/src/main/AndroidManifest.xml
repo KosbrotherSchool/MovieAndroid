@@ -25,8 +25,14 @@
 
         <activity
             android:name=".TheatersActivity"
+
+            android:label="全台戲院"
+            android:theme="@style/CustomTheme"
+            android:screenOrientation="portrait"/>
+
             android:label="全台戲院" />
         
+
         <activity
             android:name=".TheatersOfArea"
             android:screenOrientation="portrait"
