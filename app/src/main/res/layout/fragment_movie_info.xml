@@ -306,6 +306,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
+                    android:background="@drawable/movie_info_button_selector"
                     >
                     <ImageView
                         android:id="@+id/follow_movie_bottom_image"
@@ -328,6 +329,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
+                    android:background="@drawable/movie_info_button_selector"
                     >
                     <ImageView
                         android:layout_width="40dp"
@@ -349,6 +351,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
+                    android:background="@drawable/movie_info_button_selector"
                     >
                     <ImageView
                         android:layout_width="40dp"

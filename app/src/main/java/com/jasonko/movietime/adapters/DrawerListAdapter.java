@@ -89,7 +89,7 @@ public class DrawerListAdapter extends BaseAdapter {
                         }
                         break;
                     case 4:
-                        String url = "http://www.example.com";
+                        String url = "https://play.google.com/store/apps/details?id=com.jasonko.movietime";
                         Intent intentGood = new Intent(Intent.ACTION_VIEW);
                         intentGood.setData(Uri.parse(url));
                         mActivity.startActivity(intentGood);
@@ -98,7 +98,7 @@ public class DrawerListAdapter extends BaseAdapter {
                         Intent intentShare = new Intent(Intent.ACTION_SEND);
                         intentShare.setType("text/plain");
                         intentShare.putExtra(Intent.EXTRA_SUBJECT, "電影即時通 APP !");
-                        intentShare.putExtra(Intent.EXTRA_TEXT, "電影即時通 APP 推薦給您 ~");
+                        intentShare.putExtra(Intent.EXTRA_TEXT, "推薦給您, [電影即時通]APP 找電影一點通~  https://play.google.com/store/apps/details?id=com.jasonko.movietime");
                         try {
                             mActivity.startActivity(Intent.createChooser(intentShare, "分享 ..."));
                         } catch (android.content.ActivityNotFoundException ex) {

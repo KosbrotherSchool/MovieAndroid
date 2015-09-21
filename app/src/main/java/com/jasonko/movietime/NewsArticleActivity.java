@@ -32,7 +32,7 @@ public class NewsArticleActivity extends AppCompatActivity {
         String mUrl = getIntent().getStringExtra("news_link");
         String title = getIntent().getStringExtra("news_title");
 
-        setAdView();
+//        setAdView();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.icon_back_white);

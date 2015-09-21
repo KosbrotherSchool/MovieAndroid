@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
         processViews();
 
         setSearchBar();
-//        setAdView();
+        setAdView();
 
         rankRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_rank);
         rankRecyclerView.setHasFixedSize(true);

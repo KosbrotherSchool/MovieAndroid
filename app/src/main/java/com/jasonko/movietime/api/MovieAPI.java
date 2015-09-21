@@ -444,11 +444,26 @@ public class MovieAPI {
                 int news_id = 0;
                 try {
                     title = newsObject.getString("title");
-                    info = newsObject.getString("info");
                     news_link = newsObject.getString("news_link");
                     publish_day = newsObject.getString("publish_day");
                     pic_link = newsObject.getString("pic_link");
+                }catch (Exception e){
+
+                }
+
+                try{
+                    info = newsObject.getString("info");
+                }catch (Exception e){
+
+                }
+
+                try {
                     news_type = newsObject.getInt("news_type");
+                }catch (Exception e){
+
+                }
+
+                try {
                     news_id = newsObject.getInt("news_id");
                 }catch (Exception e){
 
