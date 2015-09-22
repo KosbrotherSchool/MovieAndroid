@@ -1,11 +1,14 @@
 package com.jasonko.movietime.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jasonko.movietime.R;
@@ -30,6 +33,7 @@ public class MovieTimeAdapter extends RecyclerView.Adapter<MovieTimeAdapter.View
         public TextView textRemark;
         public TextView textTeaterAddress;
         public ExpandableHeightGridView gridTheaterMovie;
+        public ImageView imageMap;
 
         public ViewHolder(View v) {
             super(v);
@@ -38,6 +42,7 @@ public class MovieTimeAdapter extends RecyclerView.Adapter<MovieTimeAdapter.View
             textRemark = (TextView) mView.findViewById(R.id.movietime_remark);
             textTeaterAddress = (TextView) mView.findViewById(R.id.movietime_theater_address);
             gridTheaterMovie = (ExpandableHeightGridView) mView.findViewById(R.id.movietime_theater_movietime_grid);
+            imageMap = (ImageView) mView.findViewById(R.id.image_map);
         }
 
     }
@@ -70,6 +75,15 @@ public class MovieTimeAdapter extends RecyclerView.Adapter<MovieTimeAdapter.View
         ArrayAdapter arrayAdapter = new ArrayAdapter(mActivity, android.R.layout.simple_list_item_1, mStrings);
         holder.gridTheaterMovie.setExpanded(true);
         holder.gridTheaterMovie.setAdapter(arrayAdapter);
+        holder.imageMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Theater theTheater = Theater.getTheaterByID(mMovieTimes.get(position).getTheater_id());
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("geo:0,0?q=" + theTheater.getAddress()));
+                mActivity.startActivity(intent);
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)

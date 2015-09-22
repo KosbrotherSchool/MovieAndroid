@@ -2,10 +2,12 @@ package com.jasonko.movietime;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
@@ -24,7 +26,6 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
     private LayoutInflater layoutInflater;
     private ArrayList<Theater> mData;
     private Activity mActivity;
-
 
     //RecyclerView不能直接製作onItemClickListener
     //只好自己來
@@ -60,6 +61,7 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
         TextView tv_theater_name;
         TextView tv_theater_address;
         TextView tv_theater_phone;
+        ImageView imageViewMap;
     }
 
     @Override
@@ -76,6 +78,7 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
         viewHolder.tv_theater_name = (TextView) view.findViewById(R.id.tv_theater_name);
         viewHolder.tv_theater_address = (TextView) view.findViewById(R.id.tv_theater_address);
         viewHolder.tv_theater_phone = (TextView) view.findViewById(R.id.tv_theater_phone);
+        viewHolder.imageViewMap = (ImageView) view.findViewById(R.id.image_map);
 
         return viewHolder;
     }
@@ -118,6 +121,15 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
 
                 v.getContext().startActivity(intent);
 
+            }
+        });
+
+        viewHolder.imageViewMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("geo:0,0?q=" + mTheater.getAddress()));
+                mActivity.startActivity(intent);
             }
         });
 
