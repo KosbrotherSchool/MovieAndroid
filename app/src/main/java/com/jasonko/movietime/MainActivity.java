@@ -28,7 +28,7 @@ import com.jasonko.movietime.adapters.RankMovieAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.model.MyYoutubeVideo;
-import com.jasonko.movietime.services.MovieBootReceiver;
+import com.jasonko.movietime.services.FollowMovieReceiver;
 import com.jasonko.movietime.tool.NetworkUtil;
 import com.quinny898.library.persistentsearch.SearchBox;
 
@@ -110,11 +110,11 @@ public class MainActivity extends Activity {
         // With setInexactRepeating(), you have to use one of the AlarmManager interval
         // constants--in this case, AlarmManager.INTERVAL_DAY.
         AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent serviceIntent = new Intent(MainActivity.this, MovieBootReceiver.class);
-        serviceIntent.setAction("register alarm from movietime");
+        Intent serviceIntent = new Intent(MainActivity.this, FollowMovieReceiver.class);
+        serviceIntent.setAction(FollowMovieReceiver.actionAlarm);
         if (!alarmUp()) {
             PendingIntent alarmIntent = PendingIntent.getBroadcast(MainActivity.this, 0, serviceIntent, 0);
-            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
+            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY, alarmIntent);
         }
     }

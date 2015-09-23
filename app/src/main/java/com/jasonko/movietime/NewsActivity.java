@@ -95,7 +95,7 @@ public class NewsActivity extends AppCompatActivity {
     public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
         final int PAGE_COUNT = 4;
-        private String tabTitles[] = new String[] { "影片新聞", "選片指南", "影評", "專題報導" };
+        private String tabTitles[] = new String[] { "影片新聞","專題報導", "選片指南", "影評" };
 
         public SampleFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -108,7 +108,22 @@ public class NewsActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return NewsFragment.newInstance(position + 1);
+            NewsFragment theNewsFragment = null;
+            switch (position){
+                case 0:
+                    theNewsFragment = NewsFragment.newInstance(1);
+                    break;
+                case 1:
+                    theNewsFragment = NewsFragment.newInstance(4);
+                    break;
+                case 2:
+                    theNewsFragment = NewsFragment.newInstance(2);
+                    break;
+                case 3:
+                    theNewsFragment = NewsFragment.newInstance(3);
+                    break;
+            }
+            return theNewsFragment;
         }
 
         @Override

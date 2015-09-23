@@ -147,6 +147,11 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".services.FollowMovieReceiver"
+            android:enabled="true"
+            >
+        </receiver>
+
     </application>
 
 </manifest>

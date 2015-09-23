@@ -10,8 +10,14 @@ import android.os.Build;
 
 import com.jasonko.movietime.MainActivity;
 import com.jasonko.movietime.R;
+import com.jasonko.movietime.dao.DaoMaster;
+import com.jasonko.movietime.dao.DaoSession;
+import com.jasonko.movietime.dao.FollowMovie;
+import com.jasonko.movietime.dao.FollowMovieDao;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by kolichung on 9/7/15.
@@ -30,31 +36,31 @@ public class FollowMovieService extends IntentService {
         boolean customDayBoolean = mSharedPreference.getBoolean("custom_day", false);
         int customDayInt = mSharedPreference.getInt("custom_day_int", 3);
 
-        makeNotification("電影即時通", "電影今日上映囉！");
+//        makeNotification("電影即時通", "電影今日上映囉！");
 
 
-//        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "expense", null);
-//        DaoMaster daoMaster = new DaoMaster(helper.getWritableDatabase());
-//        DaoSession daoSession = daoMaster.newSession();
-//        FollowMovieDao movieDao = daoSession.getFollowMovieDao();
-//
-//        ArrayList<FollowMovie> mMovies = (ArrayList) movieDao.queryBuilder().orderDesc(FollowMovieDao.Properties.Update_date).list();
-//        Calendar c = Calendar.getInstance();
-//        for (int i=0; i<mMovies.size(); i++){
-//            Calendar movieCal = Calendar.getInstance();
-//            Date movieDate = mMovies.get(i).getPublish_day();
-//            movieCal.setTime(movieDate);
-//            if (theDayBoolean) {
-//                if (isIntervalLessXDay(c, movieCal, 0)) {
-//                    makeNotification("電影即時通", mMovies.get(i).getTitle() + "今日上映囉！");
-//                }
-//            }
-//            if (customDayBoolean){
-//                if (isIntervalLessXDay(c, movieCal, customDayInt)) {
-//                    makeNotification("電影即時通", mMovies.get(i).getTitle() + "快要上映囉！");
-//                }
-//            }
-//        }
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "expense", null);
+        DaoMaster daoMaster = new DaoMaster(helper.getWritableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        FollowMovieDao movieDao = daoSession.getFollowMovieDao();
+
+        ArrayList<FollowMovie> mMovies = (ArrayList) movieDao.queryBuilder().orderDesc(FollowMovieDao.Properties.Update_date).list();
+        Calendar c = Calendar.getInstance();
+        for (int i=0; i<mMovies.size(); i++){
+            Calendar movieCal = Calendar.getInstance();
+            Date movieDate = mMovies.get(i).getPublish_day();
+            movieCal.setTime(movieDate);
+            if (theDayBoolean) {
+                if (isIntervalLessXDay(c, movieCal, 0)) {
+                    makeNotification("電影即時通", mMovies.get(i).getTitle() + "今日上映囉！");
+                }
+            }
+            if (customDayBoolean){
+                if (isIntervalLessXDay(c, movieCal, customDayInt)) {
+                    makeNotification("電影即時通", mMovies.get(i).getTitle() + "快要上映囉！");
+                }
+            }
+        }
 
     }
 
@@ -93,7 +99,7 @@ public class FollowMovieService extends IntentService {
         long milliSeconds2 = c2.getTimeInMillis();
         long periodSeconds = (milliSeconds2 - milliSeconds1) / 1000;
         long elapsedDays = periodSeconds / 60 / 60 / 24;
-        if ( x < elapsedDays && elapsedDays < x+1){
+        if ( x <= elapsedDays && elapsedDays < x+1){
             return  true;
         }
         return false;

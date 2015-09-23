@@ -15,8 +15,7 @@ public class MovieBootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED") || intent.getAction().equals("register alarm from movietime")) {
-            context.startService(new Intent(context, FollowMovieService.class));
+        if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             setRepeatAlarm(context);
         }
     }
@@ -32,11 +31,11 @@ public class MovieBootReceiver extends BroadcastReceiver {
         // With setInexactRepeating(), you have to use one of the AlarmManager interval
         // constants--in this case, AlarmManager.INTERVAL_DAY.
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent serviceIntent = new Intent(context, MovieBootReceiver.class);
-        serviceIntent.setAction("register alarm from movietime");
+        Intent serviceIntent = new Intent(context, FollowMovieReceiver.class);
+        serviceIntent.setAction(FollowMovieReceiver.actionAlarm);
         if (!alarmUp(context)) {
             PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, serviceIntent, 0);
-            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
+            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY, alarmIntent);
         }
     }
