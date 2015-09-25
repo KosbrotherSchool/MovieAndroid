@@ -1,4 +1,4 @@
-package com.jasonko.movietime;
+package com.jasonko.movietime.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,8 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.jasonko.movietime.R;
+import com.jasonko.movietime.adapters.TheatersListAdapter;
 import com.jasonko.movietime.model.Theater;
 
 import java.util.ArrayList;

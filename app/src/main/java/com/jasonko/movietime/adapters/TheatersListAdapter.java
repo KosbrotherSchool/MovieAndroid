@@ -1,4 +1,4 @@
-package com.jasonko.movietime;
+package com.jasonko.movietime.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +13,9 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.jasonko.movietime.AppParams;
+import com.jasonko.movietime.MovieListOfTheaterInAreaActivity;
+import com.jasonko.movietime.R;
 import com.jasonko.movietime.model.Theater;
 
 import java.util.ArrayList;

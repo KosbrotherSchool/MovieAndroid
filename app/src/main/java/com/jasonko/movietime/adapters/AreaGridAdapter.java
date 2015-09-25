@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jasonko.movietime.R;
-import com.jasonko.movietime.TheatersOfArea;
+import com.jasonko.movietime.TheatersOfAreaActivity;
 import com.jasonko.movietime.model.Area;
 
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class AreaGridAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mActivity, TheatersOfArea.class);
+                Intent intent = new Intent(mActivity, TheatersOfAreaActivity.class);
                 intent.putExtra("area_id", mAreas.get(position).getArea_id());
                 intent.putExtra("area_name", mAreas.get(position).getName());
                 mActivity.startActivity(intent);

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jasonko.movietime.AboutUsActivity;
+import com.jasonko.movietime.BloggerActivity;
 import com.jasonko.movietime.FollowMovieActivity;
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.RecentMovieActivity;
@@ -106,10 +107,14 @@ public class DrawerListAdapter extends BaseAdapter {
                         }
                         break;
                     case 6:
+                        Intent intentBlogger = new Intent(mActivity, BloggerActivity.class);
+                        mActivity.startActivity(intentBlogger);
+                        break;
+                    case 7:
                         Intent intentAbout = new Intent(mActivity, AboutUsActivity.class);
                         mActivity.startActivity(intentAbout);
                         break;
-                    case 7:
+                    case 8:
                         Intent intentSetting = new Intent(mActivity, SettingActivity.class);
                         mActivity.startActivity(intentSetting);
                         break;

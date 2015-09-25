@@ -18,7 +18,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.jasonko.movietime.fragments.AreaFragment;
-
+import com.jasonko.movietime.fragments.TheaterLatelyFragment;
 
 
 public class TheatersActivity extends AppCompatActivity {

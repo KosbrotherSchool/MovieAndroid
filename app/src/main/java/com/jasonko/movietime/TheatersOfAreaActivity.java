@@ -13,12 +13,13 @@ import android.view.View;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.jasonko.movietime.adapters.TheatersListAdapter;
 import com.jasonko.movietime.model.Theater;
 
 import java.util.ArrayList;
 
 
-public class TheatersOfArea extends AppCompatActivity {
+public class TheatersOfAreaActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private TheatersListAdapter mAdapter;
@@ -58,7 +59,7 @@ public class TheatersOfArea extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 Theater theater = mData.get(position);
-                Intent intent1 = new Intent(TheatersOfArea.this, MovieListOfTheaterInAreaActivity.class);
+                Intent intent1 = new Intent(TheatersOfAreaActivity.this, MovieListOfTheaterInAreaActivity.class);
                 intent1.putExtra("theater_name", theater.getName());
                 intent1.putExtra("theater_phone", theater.getPhone());
                 intent1.putExtra("theater_address", theater.getAddress());

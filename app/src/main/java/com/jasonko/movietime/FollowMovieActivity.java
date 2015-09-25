@@ -1,5 +1,6 @@
 package com.jasonko.movietime;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -63,7 +64,8 @@ public class FollowMovieActivity extends AppCompatActivity {
         if (menuItem.getItemId() == android.R.id.home) {
             finish();
         }else if (menuItem.getItemId() == R.id.action_follow_setting){
-
+            Intent intent = new Intent(FollowMovieActivity.this, SettingActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(menuItem);
     }
