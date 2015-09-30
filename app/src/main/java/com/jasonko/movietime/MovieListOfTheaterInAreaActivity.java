@@ -3,6 +3,7 @@ package com.jasonko.movietime;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,11 +12,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jasonko.movietime.adapters.MoviesListOfTheaterAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.MovieTime;
+import com.jasonko.movietime.tool.NetworkUtil;
 
 import java.util.ArrayList;
 
@@ -24,14 +28,15 @@ public class MovieListOfTheaterInAreaActivity extends AppCompatActivity {
 
     private TextView tv_phone_of_theater;
     private TextView tv_address_of_theater;
-
+    private String stringAddress;
 
     private RecyclerView mRecyclerView;
     private MoviesListOfTheaterAdapter mAdapter;
     private ArrayList<MovieTime> mData;
     int theater_id;
 
-
+    private ProgressBar mProgressBar;
+    private TextView noNetText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +46,8 @@ public class MovieListOfTheaterInAreaActivity extends AppCompatActivity {
         //set views
         tv_phone_of_theater = (TextView)findViewById(R.id.tv_phone_of_theater);
         tv_address_of_theater = (TextView)findViewById(R.id.tv_address_of_theater);
-
+        mProgressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
+        noNetText = (TextView) findViewById(R.id.no_network_text);
 
         //set basic data of the clicked theater
         Intent intent = getIntent();
@@ -49,6 +55,7 @@ public class MovieListOfTheaterInAreaActivity extends AppCompatActivity {
         tv_address_of_theater.setText(intent.getStringExtra("theater_address"));
         theater_id = intent.getIntExtra("theater_id", 0);
 
+        stringAddress = intent.getStringExtra("theater_address");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
@@ -140,7 +147,12 @@ public class MovieListOfTheaterInAreaActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        new GetMoviesTask().execute();
+        if (NetworkUtil.getConnectivityStatus(MovieListOfTheaterInAreaActivity.this) != 0) {
+            new GetMoviesTask().execute();
+        }else {
+            mProgressBar.setVisibility(View.GONE);
+            noNetText.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -155,21 +167,34 @@ public class MovieListOfTheaterInAreaActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Object result){
-            mAdapter = new MoviesListOfTheaterAdapter(MovieListOfTheaterInAreaActivity.this, mData);
-            mRecyclerView.setAdapter(mAdapter);
+            if (mData != null && mData.size() > 0) {
+                mAdapter = new MoviesListOfTheaterAdapter(MovieListOfTheaterInAreaActivity.this, mData);
+                mRecyclerView.setAdapter(mAdapter);
+            }else {
+                noNetText.setVisibility(View.VISIBLE);
+            }
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_theater, menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        if (menuItem.getItemId() == android.R.id.home) {
-            finish();
+        switch (menuItem.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.action_to_map:
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("geo:0,0?q=" + stringAddress));
+                startActivity(intent);
+                break;
         }
         return super.onOptionsItemSelected(menuItem);
     }

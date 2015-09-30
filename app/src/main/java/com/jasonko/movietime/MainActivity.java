@@ -1,6 +1,9 @@
 package com.jasonko.movietime;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,16 +19,21 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.jasonko.movietime.adapters.DrawerListAdapter;
 import com.jasonko.movietime.adapters.RandomYoutubeVideoAdapter;
 import com.jasonko.movietime.adapters.RankMovieAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.model.MyYoutubeVideo;
+import com.jasonko.movietime.services.FollowMovieReceiver;
 import com.jasonko.movietime.tool.NetworkUtil;
 import com.quinny898.library.persistentsearch.SearchBox;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class MainActivity extends Activity {
@@ -53,15 +61,20 @@ public class MainActivity extends Activity {
     private TextView movieText;
     private TextView videoText;
 
+    private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setRepeatAlarm();
+
         //設定各個元件的對應id
         processViews();
 
         setSearchBar();
+        setAdView();
 
         rankRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_rank);
         rankRecyclerView.setHasFixedSize(true);
@@ -84,6 +97,68 @@ public class MainActivity extends Activity {
             movieText.setVisibility(View.VISIBLE);
             videoText.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void setRepeatAlarm() {
+
+        // Set the alarm to start at approximately 2:00 p.m.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 30);
+
+        // With setInexactRepeating(), you have to use one of the AlarmManager interval
+        // constants--in this case, AlarmManager.INTERVAL_DAY.
+        AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent serviceIntent = new Intent(MainActivity.this, FollowMovieReceiver.class);
+        serviceIntent.setAction(FollowMovieReceiver.actionAlarm);
+        if (!alarmUp()) {
+            PendingIntent alarmIntent = PendingIntent.getBroadcast(MainActivity.this, 0, serviceIntent, 0);
+            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                    AlarmManager.INTERVAL_DAY, alarmIntent);
+        }
+    }
+
+    private boolean alarmUp() {
+        return PendingIntent.getBroadcast(MainActivity.this, 0,
+                new Intent("register alarm from movietime"),
+                PendingIntent.FLAG_NO_CREATE) != null;
+    }
+
+    private void setAdView() {
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                mAdView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                super.onAdFailedToLoad(errorCode);
+                mAdView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                super.onAdLeftApplication();
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+                mAdView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                mAdView.setVisibility(View.VISIBLE);
+            }
+        });
+        mAdView.loadAd(adRequest);
     }
 
     @Override

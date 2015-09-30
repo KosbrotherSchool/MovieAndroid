@@ -34,7 +34,7 @@ public class MovieAPI {
 
     public static final String  TAG   = "MOVIE_API";
     public static final boolean DEBUG = true;
-    public static final String host = "http://106.185.27.30";
+    public static final String host = "http://139.162.10.76";
 
     public static ArrayList<Trailer> getMovieTrailersByID(int movie_id){
         ArrayList<Trailer> trailers = new ArrayList<>();
@@ -444,11 +444,26 @@ public class MovieAPI {
                 int news_id = 0;
                 try {
                     title = newsObject.getString("title");
-                    info = newsObject.getString("info");
                     news_link = newsObject.getString("news_link");
                     publish_day = newsObject.getString("publish_day");
                     pic_link = newsObject.getString("pic_link");
+                }catch (Exception e){
+
+                }
+
+                try{
+                    info = newsObject.getString("info");
+                }catch (Exception e){
+
+                }
+
+                try {
                     news_type = newsObject.getInt("news_type");
+                }catch (Exception e){
+
+                }
+
+                try {
                     news_id = newsObject.getInt("news_id");
                 }catch (Exception e){
 

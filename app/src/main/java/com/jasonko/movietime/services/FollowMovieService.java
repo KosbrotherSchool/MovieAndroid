@@ -36,6 +36,7 @@ public class FollowMovieService extends IntentService {
         boolean customDayBoolean = mSharedPreference.getBoolean("custom_day", false);
         int customDayInt = mSharedPreference.getInt("custom_day_int", 3);
 
+//        makeNotification("電影即時通", "電影今日上映囉！");
 
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "expense", null);
         DaoMaster daoMaster = new DaoMaster(helper.getWritableDatabase());
@@ -49,13 +50,13 @@ public class FollowMovieService extends IntentService {
             Date movieDate = mMovies.get(i).getPublish_day();
             movieCal.setTime(movieDate);
             if (theDayBoolean) {
-                if (isIntervalLessXDay(c, movieCal, 0)) {
+                if (isIntervalLessXDay(c, movieCal, -1)) {
                     makeNotification("電影即時通", mMovies.get(i).getTitle() + "今日上映囉！");
                 }
             }
             if (customDayBoolean){
-                if (isIntervalLessXDay(c, movieCal, customDayInt)) {
-                    makeNotification("電影即時通", mMovies.get(i).getTitle() + "快要上映囉！");
+                if (isIntervalLessXDay(c, movieCal, -1 + customDayInt)) {
+                    makeNotification("電影即時通", mMovies.get(i).getTitle() + "再" + Integer.toString(customDayInt) +"天就上映囉！");
                 }
             }
         }
@@ -71,12 +72,12 @@ public class FollowMovieService extends IntentService {
         if (Build.VERSION.SDK_INT < 16) {
             noti = new Notification.Builder(this)
                     .setContentTitle(appTitle).setContentText(subTitle)
-                    .setSmallIcon(R.mipmap.ic_launcher).getNotification();
+                    .setSmallIcon(getNotificationIcon()).getNotification();
         } else {
             noti = new Notification.Builder(this)
                     .setContentTitle(appTitle)
                     .setContentText(subTitle)
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSmallIcon(getNotificationIcon())
                     .setContentIntent(pIntent).build();
         }
 
@@ -86,13 +87,18 @@ public class FollowMovieService extends IntentService {
 
     }
 
+    private int getNotificationIcon() {
+        boolean whiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
+        return whiteIcon ? R.drawable.icon_sil : R.mipmap.ic_launcher;
+    }
+
     public boolean isIntervalLessXDay(Calendar c1, Calendar c2, int x)
     {
         long milliSeconds1 = c1.getTimeInMillis();
         long milliSeconds2 = c2.getTimeInMillis();
         long periodSeconds = (milliSeconds2 - milliSeconds1) / 1000;
-        long elapsedDays = periodSeconds / 60 / 60 / 24;
-        if ( x < elapsedDays && elapsedDays < x+1){
+        double elapsedDays = periodSeconds / 60.0 / 60.0 / 24.0;
+        if ( x <= elapsedDays && elapsedDays < x+1){
             return  true;
         }
         return false;

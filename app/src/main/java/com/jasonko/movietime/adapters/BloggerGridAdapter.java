@@ -2,7 +2,6 @@ package com.jasonko.movietime.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,25 +13,26 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.jasonko.movietime.AppParams;
+import com.jasonko.movietime.NewsArticleActivity;
 import com.jasonko.movietime.R;
-import com.jasonko.movietime.model.OrderTheater;
+import com.jasonko.movietime.model.Blogger;
 
 /**
- * Created by kolichung on 8/31/15.
+ * Created by kolichung on 9/23/15.
  */
-public class TheaterGridAdapter extends BaseAdapter {
+public class BloggerGridAdapter extends BaseAdapter {
 
     private Activity mActivity;
-    private OrderTheater[] mOrderTheaters;
+    private Blogger[] mBloggers;
 
-    public TheaterGridAdapter(Activity activity, OrderTheater[] orderTheaters) {
+    public BloggerGridAdapter(Activity activity, Blogger[] bloggers) {
         mActivity = activity;
-        mOrderTheaters = orderTheaters;
+        mBloggers = bloggers;
     }
 
     @Override
     public int getCount() {
-        return mOrderTheaters.length;
+        return mBloggers.length;
     }
 
     @Override
@@ -55,8 +55,8 @@ public class TheaterGridAdapter extends BaseAdapter {
         ImageView gridImage = (ImageView) convertView.findViewById(R.id.theater_grid_image);
         TextView gridTitle = (TextView) convertView.findViewById(R.id.theater_grid_title_text);
 
-        gridImage.setImageResource(mOrderTheaters[position].getTheater_icon_id());
-        gridTitle.setText(mOrderTheaters[position].getTheater_name());
+        gridImage.setImageResource(mBloggers[position].getBlogger_icon_id());
+        gridTitle.setText(mBloggers[position].getBlogger_name());
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,10 +64,12 @@ public class TheaterGridAdapter extends BaseAdapter {
                 if (AppParams.isShowIntersitialAd(mActivity)){
                     requestNewInterstitial();
                 }
-                String url = mOrderTheaters[position].getTheater_url();
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                mActivity.startActivity(i);
+
+                Intent newIntent = new Intent(mActivity, NewsArticleActivity.class);
+                newIntent.putExtra("news_link", mBloggers[position].getBlogger_url());
+                newIntent.putExtra("news_title", mBloggers[position].getBlogger_name());
+                mActivity.startActivity(newIntent);
+
             }
         });
 

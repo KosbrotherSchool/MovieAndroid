@@ -117,6 +117,8 @@ public class MovieInfoFragment extends Fragment{
         follow_image = (ImageView) view.findViewById(R.id.follow_movie_up_image);
         linearAddFollow = (LinearLayout) view.findViewById(R.id.linearLayout_movie_add_follow);
         follow_bottom_image = (ImageView) view.findViewById(R.id.follow_movie_bottom_image);
+        linearShare = (LinearLayout) view.findViewById(R.id.linearLayout_movie_share);
+        linearResponse = (LinearLayout) view.findViewById(R.id.linearLayout_movie_response);
 
         mImageLoader = new ImageLoader(getActivity());
         readmoreTextView.setOnClickListener(new View.OnClickListener() {
@@ -230,6 +232,37 @@ public class MovieInfoFragment extends Fragment{
                         }
                     }
                 });
+
+                linearShare.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intentShare = new Intent(Intent.ACTION_SEND);
+                        intentShare.setType("text/plain");
+                        intentShare.putExtra(Intent.EXTRA_SUBJECT, "電影即時通 APP !");
+                        intentShare.putExtra(Intent.EXTRA_TEXT, "走走走,看電影:" + mMovie.getTitle()+"~ from 電影即時通APP \n https://play.google.com/store/apps/details?id=com.jasonko.movietime");
+                        try {
+                            startActivity(Intent.createChooser(intentShare, "分享 ..."));
+                        } catch (android.content.ActivityNotFoundException ex) {
+                            Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                linearResponse.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intentReport = new Intent(Intent.ACTION_SEND);
+                        intentReport.setType("text/plain");
+                        intentReport.putExtra(Intent.EXTRA_EMAIL, new String[]{"kosbrotherschool@gmail.com"});
+                        intentReport.putExtra(Intent.EXTRA_SUBJECT, "問題回報："+ mMovie.getTitle() +" "+ Integer.toString(mMovie.getMovie_id()));
+                        try {
+                            startActivity(Intent.createChooser(intentReport, "傳送 mail..."));
+                        } catch (android.content.ActivityNotFoundException ex) {
+                            Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
 
                 addThisMovieToRecentMovie();
 

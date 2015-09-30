@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jasonko.movietime.AboutUsActivity;
+import com.jasonko.movietime.BloggerActivity;
 import com.jasonko.movietime.FollowMovieActivity;
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.RecentMovieActivity;
@@ -89,7 +90,7 @@ public class DrawerListAdapter extends BaseAdapter {
                         }
                         break;
                     case 4:
-                        String url = "http://www.example.com";
+                        String url = "https://play.google.com/store/apps/details?id=com.jasonko.movietime";
                         Intent intentGood = new Intent(Intent.ACTION_VIEW);
                         intentGood.setData(Uri.parse(url));
                         mActivity.startActivity(intentGood);
@@ -98,7 +99,7 @@ public class DrawerListAdapter extends BaseAdapter {
                         Intent intentShare = new Intent(Intent.ACTION_SEND);
                         intentShare.setType("text/plain");
                         intentShare.putExtra(Intent.EXTRA_SUBJECT, "電影即時通 APP !");
-                        intentShare.putExtra(Intent.EXTRA_TEXT, "電影即時通 APP 推薦給您 ~");
+                        intentShare.putExtra(Intent.EXTRA_TEXT, "推薦給您, [電影即時通]APP 找電影一點通~  https://play.google.com/store/apps/details?id=com.jasonko.movietime");
                         try {
                             mActivity.startActivity(Intent.createChooser(intentShare, "分享 ..."));
                         } catch (android.content.ActivityNotFoundException ex) {
@@ -106,10 +107,14 @@ public class DrawerListAdapter extends BaseAdapter {
                         }
                         break;
                     case 6:
+                        Intent intentBlogger = new Intent(mActivity, BloggerActivity.class);
+                        mActivity.startActivity(intentBlogger);
+                        break;
+                    case 7:
                         Intent intentAbout = new Intent(mActivity, AboutUsActivity.class);
                         mActivity.startActivity(intentAbout);
                         break;
-                    case 7:
+                    case 8:
                         Intent intentSetting = new Intent(mActivity, SettingActivity.class);
                         mActivity.startActivity(intentSetting);
                         break;

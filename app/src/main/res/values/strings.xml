@@ -13,4 +13,8 @@
     <string name="title_activity_movie_list_of_theater_in_area">MovieListOfTheaterInAreaActivity
     </string>
     <string name="title_activity_main_activity2">MainActivity2Activity</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-7865591931541679/3638059942</string>
+    <string name="intersitial_ad_unit_id">ca-app-pub-7865591931541679/5114793148</string>
+
 </resources>

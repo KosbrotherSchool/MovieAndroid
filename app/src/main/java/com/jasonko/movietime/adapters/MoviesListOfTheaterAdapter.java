@@ -80,7 +80,6 @@ public class MoviesListOfTheaterAdapter extends RecyclerView.Adapter<MoviesListO
     }
 
 
-
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position){
         movieTime = mData.get(position);

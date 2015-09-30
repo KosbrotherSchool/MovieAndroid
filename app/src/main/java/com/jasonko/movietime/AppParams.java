@@ -1,5 +1,9 @@
 package com.jasonko.movietime;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+
+import com.jasonko.movietime.model.Blogger;
 import com.jasonko.movietime.model.DrawerItem;
 import com.jasonko.movietime.model.OrderTheater;
 
@@ -22,16 +26,35 @@ public class AppParams {
             new OrderTheater("博客來訂票", "http://www.ezding.com.tw/mmb.do", R.drawable.theater_icon_8),
     };
 
-   public static final DrawerItem[] drawerItems={
+    public static final Blogger[] bloggers ={
+            new Blogger("鯨鯊的塗鴨影評", "http://whale005.pixnet.net/blog", R.drawable.blogger_1),
+            new Blogger("電影知識分享趣", "http://movielore.pixnet.net/blog", R.drawable.blogger_2)
+    };
+
+
+    public static final DrawerItem[] drawerItems={
            new DrawerItem("最近瀏覽", R.drawable.drawer_recent_read),
            new DrawerItem("我的追蹤", R.drawable.drawer_follow),
            new DrawerItem("我要訂票", R.drawable.drawer_ticket),
            new DrawerItem("問題回報", R.drawable.drawer_problem),
            new DrawerItem("好用給個讚", R.drawable.drawer_thumb),
            new DrawerItem("分享給好友", R.drawable.drawer_share),
+            new DrawerItem("電影部落格", R.drawable.drawer_blogger),
            new DrawerItem("關於我們", R.drawable.drawer_about),
            new DrawerItem("我的設定", R.drawable.drawer_setting),
-   };
+    };
 
+    public static boolean isShowIntersitialAd(Activity activity){
+           SharedPreferences myPref = activity.getPreferences(0);
+           int click_count = myPref.getInt("click_count", 0);
+           click_count = click_count + 1;
+           if (click_count == 5){
+             myPref.edit().putInt("click_count", 0).commit();
+             return  true;
+           }else {
+             myPref.edit().putInt("click_count", click_count).commit();
+             return  false;
+           }
+    }
 
 }

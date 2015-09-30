@@ -9,8 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.jasonko.movietime.fragments.NewsFragment;
 
 /**
@@ -18,10 +22,14 @@ import com.jasonko.movietime.fragments.NewsFragment;
  */
 public class NewsActivity extends AppCompatActivity {
 
+    private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pagers);
+
+        setAdView();
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -48,10 +56,46 @@ public class NewsActivity extends AppCompatActivity {
 
     }
 
+    private void setAdView() {
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                mAdView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                super.onAdFailedToLoad(errorCode);
+                mAdView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                super.onAdLeftApplication();
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+                mAdView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                mAdView.setVisibility(View.VISIBLE);
+            }
+        });
+        mAdView.loadAd(adRequest);
+    }
+
     public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
         final int PAGE_COUNT = 4;
-        private String tabTitles[] = new String[] { "影片新聞", "選片指南", "影評", "專題報導" };
+        private String tabTitles[] = new String[] { "影片新聞","專題報導", "選片指南", "影評" };
 
         public SampleFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -64,7 +108,22 @@ public class NewsActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return NewsFragment.newInstance(position + 1);
+            NewsFragment theNewsFragment = null;
+            switch (position){
+                case 0:
+                    theNewsFragment = NewsFragment.newInstance(1);
+                    break;
+                case 1:
+                    theNewsFragment = NewsFragment.newInstance(4);
+                    break;
+                case 2:
+                    theNewsFragment = NewsFragment.newInstance(2);
+                    break;
+                case 3:
+                    theNewsFragment = NewsFragment.newInstance(3);
+                    break;
+            }
+            return theNewsFragment;
         }
 
         @Override
