@@ -133,7 +133,7 @@ public class SearchResultActivity extends AppCompatActivity {
                 queryString = searchTerm;
                 searchBox.setLogoText(queryString);
                 mMovies.clear();
-                searchMovieAdapter.notifyDataSetChanged();
+//                searchMovieAdapter.notifyDataSetChanged();
                 mProgressBar.setVisibility(View.VISIBLE);
                 mPage = 1;
                 new NewsTask().execute();
@@ -158,7 +158,7 @@ public class SearchResultActivity extends AppCompatActivity {
             queryString = matches.get(0);
             searchBox.setLogoText(queryString);
             mMovies.clear();
-            searchMovieAdapter.notifyDataSetChanged();
+//            searchMovieAdapter.notifyDataSetChanged();
             mProgressBar.setVisibility(View.VISIBLE);
             mPage = 1;
             new NewsTask().execute();

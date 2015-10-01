@@ -11,6 +11,7 @@ import com.jasonko.movietime.model.MyYoutubeColumn;
 import com.jasonko.movietime.model.MyYoutubeVideo;
 import com.jasonko.movietime.model.Photo;
 import com.jasonko.movietime.model.Trailer;
+import com.jasonko.movietime.model.Version;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,6 +36,27 @@ public class MovieAPI {
     public static final String  TAG   = "MOVIE_API";
     public static final boolean DEBUG = true;
     public static final String host = "http://139.162.10.76";
+
+    public static Version getVersion() {
+        Version theversion = null;
+        String url = host + "/api/movie/version";
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            try {
+                JSONObject theObject = new JSONObject(message);
+                String versionName = theObject.getString("version_name");
+                String versionContent = theObject.getString("version_content");
+                int versionCode = theObject.getInt("version_code");
+                theversion = new Version(versionName,versionContent,versionCode);
+            }catch (Exception e){
+
+            }
+
+        }
+        return theversion;
+    }
 
     public static ArrayList<Trailer> getMovieTrailersByID(int movie_id){
         ArrayList<Trailer> trailers = new ArrayList<>();
@@ -530,6 +552,9 @@ public class MovieAPI {
             int photo_size = 0;
             int trailer_size = 0;
 
+            int review_size = 0;
+            double points = 0;
+
             try {
                 title = movieObject.getString("title");
                 title_eng = movieObject.getString("title_eng");
@@ -582,7 +607,14 @@ public class MovieAPI {
 
             }
 
-            mMovie = new Movie(title,title_eng,movie_class,movie_type,movie_length,publish_date,director,editors,actors,official,movie_info,small_pic,large_pic,publish_date_date,movie_round,movie_id, null, photo_size, trailer_size);
+            try {
+                review_size = movieObject.getInt("review_size");
+                points = movieObject.getDouble("point");
+            }catch (Exception e){
+
+            }
+
+            mMovie = new Movie(title,title_eng,movie_class,movie_type,movie_length,publish_date,director,editors,actors,official,movie_info,small_pic,large_pic,publish_date_date,movie_round,movie_id,photo_size,trailer_size,points,review_size,null);
         }catch (Exception e){
 
         }
@@ -851,5 +883,6 @@ public class MovieAPI {
             return null;
         }
     }
+
 
 }

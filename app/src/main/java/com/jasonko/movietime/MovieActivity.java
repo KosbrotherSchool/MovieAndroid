@@ -20,14 +20,12 @@ import com.jasonko.movietime.fragments.MovieTimeFragment;
 public class MovieActivity extends AppCompatActivity {
 
     private int mMovieID;
-    private int mAreaID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pagers);
         mMovieID = getIntent().getIntExtra("movie_id", 1);
-        mAreaID = getIntent().getIntExtra("area_id", 1);
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -46,6 +44,7 @@ public class MovieActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("影片列表");
+
     }
 
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
@@ -91,4 +90,24 @@ public class MovieActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(menuItem);
     }
+
+//    private class ReviewTask extends AsyncTask {
+//
+//        @Override
+//        protected Object doInBackground(Object[] params) {
+//            ArrayList<Review> reviews = ReviewAPI.getReviewsByMovieID(1,1);
+//            return null;
+//        }
+//
+//    }
+//
+//    private class PostTask extends AsyncTask {
+//
+//        @Override
+//        protected Object doInBackground(Object[] params) {
+//            ReviewAPI.httpPostReview(1,"author","title","content","9.0");
+//            return null;
+//        }
+//
+//    }
 }

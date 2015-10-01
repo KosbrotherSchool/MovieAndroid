@@ -40,7 +40,7 @@ public class PhotoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_photo, container, false);
         ImageView imageView = (ImageView) view.findViewById(R.id.photo_fragment_image);
 
-        imageLoader = new ImageLoader(getActivity(),200);
+        imageLoader = new ImageLoader(getActivity(),400);
         imageLoader.DisplayImage(photoUrl,imageView);
 
         return view;

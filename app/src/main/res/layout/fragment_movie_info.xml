@@ -11,12 +11,14 @@
         android:background="@color/background_color"
         >
 
+
         <ProgressBar
             android:id="@+id/my_progress_bar"
             style="@android:style/Widget.ProgressBar.Large"
             android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:paddingBottom="200dp"
             />
 
         <TextView
@@ -34,15 +36,15 @@
             android:id="@+id/movieinfo_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:orientation="vertical"
             android:visibility="invisible"
             >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="200dp"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp"
 
@@ -50,8 +52,8 @@
 
                 <ImageView
                     android:id="@+id/movieinfo_image"
-                    android:layout_width="110dp"
-                    android:layout_height="150dp"
+                    android:layout_width="145dp"
+                    android:layout_height="200dp"
                     android:src="@drawable/icon_app"
                     />
                 <LinearLayout
@@ -59,13 +61,13 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
                     >
                     <TextView
                         android:id="@+id/movieinfo_text_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="我的少女時代"
+                        android:text="我的少女時代之風雲變色"
                         android:textSize="22dp"
                         android:layout_marginTop="3dp"
                         android:maxLines="2"
@@ -74,7 +76,7 @@
                         android:id="@+id/movieinfo_text_title_eng"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="English title here"
+                        android:text="English title here it may be 2 lins"
                         android:textSize="15dp"
                         android:maxLines="2"
                         android:layout_marginTop="3dp"
@@ -95,6 +97,36 @@
                         android:layout_marginTop="5dp"
                         android:textSize="14dp"
                         />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        >
+                        <RatingBar
+                            android:id="@+id/ratingBar"
+                            android:layout_marginTop="0dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:numStars="5"
+                            android:rating="2.5"
+                            android:progressBackgroundTint="@color/movie_indicator"
+                            android:progressTint="@color/movie_indicator"
+                            android:secondaryProgressTint="@color/white"
+                            android:isIndicator="true"
+                            />
+                        <TextView
+                            android:id="@+id/rate_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="9.8分"
+                            android:textSize="22dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/movie_indicator"
+                            />
+                    </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="40dp"
@@ -323,6 +355,43 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearLayout_movie_review"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@drawable/movie_info_button_selector"
+                    >
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/icon_comment"
+                            />
+                        <TextView
+                            android:id="@+id/review_num_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1180"
+                            android:layout_centerInParent="true"
+                            android:paddingBottom="8dp"
+                            android:textSize="13dp"
+                            android:textColor="@color/movie_indicator"
+                            />
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="評論"
+                        android:textSize="14dp"
+                        />
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:id="@+id/linearLayout_movie_share"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -340,28 +409,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="分享"
-                        android:textSize="14dp"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout_movie_response"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:background="@drawable/movie_info_button_selector"
-                    >
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/icon_message_2"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="問題回報"
                         android:textSize="14dp"
                         />
                 </LinearLayout>

@@ -4,7 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardview"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="140dp"
     card_view:cardBackgroundColor="#FFFFFF"
     card_view:cardUseCompatPadding="true"
     card_view:cardElevation="5dp"
@@ -31,14 +31,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginLeft="3dp"
+            android:layout_marginLeft="5dp"
             >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 >
                 <TextView
                     android:id="@+id/movie_thisweek_new_text"
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="上映日期：2015/09/03  保護級"
-                android:textSize="13dp"
+                android:textSize="15dp"
                 android:layout_marginTop="5dp"
                 android:maxLines="1"
                 />
@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="湯姆克魯斯、傑瑞米雷納、賽門佩吉、文雷姆斯"
-                android:textSize="13dp"
+                android:textSize="15dp"
                 android:maxLines="1"
                 android:layout_marginTop="5dp"
                 />
@@ -85,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="動作、懸疑/驚悚、冒險"
-                android:textSize="13dp"
+                android:textSize="15dp"
                 android:maxLines="1"
                 android:layout_marginTop="5dp"
                 />

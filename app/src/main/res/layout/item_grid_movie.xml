@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/movie_grid_image"
             android:layout_width="match_parent"
-            android:layout_height="175dp"
+            android:layout_height="150dp"
             android:src="@drawable/icon_app"
             android:layout_marginTop="3dp"
             />

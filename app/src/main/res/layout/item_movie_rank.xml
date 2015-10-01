@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardview"
-    android:layout_width="130dp"
-    android:layout_height="190dp"
+    android:layout_width="145dp"
+    android:layout_height="210dp"
     card_view:cardBackgroundColor="#FFFFFF"
     card_view:cardUseCompatPadding="true"
     card_view:cardElevation="5dp"
@@ -16,8 +16,8 @@
 
     <ImageView
         android:id="@+id/image_rank"
-        android:layout_width="120dp"
-        android:layout_height="150dp"
+        android:layout_width="130dp"
+        android:layout_height="165dp"
         android:src="@drawable/icon_app"
         android:layout_marginTop="3dp"
         />
@@ -27,10 +27,10 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:text="1"
-        android:textSize="12dp"
+        android:textSize="15dp"
         android:background="@drawable/circle_style"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="145dp"
         android:layout_marginLeft="5dp"
         android:gravity="center"
         />
@@ -39,9 +39,9 @@
         android:layout_width="110dp"
         android:layout_height="20dp"
         android:text="我的少女時代"
-        android:layout_marginTop="153dp"
+        android:layout_marginTop="170dp"
         android:layout_marginLeft="5dp"
-        android:textSize="13dp"
+        android:textSize="16dp"
         android:textColor="#000000"
         android:singleLine="true"
         />

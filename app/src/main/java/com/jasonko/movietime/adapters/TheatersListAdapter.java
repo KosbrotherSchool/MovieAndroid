@@ -16,6 +16,7 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.jasonko.movietime.AppParams;
 import com.jasonko.movietime.MovieListOfTheaterInAreaActivity;
 import com.jasonko.movietime.R;
+import com.jasonko.movietime.WebTheaterActivity;
 import com.jasonko.movietime.model.Theater;
 
 import java.util.ArrayList;
@@ -116,13 +117,34 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
                     requestNewInterstitial();
                 }
 
-                Intent intent = new Intent(v.getContext(), MovieListOfTheaterInAreaActivity.class);
-                intent.putExtra("theater_name", mTheater.getName());
-                intent.putExtra("theater_phone", mTheater.getPhone());
-                intent.putExtra("theater_address", mTheater.getAddress());
-                intent.putExtra("theater_id", mTheater.getTheater_id());
-
-                v.getContext().startActivity(intent);
+                if (mTheater.getTheater_id()!=12 && mTheater.getTheater_id()!=25 && mTheater.getTheater_id() != 6) {
+                    Intent intent = new Intent(v.getContext(), MovieListOfTheaterInAreaActivity.class);
+                    intent.putExtra("theater_name", mTheater.getName());
+                    intent.putExtra("theater_phone", mTheater.getPhone());
+                    intent.putExtra("theater_address", mTheater.getAddress());
+                    intent.putExtra("theater_id", mTheater.getTheater_id());
+                    v.getContext().startActivity(intent);
+                }else {
+                    Intent intent = new Intent(v.getContext(), WebTheaterActivity.class);
+                    switch (mTheater.getTheater_id()){
+                        case 6:
+                            intent.putExtra("theater_link", "http://www.westin-taipei.com/01_text.asp?sn=40");
+                            intent.putExtra("theater_title", mTheater.getName());
+                            intent.putExtra("theater_address", mTheater.getAddress());
+                            break;
+                        case 12:
+                            intent.putExtra("theater_link", "http://www.spot-hs.org.tw/schedule/schedule.html");
+                            intent.putExtra("theater_title", mTheater.getName());
+                            intent.putExtra("theater_address", mTheater.getAddress());
+                            break;
+                        case 25:
+                            intent.putExtra("theater_link", "http://www.spot.org.tw/schedule/schedule_one.html");
+                            intent.putExtra("theater_title", mTheater.getName());
+                            intent.putExtra("theater_address", mTheater.getAddress());
+                            break;
+                    }
+                    v.getContext().startActivity(intent);
+                }
 
             }
         });

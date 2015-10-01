@@ -4,14 +4,21 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -28,6 +35,7 @@ import com.jasonko.movietime.adapters.RankMovieAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.model.MyYoutubeVideo;
+import com.jasonko.movietime.model.Version;
 import com.jasonko.movietime.services.FollowMovieReceiver;
 import com.jasonko.movietime.tool.NetworkUtil;
 import com.quinny898.library.persistentsearch.SearchBox;
@@ -69,6 +77,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         setRepeatAlarm();
+        checkCurrentVersion();
 
         //設定各個元件的對應id
         processViews();
@@ -97,6 +106,12 @@ public class MainActivity extends Activity {
             movieText.setVisibility(View.VISIBLE);
             videoText.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void checkCurrentVersion() {
+
+        new GetVersionCodeTask().execute();
+
     }
 
     private void setRepeatAlarm() {
@@ -246,6 +261,87 @@ public class MainActivity extends Activity {
         });
     }
 
+
+    private class GetVersionCodeTask extends AsyncTask {
+
+        Version currentVersion;
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            currentVersion = MovieAPI.getVersion();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object result) {
+            if (currentVersion != null) {
+                //Todo put version code to pref
+                try {
+                    PackageManager manager = getApplicationContext().getPackageManager();
+                    PackageInfo info = manager.getPackageInfo(
+                            getApplicationContext().getPackageName(), 0);
+                    int verCode = info.versionCode;
+
+                    SharedPreferences mPref = getPreferences(0);
+                    int prefVersion = mPref.getInt("version code", 0);
+
+                    if(verCode != currentVersion.getVersionCode()){
+                        if(prefVersion == currentVersion.getVersionCode()){
+                            boolean isPopGetNewDialog = mPref.getBoolean("is pop new version dialog", true);
+                            if (isPopGetNewDialog){
+                                popGetNewDialog("version code", currentVersion.getVersionCode(), currentVersion.getVersionName(), currentVersion.getVersionContent());
+                            }
+                        }else {
+                            popGetNewDialog("version code", currentVersion.getVersionCode(), currentVersion.getVersionName(), currentVersion.getVersionContent());
+                        }
+                    }
+
+                }catch (Exception e){
+
+                }
+
+
+            }
+        }
+    }
+
+    private void popGetNewDialog(String versionCodeKey, int versionCode, String verstionName, String versionContent) {
+
+        SharedPreferences mPref = getPreferences(0);
+        mPref.edit().putInt(versionCodeKey, versionCode).commit();
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+        dialog.setTitle(verstionName);
+        dialog.setMessage(Html.fromHtml(versionContent));
+        dialog.setNegativeButton("不再通知", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                SharedPreferences mPref = getPreferences(0);
+                mPref.edit().putBoolean("is pop new version dialog", false).commit();
+            }
+
+        });
+        dialog.setPositiveButton("更新",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                String url = "https://play.google.com/store/apps/details?id=com.jasonko.movietime";
+                Intent intentGood = new Intent(Intent.ACTION_VIEW);
+                intentGood.setData(Uri.parse(url));
+                startActivity(intentGood);
+            }
+
+        });
+        dialog.setNeutralButton("稍後通知",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                SharedPreferences mPref = getPreferences(0);
+                mPref.edit().putBoolean("is pop new version dialog", true).commit();
+            }
+
+        });
+        dialog.show();
+
+    }
 
 
     private class RankMoviesTask extends AsyncTask {

@@ -36,7 +36,7 @@ public class MoviesListOfTheaterAdapter extends RecyclerView.Adapter<MoviesListO
         layoutInflater = LayoutInflater.from(context);
         mData = data;
         mActivity = (Activity)context;
-        mImageLoader = new ImageLoader(mActivity);
+        mImageLoader = new ImageLoader(mActivity, 100);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -84,7 +84,12 @@ public class MoviesListOfTheaterAdapter extends RecyclerView.Adapter<MoviesListO
     public void onBindViewHolder(final ViewHolder viewHolder, final int position){
         movieTime = mData.get(position);
         viewHolder.tv_movie_title.setText(movieTime.getMovie_title());
-        viewHolder.tv_movie_remark.setText(movieTime.getRemark());
+        if (movieTime.getRemark() == null || movieTime.getRemark().equals("")){
+            viewHolder.tv_movie_remark.setVisibility(View.GONE);
+        }else {
+            viewHolder.tv_movie_remark.setText(movieTime.getRemark());
+        }
+
 //        viewHolder.tv_movie_time.setText(movieTime.getMovie_time());
         mImageLoader.DisplayImage(movieTime.getMovie_photo(), viewHolder.iv_movie_cover);
         Log.d("test movie photo",movieTime.getMovie_photo());

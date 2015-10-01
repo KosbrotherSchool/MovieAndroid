@@ -28,7 +28,8 @@ public class AppParams {
 
     public static final Blogger[] bloggers ={
             new Blogger("鯨鯊的塗鴨影評", "http://whale005.pixnet.net/blog", R.drawable.blogger_1),
-            new Blogger("電影知識分享趣", "http://movielore.pixnet.net/blog", R.drawable.blogger_2)
+            new Blogger("電影知識分享趣", "http://movielore.pixnet.net/blog", R.drawable.blogger_2),
+            new Blogger("多多看電影", "http://applause29.pixnet.net/blog", R.drawable.blogger_3)
     };
 
 
