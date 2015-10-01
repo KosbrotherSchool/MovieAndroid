@@ -16,5 +16,6 @@
 
     <string name="banner_ad_unit_id">ca-app-pub-7865591931541679/3638059942</string>
     <string name="intersitial_ad_unit_id">ca-app-pub-7865591931541679/5114793148</string>
+    <string name="title_activity_comment">CommentActivity</string>
 
 </resources>

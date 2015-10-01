@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.jasonko.movietime.CommentActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/movie_indicator"
+        app:contentInsetEnd="0dp"
+        app:contentInsetStart="0dp"
+        ></android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_point"
+            android:text="網友評分："
+            android:textSize="15sp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_average_point"
+            android:text="5分"
+            android:layout_toRightOf="@+id/text_point"
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_drawable"
+            android:text="評分統計"
+            android:layout_toRightOf="@+id/text_point"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="8dp"
+            android:padding="2dp"/>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/recycler_comments"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="撰寫評論"/>
+
+</LinearLayout>
