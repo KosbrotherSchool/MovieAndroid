@@ -28,7 +28,7 @@ public class MovieGridAdapter extends BaseAdapter {
     public MovieGridAdapter(Activity activity, ArrayList<Movie> movies) {
         mActivity = activity;
         mMovies = movies;
-        mImageLoader = new ImageLoader(this.mActivity, 80);
+        mImageLoader = new ImageLoader(this.mActivity, 100);
     }
 
     @Override

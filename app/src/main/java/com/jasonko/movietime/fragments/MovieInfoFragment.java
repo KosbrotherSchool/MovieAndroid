@@ -1,6 +1,8 @@
 package com.jasonko.movietime.fragments;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,7 +72,10 @@ public class MovieInfoFragment extends Fragment{
     private ImageView follow_image;
     private LinearLayout linearAddFollow;
     private LinearLayout linearShare;
-    private LinearLayout linearResponse;
+    private LinearLayout linearReview;
+    private RatingBar ratingBar;
+    private TextView rateText;
+    private TextView reviewNumTExt;
 
     private DaoMaster.DevOpenHelper helper;
 
@@ -118,9 +124,21 @@ public class MovieInfoFragment extends Fragment{
         linearAddFollow = (LinearLayout) view.findViewById(R.id.linearLayout_movie_add_follow);
         follow_bottom_image = (ImageView) view.findViewById(R.id.follow_movie_bottom_image);
         linearShare = (LinearLayout) view.findViewById(R.id.linearLayout_movie_share);
-        linearResponse = (LinearLayout) view.findViewById(R.id.linearLayout_movie_response);
+        linearReview = (LinearLayout) view.findViewById(R.id.linearLayout_movie_review);
+        ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
+        rateText = (TextView) view.findViewById(R.id.rate_text);
+        reviewNumTExt = (TextView) view.findViewById(R.id.review_num_text);
 
-        mImageLoader = new ImageLoader(getActivity());
+        LayerDrawable stars = (LayerDrawable) ratingBar
+                .getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.movie_indicator),
+                PorterDuff.Mode.SRC_ATOP); // for filled stars
+        stars.getDrawable(1).setColorFilter(getResources().getColor(R.color.movie_indicator),
+                PorterDuff.Mode.SRC_ATOP); // for half filled stars
+        stars.getDrawable(0).setColorFilter(getResources().getColor(R.color.white),
+                PorterDuff.Mode.SRC_ATOP); // for empty stars
+
+        mImageLoader = new ImageLoader(getActivity(),200);
         readmoreTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,7 +179,11 @@ public class MovieInfoFragment extends Fragment{
 
             if (mMovie != null) {
                 titleText.setText(mMovie.getTitle());
-                titleEngText.setText(mMovie.getTitle_eng());
+                if (mMovie.getTitle_eng() == null || mMovie.getTitle_eng().equals("")){
+                    titleEngText.setVisibility(View.GONE);
+                }else {
+                    titleEngText.setText(mMovie.getTitle_eng());
+                }
                 classText.setText(mMovie.getMovie_class() + " 片長：" + mMovie.getMovie_length());
                 publishDateText.setText("上映日期：" + mMovie.getPublish_date());
 
@@ -174,6 +196,10 @@ public class MovieInfoFragment extends Fragment{
                 trailerText.setText("影片(" + Integer.toString(mMovie.getTrailer_size()) + ")");
 
                 mImageLoader.DisplayImage(mMovie.getSmall_pic(), mImage);
+
+                ratingBar.setRating((float) mMovie.getPoints());
+                rateText.setText(Double.toString(mMovie.getPoints()));
+                reviewNumTExt.setText(Integer.toString(mMovie.getReview_size()));
 
                 photoCardView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -248,18 +274,18 @@ public class MovieInfoFragment extends Fragment{
                     }
                 });
 
-                linearResponse.setOnClickListener(new View.OnClickListener() {
+                linearReview.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intentReport = new Intent(Intent.ACTION_SEND);
-                        intentReport.setType("text/plain");
-                        intentReport.putExtra(Intent.EXTRA_EMAIL, new String[]{"kosbrotherschool@gmail.com"});
-                        intentReport.putExtra(Intent.EXTRA_SUBJECT, "問題回報："+ mMovie.getTitle() +" "+ Integer.toString(mMovie.getMovie_id()));
-                        try {
-                            startActivity(Intent.createChooser(intentReport, "傳送 mail..."));
-                        } catch (android.content.ActivityNotFoundException ex) {
-                            Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-                        }
+//                        Intent intentReport = new Intent(Intent.ACTION_SEND);
+//                        intentReport.setType("text/plain");
+//                        intentReport.putExtra(Intent.EXTRA_EMAIL, new String[]{"kosbrotherschool@gmail.com"});
+//                        intentReport.putExtra(Intent.EXTRA_SUBJECT, "問題回報："+ mMovie.getTitle() +" "+ Integer.toString(mMovie.getMovie_id()));
+//                        try {
+//                            startActivity(Intent.createChooser(intentReport, "傳送 mail..."));
+//                        } catch (android.content.ActivityNotFoundException ex) {
+//                            Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+//                        }
                     }
                 });
 

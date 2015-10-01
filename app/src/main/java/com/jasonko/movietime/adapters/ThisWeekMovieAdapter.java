@@ -50,7 +50,7 @@ public class ThisWeekMovieAdapter extends RecyclerView.Adapter<ThisWeekMovieAdap
     public ThisWeekMovieAdapter(Activity mActivity, ArrayList<Movie> movies) {
         mMovies = movies;
         this.mActivity = mActivity;
-        mImageLoader = new ImageLoader(this.mActivity);
+        mImageLoader = new ImageLoader(this.mActivity,100);
     }
 
     // Create new views (invoked by the layout manager)

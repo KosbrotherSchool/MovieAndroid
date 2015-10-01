@@ -54,7 +54,7 @@ public class RankMovieSatisfyAdapter extends RecyclerView.Adapter<RankMovieSatis
     public RankMovieSatisfyAdapter(Activity mActivity, ArrayList<Movie> movies) {
         mMovies = movies;
         this.mActivity = mActivity;
-        mImageLoader = new ImageLoader(this.mActivity);
+        mImageLoader = new ImageLoader(this.mActivity, 100);
     }
 
     // Create new views (invoked by the layout manager)

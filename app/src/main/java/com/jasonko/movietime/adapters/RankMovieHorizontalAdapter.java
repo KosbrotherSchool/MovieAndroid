@@ -52,7 +52,7 @@ public class RankMovieHorizontalAdapter extends RecyclerView.Adapter<RankMovieHo
     public RankMovieHorizontalAdapter(Activity mActivity, ArrayList<Movie> movies) {
         mMovies = movies;
         this.mActivity = mActivity;
-        mImageLoader = new ImageLoader(this.mActivity);
+        mImageLoader = new ImageLoader(this.mActivity, 100);
     }
 
     // Create new views (invoked by the layout manager)

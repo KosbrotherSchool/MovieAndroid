@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:id="@+id/text_userId"
-                android:text="@使用者"
+                android:text="使用者"
                 android:layout_margin="5dp" />
 
             <TextView
