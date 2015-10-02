@@ -35,7 +35,6 @@
             android:label="全台戲院"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme" />
-            android:label="全台戲院" />
         <activity
             android:name=".TheatersOfAreaActivity"
             android:screenOrientation="portrait"
@@ -123,6 +122,10 @@
             android:name=".AboutUsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme" />
+        <activity
+            android:name=".CommentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme" />
 
         <service
             android:name=".services.FollowMovieService"
@@ -140,10 +143,6 @@
             android:enabled="true" >
         </receiver>
 
-        <activity
-            android:name=".CommentActivity"
-            android:label="@string/title_activity_comment" >
-        </activity>
     </application>
 
 </manifest>

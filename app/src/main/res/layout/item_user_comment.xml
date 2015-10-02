@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -29,15 +30,25 @@
                 android:layout_margin="5dp" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/text_user_point"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="20dp"
-                android:text="評分：7"/>
+                android:id="@+id/text_publish_date"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:text="publish_date"
+                />
+
+
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_user_point"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="評分：7"/>
 
         <TextView
             android:layout_width="match_parent"
