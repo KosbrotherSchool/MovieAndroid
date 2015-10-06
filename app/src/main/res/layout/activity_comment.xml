@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.jasonko.movietime.CommentActivity">
+    android:background="@color/background_color">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_comment"
@@ -17,41 +17,70 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="30dp"
+        >
 
         <TextView
+            android:id="@+id/total_people_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/text_point"
-            android:text="網友評分："
-            android:textSize="15sp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="10dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/text_average_point"
-            android:text="5分"
-            android:layout_toRightOf="@+id/text_point"
-            android:layout_marginTop="10dp"
+            android:text="(共 1223 人評分)"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:textSize="15dp"
             />
 
         <TextView
+            android:id="@+id/points_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/rectangle_drawable"
-            android:text="評分統計"
-            android:layout_toRightOf="@+id/text_point"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="8dp"
-            android:padding="2dp"/>
+            android:text="9.7分"
+            android:layout_centerVertical="true"
+            android:textSize="20dp"
+            android:layout_marginRight="2dp"
+            android:layout_toLeftOf="@+id/total_people_text"
+            />
+
 
     </RelativeLayout>
 
-    <Button
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="撰寫評論"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_comments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <LinearLayout
+            android:id="@+id/linear_no_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:visibility="gone"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="目前無短評"
+                android:textSize="17dp"
+                />
+            <Button
+                android:id="@+id/button_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="寫第一則短評"
+                android:textColor="@color/white"
+                android:background="@drawable/button_selector"
+                android:layout_marginTop="10dp"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

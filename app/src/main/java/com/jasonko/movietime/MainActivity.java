@@ -21,6 +21,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.Menu;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -29,6 +30,7 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.jasonko.movietime.adapters.BloggerGridAdapter;
 import com.jasonko.movietime.adapters.DrawerListAdapter;
 import com.jasonko.movietime.adapters.RandomYoutubeVideoAdapter;
 import com.jasonko.movietime.adapters.RankMovieAdapter;
@@ -52,9 +54,11 @@ public class MainActivity extends Activity {
     private SearchBox searchBox;
     private RecyclerView rankRecyclerView;
     private RecyclerView recommendRecyclerView;
+    private GridView blogGridView;
 
     private ArrayList<Movie> rankMovies = new ArrayList<>();
     private ArrayList<MyYoutubeVideo> randomVideos = new ArrayList<>();
+    private BloggerGridAdapter mBloggerGridAdatper;
 
     private CardView newsCardView;
     private CardView theaterCardView;
@@ -199,6 +203,7 @@ public class MainActivity extends Activity {
         videoProgress = (ProgressBar) findViewById(R.id.main_video_progress);
         movieText = (TextView) findViewById(R.id.main_movie_text);
         videoText = (TextView) findViewById(R.id.main_video_text);
+        blogGridView = (GridView) findViewById(R.id.recommend_blog_grid_view);
 
         //設定drawer中的listview的選項
         DrawerListAdapter mAdapter = new DrawerListAdapter(this, AppParams.drawerItems);
@@ -259,6 +264,10 @@ public class MainActivity extends Activity {
                 startActivity(newIntent);
             }
         });
+
+        mBloggerGridAdatper = new BloggerGridAdapter(MainActivity.this, AppParams.bloggers);
+        blogGridView.setAdapter(mBloggerGridAdatper);
+
     }
 
 
@@ -286,7 +295,7 @@ public class MainActivity extends Activity {
                     int prefVersion = mPref.getInt("version code", 0);
 
                     if(verCode != currentVersion.getVersionCode()){
-                        if(prefVersion == currentVersion.getVersionCode()){
+                        if(prefVersion <= currentVersion.getVersionCode()){
                             boolean isPopGetNewDialog = mPref.getBoolean("is pop new version dialog", true);
                             if (isPopGetNewDialog){
                                 popGetNewDialog("version code", currentVersion.getVersionCode(), currentVersion.getVersionName(), currentVersion.getVersionContent());

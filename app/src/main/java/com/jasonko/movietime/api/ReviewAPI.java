@@ -61,6 +61,8 @@ public class ReviewAPI {
                 String title = "";
                 String content = "";
                 String publish_date = "";
+                double point = 0;
+                int head_index = 0;
                 try {
                     review_id = reviewObject.getInt("id");
                     movie_id = reviewObject.getInt("movie_id");
@@ -68,10 +70,16 @@ public class ReviewAPI {
                     title = reviewObject.getString("title");
                     content = reviewObject.getString("content");
                     publish_date = reviewObject.getString("publish_date");
+                    head_index = reviewObject.getInt("head_index");
                 }catch (Exception e){
 
                 }
-                Review newReview = new Review(review_id,movie_id,author,title,content,publish_date);
+                try {
+                    point = reviewObject.getDouble("point");
+                }catch (Exception e){
+
+                }
+                Review newReview = new Review(review_id,movie_id,author,title,content,publish_date,head_index,point);
                 reviews.add(newReview);
             }
         }catch (Exception e){
@@ -81,7 +89,7 @@ public class ReviewAPI {
     }
 
 
-    public static String httpPostReview(int movie_id, String author, String title, String content, String point){
+    public static String httpPostReview(int movie_id, String author, String title, String content, String point, int head_index){
         String result = "" ;
         // 第一步，创建HttpPost对象
         HttpPost httpPost = new HttpPost( host + "/api/movie/update_reviews" );
@@ -93,6 +101,7 @@ public class ReviewAPI {
         params.add(new BasicNameValuePair("t", title));
         params.add(new BasicNameValuePair("c", content));
         params.add(new BasicNameValuePair("p", point));
+        params.add(new BasicNameValuePair("h", Integer.toString(head_index)));
 
         HttpResponse httpResponse = null;
         try {

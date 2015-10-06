@@ -19,36 +19,86 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/text_userId"
-                android:text="使用者"
-                android:layout_margin="5dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/text_publish_date"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="publish_date"
+            <ImageView
+                android:id="@+id/comment_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/head_captain"
                 />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                >
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/text_userId"
+                        android:text="使用者"
+                        android:layout_centerVertical="true"
+                        android:textSize="17dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/text_publish_date"
+                        android:text="publish_date"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:textSize="14dp"
+                        />
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/text_user_point"
+                        android:text="7分"
+                        android:textSize="15dp"
+                        android:textColor="@color/movie_indicator"
+                        />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_marginTop="1dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:numStars="5"
+                        android:rating="2.5"
+                        android:progressBackgroundTint="@color/white"
+                        android:progressTint="@color/movie_indicator"
+                        android:secondaryProgressTint="@color/white"
+                        android:isIndicator="true"
+                        android:layout_marginLeft="5dp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/text_user_point"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="評分：7"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -57,7 +107,8 @@
             android:text="在此撰寫評論"
             android:layout_marginLeft="5dp"
             android:layout_marginBottom="5dp"
-            android:textSize="12sp"/>
+            android:layout_marginTop="5dp"
+            android:textSize="15dp"/>
 
     </LinearLayout>
 

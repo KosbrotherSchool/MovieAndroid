@@ -609,6 +609,11 @@ public class MovieAPI {
 
             try {
                 review_size = movieObject.getInt("review_size");
+            }catch (Exception e){
+
+            }
+
+            try {
                 points = movieObject.getDouble("point");
             }catch (Exception e){
 

@@ -435,6 +435,75 @@
 
 
             </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:gravity="center_vertical"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="電影部落格"
+                        android:textSize="20dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/movie_indicator"
+                        />
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/more_recommend_blog_card_view"
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        card_view:cardBackgroundColor="@color/movie_indicator"
+                        card_view:cardUseCompatPadding="true"
+                        card_view:cardElevation="0dp"
+                        card_view:cardCornerRadius="2dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:selectableItemBackground"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="更多部落格"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="3dp"
+                            />
+                    </android.support.v7.widget.CardView>
+                </LinearLayout>
+
+
+                <GridView
+                    android:id="@+id/recommend_blog_grid_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:numColumns="3"
+                    android:gravity="center"
+                    android:columnWidth="5dp"
+                    android:stretchMode="columnWidth"
+                    >
+                </GridView>
+
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

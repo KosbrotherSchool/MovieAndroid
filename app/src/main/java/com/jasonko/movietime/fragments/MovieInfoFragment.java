@@ -20,10 +20,7 @@ import android.widget.Toast;
 
 import com.jasonko.movietime.CommentActivity;
 import com.jasonko.movietime.MoviePhotosActivity;
-import com.jasonko.movietime.NewsActivity;
 import com.jasonko.movietime.R;
-import com.jasonko.movietime.TheatersActivity;
-import com.jasonko.movietime.TheatersOfAreaActivity;
 import com.jasonko.movietime.TrailersActivity;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.dao.DaoMaster;
@@ -66,7 +63,7 @@ public class MovieInfoFragment extends Fragment{
     private TextView classText;
     private TextView publishDateText;
     private ImageView mImage;
-    private ImageView image_review;
+//    private ImageView image_review;
 
     private ImageLoader mImageLoader;
     private ProgressBar mProgressBar;
@@ -133,7 +130,6 @@ public class MovieInfoFragment extends Fragment{
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
         rateText = (TextView) view.findViewById(R.id.rate_text);
         reviewNumTExt = (TextView) view.findViewById(R.id.review_num_text);
-        image_review = (ImageView) view.findViewById(R.id.image_review);
 
         LayerDrawable stars = (LayerDrawable) ratingBar
                 .getProgressDrawable();
@@ -143,6 +139,7 @@ public class MovieInfoFragment extends Fragment{
                 PorterDuff.Mode.SRC_ATOP); // for half filled stars
         stars.getDrawable(0).setColorFilter(getResources().getColor(R.color.white),
                 PorterDuff.Mode.SRC_ATOP); // for empty stars
+
 
         mImageLoader = new ImageLoader(getActivity(),200);
         readmoreTextView.setOnClickListener(new View.OnClickListener() {
@@ -203,7 +200,7 @@ public class MovieInfoFragment extends Fragment{
 
                 mImageLoader.DisplayImage(mMovie.getSmall_pic(), mImage);
 
-                ratingBar.setRating((float) mMovie.getPoints());
+                ratingBar.setRating((float)(mMovie.getPoints()/2));
                 rateText.setText(Double.toString(mMovie.getPoints()));
                 reviewNumTExt.setText(Integer.toString(mMovie.getReview_size()));
 
@@ -228,17 +225,6 @@ public class MovieInfoFragment extends Fragment{
                     }
                 });
 
-
-                //////////////////////////////////////////////////////////////////
-                image_review.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent reviewIntent = new Intent(getActivity(), CommentActivity.class);
-                        reviewIntent.putExtra("movie_id", mMovieID);
-                        getActivity().startActivity(reviewIntent);
-
-                    }
-                });
 
                 mProgressBar.setVisibility(View.GONE);
                 mLinearLayout.setVisibility(View.VISIBLE);
@@ -292,20 +278,17 @@ public class MovieInfoFragment extends Fragment{
                     }
                 });
 
-//                linearReview.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-////                        Intent intentReport = new Intent(Intent.ACTION_SEND);
-////                        intentReport.setType("text/plain");
-////                        intentReport.putExtra(Intent.EXTRA_EMAIL, new String[]{"kosbrotherschool@gmail.com"});
-////                        intentReport.putExtra(Intent.EXTRA_SUBJECT, "問題回報："+ mMovie.getTitle() +" "+ Integer.toString(mMovie.getMovie_id()));
-////                        try {
-////                            startActivity(Intent.createChooser(intentReport, "傳送 mail..."));
-////                        } catch (android.content.ActivityNotFoundException ex) {
-////                            Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-////                        }
-//                    }
-//                });
+                linearReview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent reviewIntent = new Intent(getActivity(), CommentActivity.class);
+                        reviewIntent.putExtra("movie_id", mMovieID);
+                        reviewIntent.putExtra("title", mMovie.getTitle());
+                        reviewIntent.putExtra("point_str", Double.toString(mMovie.getPoints()));
+                        reviewIntent.putExtra("review_size_str", Integer.toString(mMovie.getReview_size()));
+                        getActivity().startActivity(reviewIntent);
+                    }
+                });
 
 
 
