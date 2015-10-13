@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -58,6 +60,9 @@ public class QuickMovieTimeActivity extends AppCompatActivity {
 
 //    int taskRunTimes = 0;
     boolean isTaskRunning = false;
+    private LinearLayout linearButtons;
+    private Button upButton;
+    private Button downButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,9 @@ public class QuickMovieTimeActivity extends AppCompatActivity {
         timeSpinner = (Spinner) findViewById(R.id.spinner1);
         areaSpinner = (Spinner) findViewById(R.id.spinner2);
         theaterSpinner = (Spinner) findViewById(R.id.spinner3);
+        linearButtons = (LinearLayout) findViewById(R.id.linear_buttons);
+        upButton = (Button) findViewById(R.id.quicktime_up_button);
+        downButton = (Button) findViewById(R.id.quicktime_down_button);
 
         prefs = getPreferences(0);
 
@@ -222,6 +230,7 @@ public class QuickMovieTimeActivity extends AppCompatActivity {
 
     }
 
+
     private class QuickTimesTask extends AsyncTask {
 
         @Override
@@ -230,6 +239,7 @@ public class QuickMovieTimeActivity extends AppCompatActivity {
             recyclerView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.VISIBLE);
             noNetText.setVisibility(View.GONE);
+            linearButtons.setVisibility(View.GONE);
 //            Toast.makeText(QuickMovieTimeActivity.this, Integer.toString(taskRunTimes),Toast.LENGTH_SHORT).show();
 //            taskRunTimes ++;
             isTaskRunning = true;
@@ -254,11 +264,86 @@ public class QuickMovieTimeActivity extends AppCompatActivity {
                 recyclerView.setAdapter(quickTimeAdapter);
             }else {
                 noNetText.setVisibility(View.VISIBLE);
+                linearButtons.setVisibility(View.VISIBLE);
+                setUpTimeAndDownTimeButton();
             }
             mProgressBar.setVisibility(View.GONE);
 
         }
     }
+
+    private void setUpTimeAndDownTimeButton() {
+        int hour = Integer.parseInt(searchTime);
+        int upHour = getUpHour(hour);
+        int downHour = getDownHour(hour);
+        if (upHour<10){
+            upButton.setText("上一時刻 "+"0"+Integer.toString(upHour)+":00");
+        }else {
+            upButton.setText("上一時刻 "+Integer.toString(upHour)+":00");
+        }
+        if (downHour<10){
+            downButton.setText("下一時刻 "+"0"+Integer.toString(downHour)+":00");
+        }else {
+            downButton.setText("下一時刻 "+Integer.toString(downHour)+":00");
+        }
+
+        upButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                upTimeSelection();
+            }
+        });
+
+        downButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downTimeSelection();
+            }
+        });
+    }
+
+    public void downTimeSelection(){
+        int hour = Integer.parseInt(searchTime);
+        if (hour==7){
+            timeSpinner.setSelection(0);
+        }else {
+            timeSpinner.setSelection(timeSpinner.getSelectedItemPosition() + 1);
+        }
+    }
+
+    public void upTimeSelection(){
+        int hour = Integer.parseInt(searchTime);
+        if (hour==8) {
+            timeSpinner.setSelection(23);
+        }else {
+            timeSpinner.setSelection(timeSpinner.getSelectedItemPosition() - 1);
+        }
+    }
+
+    private int getDownHour(int hour) {
+        int downHour;
+        if (hour== 0){
+            downHour = 1;
+        }else if(hour == 23){
+            downHour = 0;
+        }else {
+            downHour = hour +1;
+        }
+        return downHour;
+    }
+
+    private int getUpHour(int hour) {
+        int upHour;
+        if (hour== 0){
+            upHour = 23;
+        }else if(hour == 23){
+            upHour = 22;
+        }else {
+            upHour = hour -1;
+        }
+        return upHour;
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

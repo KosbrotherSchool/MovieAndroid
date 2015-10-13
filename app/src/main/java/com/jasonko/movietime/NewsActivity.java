@@ -43,7 +43,7 @@ public class NewsActivity extends AppCompatActivity {
         tabsStrip.setIndicatorHeight(10);
         tabsStrip.setBackgroundColor(getResources().getColor(R.color.deep_blue));
         tabsStrip.setTextColorResource(R.color.white);
-
+        tabsStrip.setVisibility(View.GONE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
@@ -51,7 +51,7 @@ public class NewsActivity extends AppCompatActivity {
         toolbar.setBackgroundResource(R.color.deep_blue);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("電影資訊");
+        getSupportActionBar().setTitle("電影新聞");
 
 
     }
@@ -94,7 +94,7 @@ public class NewsActivity extends AppCompatActivity {
 
     public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
-        final int PAGE_COUNT = 4;
+        final int PAGE_COUNT = 1;
         private String tabTitles[] = new String[] { "影片新聞","專題報導", "選片指南", "影評" };
 
         public SampleFragmentPagerAdapter(FragmentManager fm) {
@@ -113,15 +113,15 @@ public class NewsActivity extends AppCompatActivity {
                 case 0:
                     theNewsFragment = NewsFragment.newInstance(1);
                     break;
-                case 1:
-                    theNewsFragment = NewsFragment.newInstance(4);
-                    break;
-                case 2:
-                    theNewsFragment = NewsFragment.newInstance(2);
-                    break;
-                case 3:
-                    theNewsFragment = NewsFragment.newInstance(3);
-                    break;
+//                case 1:
+//                    theNewsFragment = NewsFragment.newInstance(4);
+//                    break;
+//                case 2:
+//                    theNewsFragment = NewsFragment.newInstance(2);
+//                    break;
+//                case 3:
+//                    theNewsFragment = NewsFragment.newInstance(3);
+//                    break;
             }
             return theNewsFragment;
         }

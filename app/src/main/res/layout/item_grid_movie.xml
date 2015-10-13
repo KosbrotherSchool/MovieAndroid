@@ -19,30 +19,79 @@
         <ImageView
             android:id="@+id/movie_grid_image"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="220dp"
             android:src="@drawable/icon_app"
             android:layout_marginTop="3dp"
             />
-        <TextView
-            android:id="@+id/movie_grid_title_text"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="18dp"
-            android:text="我的少女時代"
-            android:maxLines="1"
-            android:layout_marginTop="1dp"
-            android:textSize="15dp"
-            android:textColor="#000000"
-            android:singleLine="true"
-            />
-        <TextView
-            android:id="@+id/movie_grid_class_text"
-            android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:layout_marginTop="1dp"
-            android:text="保護級"
-            android:textSize="13dp"
-            android:lines="1"
-            />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="2dp"
+            >
+
+            <TextView
+                android:id="@+id/movie_grid_class_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="護"
+                android:textSize="18dp"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:background="@drawable/class_red_selector"
+                android:textStyle="bold"
+                android:layout_marginRight="5dp"
+                />
+
+            <TextView
+                android:id="@+id/movie_grid_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的少女時代"
+                android:maxLines="1"
+                android:layout_marginTop="1dp"
+                android:textSize="20dp"
+                android:textColor="#000000"
+                android:singleLine="true"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="3dp"
+            android:gravity="center_vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_user_point"
+                android:text="7分"
+                android:textSize="20dp"
+                android:textColor="@color/movie_indicator"
+                />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_marginTop="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/ratingBarStyleSmall"
+                android:numStars="5"
+                android:rating="2.5"
+                android:progressBackgroundTint="@color/white"
+                android:progressTint="@color/movie_indicator"
+                android:secondaryProgressTint="@color/white"
+                android:isIndicator="true"
+                android:layout_marginLeft="5dp"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 </android.support.v7.widget.CardView>
 

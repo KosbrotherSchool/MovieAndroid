@@ -2,11 +2,14 @@ package com.jasonko.movietime.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.jasonko.movietime.MovieActivity;
@@ -31,6 +34,8 @@ public class RankMovieAdapter extends RecyclerView.Adapter<RankMovieAdapter.View
         public TextView textRankNum;
         public TextView textMovieTitle;
         public ImageView imageMovie;
+        TextView user_point;
+        RatingBar ratingBar;
 
         public ViewHolder(View v) {
             super(v);
@@ -38,6 +43,8 @@ public class RankMovieAdapter extends RecyclerView.Adapter<RankMovieAdapter.View
             textRankNum = (TextView) mView.findViewById(R.id.text_rank_num);
             textMovieTitle = (TextView) mView.findViewById(R.id.text_rank_movie_tile);
             imageMovie = (ImageView) mView.findViewById(R.id.image_rank);
+            user_point = (TextView) mView.findViewById(R.id.text_user_point);
+            ratingBar = (RatingBar) mView.findViewById(R.id.ratingBar);
         }
 
     }
@@ -57,6 +64,16 @@ public class RankMovieAdapter extends RecyclerView.Adapter<RankMovieAdapter.View
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_movie_rank, parent, false);
         // set the view's size, margins, paddings and layout parameters
+        ViewHolder viewHolder = new ViewHolder(v);
+
+        LayerDrawable stars = (LayerDrawable) viewHolder.ratingBar
+                .getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(mActivity.getResources().getColor(R.color.movie_indicator),
+                PorterDuff.Mode.SRC_ATOP); // for filled stars
+        stars.getDrawable(1).setColorFilter(mActivity.getResources().getColor(R.color.movie_indicator),
+                PorterDuff.Mode.SRC_ATOP); // for half filled stars
+        stars.getDrawable(0).setColorFilter(mActivity.getResources().getColor(R.color.white),
+                PorterDuff.Mode.SRC_ATOP);
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -76,6 +93,9 @@ public class RankMovieAdapter extends RecyclerView.Adapter<RankMovieAdapter.View
                 mActivity.startActivity(newIntent);
             }
         });
+
+        holder.user_point.setText(Double.toString(mMovies.get(position).getPoints()) + "分");
+        holder.ratingBar.setRating((float) (mMovies.get(position).getPoints() / 2));
 
     }
 

@@ -10,7 +10,11 @@
 
     <color name="gray_background">#ff4d4d4d</color>
 
-    <color name="red_color">#ffFC0000</color>
+    <color name="class_red_color">#ffFC0000</color>
+    <color name="class_green_color">#ff118323</color>
+    <color name="class_yellow_color">#ffFD7E09</color>
+    <color name="class_blue_color">#ff043499</color>
+
 
     <color name="pink_color">#ffBF2A6F</color>
     <color name="background_color">#ffE6DDB9</color>
@@ -20,4 +24,5 @@
     <color name="deep_blue">#ff1C708C</color>
 
     <color name="light_green">#ff5CB89A</color>
+
 </resources>

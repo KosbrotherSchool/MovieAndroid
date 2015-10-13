@@ -4,7 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardview"
     android:layout_width="match_parent"
-    android:layout_height="140dp"
+    android:layout_height="180dp"
     card_view:cardBackgroundColor="#FFFFFF"
     card_view:cardUseCompatPadding="true"
     card_view:cardElevation="5dp"
@@ -22,64 +22,65 @@
 
         <ImageView
             android:id="@+id/movie_thisweek_image"
-            android:layout_width="100dp"
+            android:layout_width="129dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="-3dp"
             android:src="@drawable/icon_app"
+
             />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
             >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 >
+
                 <TextView
-                    android:id="@+id/movie_thisweek_new_text"
+                    android:id="@+id/movie_thisweek_class_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="New"
-                    android:background="@drawable/movietime_area_style"
-                    android:textColor="#FFFFFF"
-                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:text="護"
+                    android:textSize="21dp"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:background="@drawable/class_red_selector"
+                    android:textStyle="bold"
+                    android:layout_marginRight="5dp"
                     />
+
                 <TextView
                     android:id="@+id/movie_thisweek_title_text"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="不可能的任務：失控國度"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="17dp"
+                    android:textSize="22dp"
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:textColor="#000000"
                     />
+
             </LinearLayout>
+
             <TextView
-                android:id="@+id/movie_thisweek_publish_text"
+                android:id="@+id/movie_thisweek_eng_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="上映日期：2015/09/03  保護級"
-                android:textSize="15dp"
-                android:layout_marginTop="5dp"
-                android:maxLines="1"
-                />
-            <TextView
-                android:id="@+id/movie_thisweek_actors_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="湯姆克魯斯、傑瑞米雷納、賽門佩吉、文雷姆斯"
-                android:textSize="15dp"
+                android:text="Mission Impossible"
+                android:textSize="18dp"
                 android:maxLines="1"
                 android:layout_marginTop="5dp"
                 />
+
             <TextView
                 android:id="@+id/movie_thisweek_type_text"
                 android:layout_width="match_parent"
@@ -90,7 +91,53 @@
                 android:layout_marginTop="5dp"
                 />
 
+
+            <TextView
+                android:id="@+id/movie_thisweek_publish_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="上映日期：2015/09/03"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:maxLines="1"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="5dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/text_user_point"
+                    android:text="7分"
+                    android:textSize="17dp"
+                    android:textColor="@color/movie_indicator"
+                    />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_marginTop="1dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:numStars="5"
+                    android:rating="2.5"
+                    android:progressBackgroundTint="@color/white"
+                    android:progressTint="@color/movie_indicator"
+                    android:secondaryProgressTint="@color/white"
+                    android:isIndicator="true"
+                    android:layout_marginLeft="5dp"
+                    />
+            </LinearLayout>
+
+
         </LinearLayout>
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

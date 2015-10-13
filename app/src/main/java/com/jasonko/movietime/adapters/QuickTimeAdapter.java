@@ -1,16 +1,19 @@
 package com.jasonko.movietime.adapters;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jasonko.movietime.MovieActivity;
+import com.jasonko.movietime.QuickMovieTimeActivity;
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.model.MovieTime;
 import com.jasonko.movietime.model.Theater;
@@ -23,7 +26,7 @@ import java.util.ArrayList;
 public class QuickTimeAdapter extends RecyclerView.Adapter<QuickTimeAdapter.ViewHolder> {
 
     public ArrayList<MovieTime> mMovieTimes;
-    public Activity mActivity;
+    public QuickMovieTimeActivity mActivity;
     public String mHour;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -33,6 +36,10 @@ public class QuickTimeAdapter extends RecyclerView.Adapter<QuickTimeAdapter.View
         public TextView textTheater;
         public TextView textMovieTitle;
         public ImageView imageMap;
+        public LinearLayout linearButtons;
+        public CardView cardView;
+        public Button upButton;
+        public Button downButton;
 
         public ViewHolder(View v) {
             super(v);
@@ -41,12 +48,16 @@ public class QuickTimeAdapter extends RecyclerView.Adapter<QuickTimeAdapter.View
             textTheater = (TextView) mView.findViewById(R.id.quick_theater_text);
             textMovieTitle = (TextView) mView.findViewById(R.id.quick_movie_title_text);
             imageMap = (ImageView) mView.findViewById(R.id.quick_image_map);
+            linearButtons = (LinearLayout) mView.findViewById(R.id.linear_buttons);
+            cardView = (CardView) mView.findViewById(R.id.cardview);
+            upButton = (Button) mView.findViewById(R.id.quicktime_up_button);
+            downButton = (Button) mView.findViewById(R.id.quicktime_down_button);
         }
 
     }
 
     // clockHour = "10" or "11" etc
-    public QuickTimeAdapter(ArrayList<MovieTime> movieTimes, Activity activity, String clockHour) {
+    public QuickTimeAdapter(ArrayList<MovieTime> movieTimes, QuickMovieTimeActivity activity, String clockHour) {
         mMovieTimes = movieTimes;
         mActivity = activity;
         mHour = clockHour;
@@ -85,7 +96,7 @@ public class QuickTimeAdapter extends RecyclerView.Adapter<QuickTimeAdapter.View
             }
         });
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(mActivity, MovieActivity.class);
@@ -93,6 +104,50 @@ public class QuickTimeAdapter extends RecyclerView.Adapter<QuickTimeAdapter.View
                 mActivity.startActivity(newIntent);
             }
         });
+
+        if (position == mMovieTimes.size()-1){
+            int hour = Integer.parseInt(mHour);
+            int upHour;
+            int downHour;
+            if (hour== 0){
+                upHour = 23;
+                downHour = 1;
+            }else if(hour == 23){
+                upHour = 22;
+                downHour = 0;
+            }else {
+                upHour = hour -1;
+                downHour = hour +1;
+            }
+            if (upHour<10){
+                holder.upButton.setText("上一時刻 "+"0"+Integer.toString(upHour)+":00");
+            }else {
+                holder.upButton.setText("上一時刻 "+Integer.toString(upHour)+":00");
+            }
+            if (downHour<10){
+                holder.downButton.setText("下一時刻 "+"0"+Integer.toString(downHour)+":00");
+            }else {
+                holder.downButton.setText("下一時刻 "+Integer.toString(downHour)+":00");
+            }
+            holder.linearButtons.setVisibility(View.VISIBLE);
+
+            holder.downButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.downTimeSelection();
+                }
+            });
+
+            holder.upButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.upTimeSelection();
+                }
+            });
+
+        }else {
+            holder.linearButtons.setVisibility(View.GONE);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

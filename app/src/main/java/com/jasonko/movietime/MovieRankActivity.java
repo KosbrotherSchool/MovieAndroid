@@ -29,7 +29,7 @@ public class MovieRankActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pagers);
 
-        setAdView();
+//        setAdView();
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -91,8 +91,8 @@ public class MovieRankActivity extends AppCompatActivity {
 
     public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
-        final int PAGE_COUNT = 5;
-        private String tabTitles[] = new String[] { "台北票房", "北美票房", "周冠軍", "期待榜", "滿意榜" };
+        final int PAGE_COUNT = 3;
+        private String tabTitles[] = new String[] { "台北票房","滿意榜", "期待榜" };
 
         public SampleFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -108,19 +108,13 @@ public class MovieRankActivity extends AppCompatActivity {
             Fragment newFragment = null;
             switch (position){
                 case 0:
-                    newFragment = MovieRankFragment.newInstance(position + 1);
+                    newFragment = MovieRankFragment.newInstance(1);
                     break;
                 case 1:
-                    newFragment = MovieRankFragment.newInstance(position + 1);
+                    newFragment = MovieRankFragment.newInstance(6);
                     break;
                 case 2:
-                    newFragment = MovieRankFragment.newInstance(position + 1);
-                    break;
-                case 3:
-                    newFragment = MovieRankFragment.newInstance(position + 2);
-                    break;
-                case 4:
-                    newFragment = MovieRankFragment.newInstance(position + 2);
+                    newFragment = MovieRankFragment.newInstance(5);
                     break;
             }
             return newFragment;

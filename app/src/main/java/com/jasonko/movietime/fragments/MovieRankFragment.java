@@ -15,7 +15,6 @@ import com.jasonko.movietime.R;
 import com.jasonko.movietime.adapters.RankMovieExpectAdpter;
 import com.jasonko.movietime.adapters.RankMovieHorizontalAdapter;
 import com.jasonko.movietime.adapters.RankMovieSatisfyAdapter;
-import com.jasonko.movietime.adapters.RankMovieWeekAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.tool.NetworkUtil;
@@ -32,7 +31,6 @@ public class MovieRankFragment extends Fragment {
     private ArrayList<Movie> mMovies;
     private RecyclerView moviesRecylerView;
     private RankMovieHorizontalAdapter movieRankAdapter;
-    private RankMovieWeekAdapter movieWeekAdapter;
     private RankMovieExpectAdpter movieExpectAdpter;
     private RankMovieSatisfyAdapter movieSatisfyAdapter;
 
@@ -80,30 +78,6 @@ public class MovieRankFragment extends Fragment {
                     }
                 }
                 break;
-            case 2:
-                if (movieRankAdapter != null){
-                    moviesRecylerView.setAdapter(movieRankAdapter);
-                }else {
-                    if (NetworkUtil.getConnectivityStatus(getActivity()) != 0) {
-                        new NewsTask().execute();
-                    }else {
-                        mProgressBar.setVisibility(View.GONE);
-                        noNetText.setVisibility(View.VISIBLE);
-                    }
-                }
-                break;
-            case 3:
-                if (movieWeekAdapter != null){
-                    moviesRecylerView.setAdapter(movieWeekAdapter);
-                }else {
-                    if (NetworkUtil.getConnectivityStatus(getActivity()) != 0) {
-                        new NewsTask().execute();
-                    }else {
-                        mProgressBar.setVisibility(View.GONE);
-                        noNetText.setVisibility(View.VISIBLE);
-                    }
-                }
-                break;
             case 5:
                 if (movieExpectAdpter != null){
                     moviesRecylerView.setAdapter(movieExpectAdpter);
@@ -142,12 +116,6 @@ public class MovieRankFragment extends Fragment {
                 case 1:
                     mMovies = MovieAPI.getTaipeiRankMovies(-1);
                     break;
-                case 2:
-                    mMovies = MovieAPI.getUSRankMovies();
-                    break;
-                case 3:
-                    mMovies = MovieAPI.getWeekRankMovies();
-                    break;
                 case 5:
                     mMovies = MovieAPI.getExpectRankMovies();
                     break;
@@ -166,14 +134,6 @@ public class MovieRankFragment extends Fragment {
                     case 1:
                         movieRankAdapter = new RankMovieHorizontalAdapter(getActivity(), mMovies);
                         moviesRecylerView.setAdapter(movieRankAdapter);
-                        break;
-                    case 2:
-                        movieRankAdapter = new RankMovieHorizontalAdapter(getActivity(), mMovies);
-                        moviesRecylerView.setAdapter(movieRankAdapter);
-                        break;
-                    case 3:
-                        movieWeekAdapter = new RankMovieWeekAdapter(getActivity(), mMovies);
-                        moviesRecylerView.setAdapter(movieWeekAdapter);
                         break;
                     case 5:
                         movieExpectAdpter = new RankMovieExpectAdpter(getActivity(), mMovies);

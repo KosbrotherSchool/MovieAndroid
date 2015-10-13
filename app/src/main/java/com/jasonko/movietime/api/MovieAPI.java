@@ -112,29 +112,6 @@ public class MovieAPI {
         return movies;
     }
 
-    public static ArrayList<Movie> getUSRankMovies(){
-        ArrayList<Movie> movies = new ArrayList<Movie>();
-        String url = host + "/api/movie/rank_movies?rank_type=2";
-        String message = getMessageFromServer("GET", null, null, url);
-        if (message == null) {
-            return null;
-        } else {
-            parseMovie(movies, message);
-        }
-        return movies;
-    }
-
-    public static ArrayList<Movie> getWeekRankMovies(){
-        ArrayList<Movie> movies = new ArrayList<>();
-        String url = host + "/api/movie/rank_movies?rank_type=3";
-        String message = getMessageFromServer("GET", null, null, url);
-        if (message == null) {
-            return null;
-        } else {
-            parseMovie(movies, message);
-        }
-        return movies;
-    }
 
     public static ArrayList<Movie> getSearchedMovies(String query, int page){
         ArrayList<Movie> movies = new ArrayList<>();
@@ -864,9 +841,23 @@ public class MovieAPI {
 
                 }
 
+                double points =0;
+                try {
+                    points = movieObject.getDouble("point");
+                }catch (Exception e){
+
+                }
+
+                int review_size = 0;
+                try {
+                    review_size = movieObject.getInt("review_size");
+                }catch (Exception e){
+
+                }
+
                 movieRank = new MovieRank(rank_type,movie_id,current_rank,last_week_rank,publish_weeks,the_week,static_duration,expect_people,total_people,satisfied_num);
 
-                Movie newMoive = new Movie(title,title_eng,movie_class,movie_type, movie_length, publish_date, director, editors, actors, official, movie_info, small_pic, large_pic, publish_date_date, movie_round, movie_id,movieRank, photo_size, trailer_size);
+                Movie newMoive =new Movie(title,title_eng,movie_class,movie_type,movie_length,publish_date,director,editors,actors,official,movie_info,small_pic,large_pic,publish_date_date,movie_round,movie_id,photo_size,trailer_size,points,review_size, movieRank);
                 movies.add(newMoive);
             }
         }catch (Exception e){
