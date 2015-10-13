@@ -36,4 +36,13 @@
         android:textColor="@color/movie_indicator"
         />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="電影即時通 v1.11"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:textSize="15dp"
+        />
+
 </LinearLayout>

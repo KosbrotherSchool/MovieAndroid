@@ -8,8 +8,8 @@ android {
         applicationId "com.jasonko.movietime"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 8
-        versionName "1.7"
+        versionCode 13
+        versionName "1.12"
     }
     buildTypes {
         release {

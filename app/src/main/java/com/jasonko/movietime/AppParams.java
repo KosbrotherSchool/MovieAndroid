@@ -27,9 +27,9 @@ public class AppParams {
     };
 
     public static final Blogger[] bloggers ={
+            new Blogger("Das Kino波電影", "http://bernd97.pixnet.net/blog", R.drawable.blogger_5),
             new Blogger("鯨鯊的塗鴨影評", "http://whale005.pixnet.net/blog", R.drawable.blogger_1),
-            new Blogger("電影知識分享趣", "http://movielore.pixnet.net/blog", R.drawable.blogger_2),
-            new Blogger("多多看電影", "http://applause29.pixnet.net/blog", R.drawable.blogger_3)
+            new Blogger("火行者的電影部落格", "http://firewalker-movie.blogspot.tw/", R.drawable.blogger_4)
     };
 
 
@@ -40,7 +40,6 @@ public class AppParams {
            new DrawerItem("問題回報", R.drawable.drawer_problem),
            new DrawerItem("好用給個讚", R.drawable.drawer_thumb),
            new DrawerItem("分享給好友", R.drawable.drawer_share),
-            new DrawerItem("電影部落格", R.drawable.drawer_blogger),
            new DrawerItem("關於我們", R.drawable.drawer_about),
            new DrawerItem("我的設定", R.drawable.drawer_setting),
     };

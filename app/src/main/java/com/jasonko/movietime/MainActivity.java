@@ -32,7 +32,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.jasonko.movietime.adapters.BloggerGridAdapter;
 import com.jasonko.movietime.adapters.DrawerListAdapter;
-import com.jasonko.movietime.adapters.RandomYoutubeVideoAdapter;
 import com.jasonko.movietime.adapters.RankMovieAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.Movie;
@@ -53,7 +52,6 @@ public class MainActivity extends Activity {
     private ListView listview_drawer;
     private SearchBox searchBox;
     private RecyclerView rankRecyclerView;
-    private RecyclerView recommendRecyclerView;
     private GridView blogGridView;
 
     private ArrayList<Movie> rankMovies = new ArrayList<>();
@@ -66,12 +64,11 @@ public class MainActivity extends Activity {
     private CardView creditCardView;
     private CardView ticketCardView;
     private CardView moreRankCardView;
-    private CardView moreRecommendVideoCardView;
+    private CardView moreBlog;
+    private CardView quickCardView;
 
     private ProgressBar movieProgress;
-    private ProgressBar videoProgress;
     private TextView movieText;
-    private TextView videoText;
 
     private AdView mAdView;
 
@@ -95,20 +92,12 @@ public class MainActivity extends Activity {
         mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rankRecyclerView.setLayoutManager(mLayoutManager);
 
-        recommendRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_recommend);
-        recommendRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager2 = new LinearLayoutManager(this);
-        mLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recommendRecyclerView.setLayoutManager(mLayoutManager2);
 
         if (NetworkUtil.getConnectivityStatus(MainActivity.this) != 0) {
             new RankMoviesTask().execute();
-            new RandomVideosTask().execute();
         }else {
             movieProgress.setVisibility(View.GONE);
-            videoProgress.setVisibility(View.GONE);
             movieText.setVisibility(View.VISIBLE);
-            videoText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -198,12 +187,11 @@ public class MainActivity extends Activity {
         creditCardView = (CardView) findViewById(R.id.credit_card_view);
         ticketCardView = (CardView) findViewById(R.id.ticket_card_view);
         moreRankCardView = (CardView) findViewById(R.id.more_rank_card_view);
-        moreRecommendVideoCardView = (CardView) findViewById(R.id.more_recommend_video_card_view);
         movieProgress = (ProgressBar) findViewById(R.id.main_movie_progress);
-        videoProgress = (ProgressBar) findViewById(R.id.main_video_progress);
         movieText = (TextView) findViewById(R.id.main_movie_text);
-        videoText = (TextView) findViewById(R.id.main_video_text);
         blogGridView = (GridView) findViewById(R.id.recommend_blog_grid_view);
+        moreBlog = (CardView) findViewById(R.id.more_recommend_blog_card_view);
+        quickCardView = (CardView) findViewById(R.id.quick_card_view);
 
         //設定drawer中的listview的選項
         DrawerListAdapter mAdapter = new DrawerListAdapter(this, AppParams.drawerItems);
@@ -257,16 +245,24 @@ public class MainActivity extends Activity {
             }
         });
 
-        moreRecommendVideoCardView.setOnClickListener(new View.OnClickListener() {
+        mBloggerGridAdatper = new BloggerGridAdapter(MainActivity.this, AppParams.bloggers);
+        blogGridView.setAdapter(mBloggerGridAdatper);
+
+        moreBlog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newIntent = new Intent(MainActivity.this, RecommendColumnActivity.class);
-                startActivity(newIntent);
+                Intent intentBlogger = new Intent(MainActivity.this, BloggerActivity.class);
+                startActivity(intentBlogger);
             }
         });
 
-        mBloggerGridAdatper = new BloggerGridAdapter(MainActivity.this, AppParams.bloggers);
-        blogGridView.setAdapter(mBloggerGridAdatper);
+        quickCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentQuick = new Intent(MainActivity.this, QuickMovieTimeActivity.class);
+                startActivity(intentQuick);
+            }
+        });
 
     }
 
@@ -294,8 +290,8 @@ public class MainActivity extends Activity {
                     SharedPreferences mPref = getPreferences(0);
                     int prefVersion = mPref.getInt("version code", 0);
 
-                    if(verCode != currentVersion.getVersionCode()){
-                        if(prefVersion <= currentVersion.getVersionCode()){
+                    if(verCode != currentVersion.getVersionCode() && verCode < currentVersion.getVersionCode()){
+                        if(prefVersion == currentVersion.getVersionCode()){
                             boolean isPopGetNewDialog = mPref.getBoolean("is pop new version dialog", true);
                             if (isPopGetNewDialog){
                                 popGetNewDialog("version code", currentVersion.getVersionCode(), currentVersion.getVersionName(), currentVersion.getVersionContent());
@@ -370,27 +366,6 @@ public class MainActivity extends Activity {
             }else{
                 movieProgress.setVisibility(View.GONE);
                 movieText.setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
-    private class RandomVideosTask extends AsyncTask {
-
-        @Override
-        protected Object doInBackground(Object[] params) {
-            randomVideos = MovieAPI.getRandomYoutubeVideos();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Object result) {
-            if (randomVideos!=null && randomVideos.size() > 0) {
-                RandomYoutubeVideoAdapter videoAdapter = new RandomYoutubeVideoAdapter(MainActivity.this, randomVideos);
-                recommendRecyclerView.setAdapter(videoAdapter);
-                videoProgress.setVisibility(View.GONE);
-            }else {
-                videoProgress.setVisibility(View.GONE);
-                videoText.setVisibility(View.VISIBLE);
             }
         }
     }

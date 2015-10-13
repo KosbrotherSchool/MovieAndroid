@@ -31,7 +31,7 @@ public class RecentMovieActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recommend_column);
+        setContentView(R.layout.activity_recent_movie);
         mProgressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
         mProgressBar.setVisibility(View.GONE);
 

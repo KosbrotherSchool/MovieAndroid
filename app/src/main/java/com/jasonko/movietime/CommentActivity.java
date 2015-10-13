@@ -116,6 +116,7 @@ public class CommentActivity extends AppCompatActivity {
                 if(mAdapter == null){
                     mAdapter = new CommentListAdapter(CommentActivity.this, mReviews);
                     mRecyclerView.setAdapter(mAdapter);
+                    noCommentLienar.setVisibility(View.GONE);
                 }else {
                     mAdapter.notifyDataSetChanged();
                 }

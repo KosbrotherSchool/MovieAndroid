@@ -46,10 +46,6 @@ public class TheaterLatelyFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-
-
-
-
         SharedPreferences preferences = getActivity().getSharedPreferences("RECENTLY_THEATERS", Context.MODE_PRIVATE);
         int finalone = preferences.getInt("FINALONE", 0);
         int count = preferences.getInt("COUNT", 0);
@@ -92,13 +88,6 @@ public class TheaterLatelyFragment extends Fragment {
 
         mAdapter = new TheatersListAdapter(getActivity(), mData);
         mRecyclerView.setAdapter(mAdapter);
-
-
-
-
-
-
-
 
 
     }

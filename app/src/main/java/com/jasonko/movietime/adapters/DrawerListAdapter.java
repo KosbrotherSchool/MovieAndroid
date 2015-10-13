@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jasonko.movietime.AboutUsActivity;
-import com.jasonko.movietime.BloggerActivity;
 import com.jasonko.movietime.FollowMovieActivity;
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.RecentMovieActivity;
@@ -106,15 +105,15 @@ public class DrawerListAdapter extends BaseAdapter {
                             Toast.makeText(mActivity, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                         }
                         break;
+//                    case 6:
+//                        Intent intentBlogger = new Intent(mActivity, BloggerActivity.class);
+//                        mActivity.startActivity(intentBlogger);
+//                        break;
                     case 6:
-                        Intent intentBlogger = new Intent(mActivity, BloggerActivity.class);
-                        mActivity.startActivity(intentBlogger);
-                        break;
-                    case 7:
                         Intent intentAbout = new Intent(mActivity, AboutUsActivity.class);
                         mActivity.startActivity(intentAbout);
                         break;
-                    case 8:
+                    case 7:
                         Intent intentSetting = new Intent(mActivity, SettingActivity.class);
                         mActivity.startActivity(intentSetting);
                         break;

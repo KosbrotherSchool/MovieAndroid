@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardBackgroundColor="#FFFFFF"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardElevation="5dp"
+    card_view:cardCornerRadius="3dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:selectableItemBackground"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+
+
+        <TextView
+            android:id="@+id/quick_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="18:00"
+            android:gravity="center_vertical"
+            android:textSize="18dp"
+            android:layout_marginLeft="10dp"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:id="@+id/quick_theater_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="總督戲院"
+                    android:textSize="17dp"
+                    android:layout_weight="1"
+                    />
+
+                <ImageView
+                    android:id="@+id/quick_image_map"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/icon_map_gray"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/quick_movie_title_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="不可能的任務：失控國度"
+                android:textSize="20dp"
+                android:singleLine="true"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+</android.support.v7.widget.CardView>

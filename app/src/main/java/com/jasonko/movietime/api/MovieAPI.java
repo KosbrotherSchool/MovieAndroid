@@ -3,6 +3,7 @@ package com.jasonko.movietime.api;
 import android.util.Log;
 
 import com.jasonko.movietime.model.Area;
+import com.jasonko.movietime.model.Blogger;
 import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.model.MovieNews;
 import com.jasonko.movietime.model.MovieRank;
@@ -56,6 +57,18 @@ public class MovieAPI {
 
         }
         return theversion;
+    }
+
+    public static ArrayList<Blogger> getBlogs(){
+        ArrayList<Blogger> bloggers = new ArrayList<>();
+        String url = host + "/api/movie/blogs";
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            parseBloggers(bloggers, message);
+        }
+        return bloggers;
     }
 
     public static ArrayList<Trailer> getMovieTrailersByID(int movie_id){
@@ -164,6 +177,32 @@ public class MovieAPI {
                 }
                 Area newArea = new Area(name, area_id);
                 areas.add(newArea);
+            }
+        }catch (Exception e){
+
+        }
+    }
+
+
+    private static void parseBloggers(ArrayList<Blogger> bloggers, String message) {
+        try {
+            JSONArray blogArray = new JSONArray(message);
+            for (int i = 0; i < blogArray.length(); i++){
+                JSONObject blogObject = blogArray.getJSONObject(i);
+
+                String blogger_name = "";
+                String blogger_url = "";
+                String pic_link = "";
+
+                try {
+                    blogger_name = blogObject.getString("title");
+                    blogger_url = blogObject.getString("link");
+                    pic_link = blogObject.getString("pic_link");
+                }catch (Exception e){
+
+                }
+                Blogger newBlogger = new Blogger(blogger_name,blogger_url,pic_link);
+                bloggers.add(newBlogger);
             }
         }catch (Exception e){
 

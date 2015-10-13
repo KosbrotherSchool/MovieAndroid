@@ -87,14 +87,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme" />
         <activity
-            android:name=".RecommendColumnActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/CustomTheme" />
-        <activity
-            android:name=".RecommendColumnVideosActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/CustomTheme" />
-        <activity
             android:name=".MoviePhotosActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme" />
@@ -128,6 +120,10 @@
             android:theme="@style/CustomTheme" />
         <activity
             android:name=".WriteCommentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme" />
+        <activity
+            android:name=".QuickMovieTimeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme" />
 
