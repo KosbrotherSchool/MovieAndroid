@@ -114,7 +114,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="各大戲城"
+                            android:text="各區影城"
                             android:textColor="#FFFFFF"
                             android:textSize="18dp"
                             android:layout_marginTop="8dp"
@@ -137,7 +137,7 @@
                     >
 
                     <android.support.v7.widget.CardView
-                        android:id="@+id/credit_card_view"
+                        android:id="@+id/blog_card_view"
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="0dp"
@@ -153,17 +153,17 @@
                         >
 
                         <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/icon_credit_card"
-                            android:layout_marginTop="8dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/icon_blog_post"
+                            android:layout_marginTop="9dp"
                             android:layout_marginLeft="8dp"
                             />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="信用卡"
+                            android:text="部落影評"
                             android:textColor="#FFFFFF"
                             android:textSize="18dp"
                             android:layout_marginTop="8dp"
@@ -172,6 +172,8 @@
                             />
 
                     </android.support.v7.widget.CardView>
+
+
 
 
                     <android.support.v7.widget.CardView
@@ -223,13 +225,53 @@
                     android:weightSum="4"
                     >
 
+
+
+
+                    <!--<android.support.v7.widget.CardView-->
+                        <!--android:id="@+id/credit_card_view"-->
+                        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+                        <!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--card_view:cardBackgroundColor="@color/deep_green"-->
+                        <!--card_view:cardUseCompatPadding="true"-->
+                        <!--card_view:cardElevation="0dp"-->
+                        <!--card_view:cardCornerRadius="2dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:clickable="true"-->
+                        <!--android:focusable="true"-->
+                        <!--android:foreground="?android:selectableItemBackground"-->
+                        <!-->-->
+
+                        <!--<ImageView-->
+                            <!--android:layout_width="24dp"-->
+                            <!--android:layout_height="24dp"-->
+                            <!--android:src="@drawable/icon_credit_card"-->
+                            <!--android:layout_marginTop="8dp"-->
+                            <!--android:layout_marginLeft="8dp"-->
+                            <!--/>-->
+
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="信用卡"-->
+                            <!--android:textColor="#FFFFFF"-->
+                            <!--android:textSize="18dp"-->
+                            <!--android:layout_marginTop="8dp"-->
+                            <!--android:layout_marginBottom="10dp"-->
+                            <!--android:layout_marginLeft="40dp"-->
+                            <!--/>-->
+
+                    <!--</android.support.v7.widget.CardView>-->
+
                     <android.support.v7.widget.CardView
                         android:id="@+id/news_card_view"
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        card_view:cardBackgroundColor="#CC5489"
+                        card_view:cardBackgroundColor="@color/deep_blue"
                         card_view:cardUseCompatPadding="true"
                         card_view:cardElevation="0dp"
                         card_view:cardCornerRadius="2dp"
@@ -266,7 +308,7 @@
                         xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        card_view:cardBackgroundColor="#1C708C"
+                        card_view:cardBackgroundColor="@color/light_yellow"
                         card_view:cardUseCompatPadding="true"
                         card_view:cardElevation="0dp"
                         card_view:cardCornerRadius="3dp"
@@ -296,8 +338,6 @@
                             />
 
                     </android.support.v7.widget.CardView>
-
-
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/quick_card_view"
@@ -338,6 +378,20 @@
 
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="4"
+                    >
+
+
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -384,7 +438,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="更多排行"
+                            android:text="更多排行榜"
                             android:textColor="#FFFFFF"
                             android:textSize="16dp"
                             android:layout_marginTop="5dp"
@@ -392,14 +446,13 @@
                             android:layout_marginLeft="3dp"
                             android:layout_marginRight="3dp"
                             />
-
                     </android.support.v7.widget.CardView>
                 </LinearLayout>
-
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     >
                     <ProgressBar
                         android:id="@+id/main_movie_progress"
@@ -422,81 +475,13 @@
                         android:id="@+id/recycler_view_rank"
                         android:scrollbars="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="265dp"
+                        android:layout_height="285dp"
                         />
                 </RelativeLayout>
 
             </LinearLayout>
+            
 
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp">
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:gravity="center_vertical"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="電影部落格"
-                        android:textSize="20dp"
-                        android:layout_weight="1"
-                        android:textColor="@color/movie_indicator"
-                        />
-
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/more_recommend_blog_card_view"
-                        xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        card_view:cardBackgroundColor="@color/movie_indicator"
-                        card_view:cardUseCompatPadding="true"
-                        card_view:cardElevation="0dp"
-                        card_view:cardCornerRadius="2dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?android:selectableItemBackground"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="更多部落格"
-                            android:textColor="#FFFFFF"
-                            android:textSize="16dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="3dp"
-                            android:layout_marginRight="3dp"
-                            />
-                    </android.support.v7.widget.CardView>
-                </LinearLayout>
-
-
-                <GridView
-                    android:id="@+id/recommend_blog_grid_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:numColumns="3"
-                    android:gravity="center"
-                    android:columnWidth="5dp"
-                    android:stretchMode="columnWidth"
-                    >
-                </GridView>
-
-
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

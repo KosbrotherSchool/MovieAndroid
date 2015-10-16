@@ -10,41 +10,39 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jasonko.movietime.R;
-import com.jasonko.movietime.adapters.RankMovieHorizontalAdapter;
-import com.jasonko.movietime.api.MovieAPI;
+import com.jasonko.movietime.adapters.RankMovieReviewAdapter;
+import com.jasonko.movietime.api.RankAPI;
 import com.jasonko.movietime.model.Movie;
+import com.jasonko.movietime.tool.EndlessRecyclerOnScrollListener;
 import com.jasonko.movietime.tool.NetworkUtil;
 
 import java.util.ArrayList;
 
 /**
- * Created by kolichung on 8/28/15.
+ * Created by kolichung on 10/14/15.
  */
-public class MovieRankFragment extends Fragment {
-    public static final String ARG_RANK_TYPE = "RANK_TYPE";
+public class MovieRankReviewFragment extends Fragment {
 
-    private int mRankTypeID;
-    private ArrayList<Movie> mMovies;
+    private ArrayList<Movie> mMovies = new ArrayList<>();
     private RecyclerView moviesRecylerView;
-    private RankMovieHorizontalAdapter movieRankAdapter;
+    private RankMovieReviewAdapter movieRankAdapter;
 
     private ProgressBar mProgressBar;
     private TextView noNetText;
 
-    public static MovieRankFragment newInstance(int rank_type_id) {
-        Bundle args = new Bundle();
-        args.putInt(ARG_RANK_TYPE, rank_type_id);
-        MovieRankFragment fragment = new MovieRankFragment();
-        fragment.setArguments(args);
+    private int mPage = 1;
+
+    public static MovieRankReviewFragment newInstance() {
+        MovieRankReviewFragment fragment = new MovieRankReviewFragment();
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRankTypeID = getArguments().getInt(ARG_RANK_TYPE);
     }
 
     // Inflate the fragment layout we defined above for this fragment
@@ -61,19 +59,23 @@ public class MovieRankFragment extends Fragment {
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         moviesRecylerView.setLayoutManager(mLayoutManager);
 
-        switch (mRankTypeID){
-            case 1:
-                if (movieRankAdapter != null){
-                    moviesRecylerView.setAdapter(movieRankAdapter);
-                }else {
-                    if (NetworkUtil.getConnectivityStatus(getActivity()) != 0) {
-                        new NewsTask().execute();
-                    }else {
-                        mProgressBar.setVisibility(View.GONE);
-                        noNetText.setVisibility(View.VISIBLE);
-                    }
-                }
-                break;
+
+        moviesRecylerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                new NewsTask().execute();
+            }
+        });
+
+        if (movieRankAdapter != null){
+            moviesRecylerView.setAdapter(movieRankAdapter);
+        }else {
+            if (NetworkUtil.getConnectivityStatus(getActivity()) != 0) {
+                new NewsTask().execute();
+            }else {
+                mProgressBar.setVisibility(View.GONE);
+                noNetText.setVisibility(View.VISIBLE);
+            }
         }
 
 
@@ -84,30 +86,30 @@ public class MovieRankFragment extends Fragment {
 
         @Override
         protected Object doInBackground(Object[] params) {
-            switch (mRankTypeID){
-                case 1:
-                    mMovies = MovieAPI.getTaipeiRankMovies(-1);
-                    break;
+            ArrayList<Movie> feedBackMovies = RankAPI.getMoiveReviewRank(mPage);
+            if (feedBackMovies != null && feedBackMovies.size() > 0){
+                mMovies.addAll(feedBackMovies);
+            }else {
+                return false;
             }
-            return null;
+            mPage = mPage + 1;
+            return true;
         }
 
         @Override
         protected void onPostExecute(Object result) {
 
-            if (mMovies != null && mMovies.size() > 0) {
-                switch (mRankTypeID) {
-                    case 1:
-                        movieRankAdapter = new RankMovieHorizontalAdapter(getActivity(), mMovies);
-                        moviesRecylerView.setAdapter(movieRankAdapter);
-                        break;
+            if ((boolean)result) {
+                if (movieRankAdapter == null) {
+                    movieRankAdapter = new RankMovieReviewAdapter(getActivity(), mMovies);
+                    moviesRecylerView.setAdapter(movieRankAdapter);
+                    mProgressBar.setVisibility(View.GONE);
+                }else {
+                    movieRankAdapter.notifyDataSetChanged();
                 }
-                mProgressBar.setVisibility(View.GONE);
             }else {
-                mProgressBar.setVisibility(View.GONE);
-                noNetText.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "無其他資料", Toast.LENGTH_SHORT).show();
             }
-
         }
     }
 }

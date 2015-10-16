@@ -39,12 +39,12 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:orientation="vertical"
-            android:visibility="invisible"
+            android:visibility="visible"
             >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="225dp"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp"
 
@@ -52,8 +52,8 @@
 
                 <ImageView
                     android:id="@+id/movieinfo_image"
-                    android:layout_width="145dp"
-                    android:layout_height="200dp"
+                    android:layout_width="160dp"
+                    android:layout_height="225dp"
                     android:src="@drawable/icon_app"
                     />
                 <LinearLayout
@@ -63,6 +63,20 @@
                     android:orientation="vertical"
                     android:layout_marginLeft="5dp"
                     >
+
+                    <TextView
+                        android:id="@+id/movie_thisweek_class_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="護"
+                        android:textSize="21dp"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        android:background="@drawable/class_red_selector"
+                        android:textStyle="bold"
+                        android:layout_marginRight="5dp"
+                        />
+
                     <TextView
                         android:id="@+id/movieinfo_text_title"
                         android:layout_width="match_parent"
@@ -77,7 +91,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="English title here it may be 2 lins"
-                        android:textSize="15dp"
+                        android:textSize="16dp"
                         android:maxLines="2"
                         android:layout_marginTop="3dp"
                         />
@@ -85,9 +99,9 @@
                         android:id="@+id/movieinfo_text_class"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="保護級 片長:2時11分"
+                        android:text="片長:2時11分"
                         android:layout_marginTop="5dp"
-                        android:textSize="14dp"
+                        android:textSize="16dp"
                         />
                     <TextView
                         android:id="@+id/movieinfo_text_publish_date"
@@ -95,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:text="上映日期:2015/9/13"
                         android:layout_marginTop="5dp"
-                        android:textSize="14dp"
+                        android:textSize="16dp"
                         />
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -129,19 +143,6 @@
                             />
                     </LinearLayout>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal"
-                    >
-                    <ImageView
-                        android:id="@+id/follow_movie_up_image"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/icon_tag"
-                        android:layout_marginTop="10dp"
-                        />
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -150,6 +151,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="3dp"
+                android:weightSum="3"
                 >
 
                 <android.support.v7.widget.CardView
@@ -168,25 +170,30 @@
                     android:foreground="?android:selectableItemBackground"
                     >
 
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/icon_photo"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="10dp"
-                        />
-
-                    <TextView
-                        android:id="@+id/movieinfo_text_photos"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="圖集(15)"
-                        android:textColor="#FFFFFF"
-                        android:textSize="22sp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="50dp"
-                        />
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        >
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/icon_photo"
+                            android:layout_marginTop="5dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/movieinfo_text_photos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="圖集(15)"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            />
+                    </LinearLayout>
 
                 </android.support.v7.widget.CardView>
 
@@ -206,25 +213,77 @@
                     android:foreground="?android:selectableItemBackground"
                     >
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/icon_play"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginLeft="10dp"
-                        />
-
-                    <TextView
-                        android:id="@+id/movieinfo_text_trailers"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="影片(5)"
-                        android:textColor="#FFFFFF"
-                        android:textSize="22sp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="50dp"
-                        />
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        >
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/icon_play"
+                            android:layout_marginTop="5dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/movieinfo_text_trailers"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="影片(5)"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/movie_review_card_view"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    card_view:cardBackgroundColor="#FF9245"
+                    card_view:cardUseCompatPadding="true"
+                    card_view:cardElevation="0dp"
+                    card_view:cardCornerRadius="3dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:selectableItemBackground"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        >
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/icon_review_white"
+                            android:layout_marginTop="5dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/movieinfo_text_review"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="留言(20)"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            />
+
+                    </LinearLayout>
 
                 </android.support.v7.widget.CardView>
 
@@ -279,11 +338,27 @@
                 </LinearLayout>
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="類型:"
+                    android:layout_marginTop="10dp"
+                    android:textSize="18dp"
+                    />
+
+                <TextView
                     android:id="@+id/movieinfo_text_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="類型:\n動作、懸疑/驚悚、冒險"
+                    android:text="動作、懸疑/驚悚、冒險"
                     android:layout_marginTop="5dp"
+                    android:textSize="20dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="導演:"
+                    android:layout_marginTop="10dp"
                     android:textSize="18dp"
                     />
 
@@ -291,26 +366,115 @@
                     android:id="@+id/movieinfo_text_director"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="導演:\n陳玉珊"
+                    android:text="陳玉珊"
                     android:layout_marginTop="5dp"
+                    android:textSize="20dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="演員:"
+                    android:layout_marginTop="10dp"
                     android:textSize="18dp"
                     />
+
                 <TextView
                     android:id="@+id/movieinfo_text_actors"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="演員:\n湯姆克魯斯、傑瑞米雷納、賽門佩吉、文雷姆斯"
+                    android:text="湯姆克魯斯、傑瑞米雷納、賽門佩吉、文雷姆斯"
                     android:layout_marginTop="5dp"
+                    android:textSize="20dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="出品公司:"
+                    android:layout_marginTop="10dp"
                     android:textSize="18dp"
                     />
+
                 <TextView
                     android:id="@+id/movieinfo_text_officier"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="出品公司:\n派拉蒙影業"
-                    android:layout_marginTop="5dp"
-                    android:textSize="18dp"
+                    android:text="派拉蒙影業"
+                    android:layout_marginTop="3dp"
+                    android:textSize="20dp"
                     />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="國外影評:"
+                android:layout_marginTop="10dp"
+                android:textSize="18dp"
+                android:layout_marginLeft="10dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                >
+
+                <LinearLayout
+                    android:id="@+id/imdb_linear"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:background="@drawable/transparent_button_selector"
+                    >
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/icon_imdb"
+                        />
+                    <TextView
+                        android:id="@+id/imdb_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="7.7"
+                        android:textSize="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/movie_indicator"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/potato_linear"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:background="@drawable/transparent_button_selector"
+                    >
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/icon_rotten_tomatoes"
+                        />
+                    <TextView
+                        android:id="@+id/potato_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="88%"
+                        android:textSize="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/movie_indicator"
+                        />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -386,7 +550,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="評論"
+                        android:text="留言"
                         android:textSize="14dp"
                         />
                 </LinearLayout>

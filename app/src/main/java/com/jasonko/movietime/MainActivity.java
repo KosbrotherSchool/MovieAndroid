@@ -21,7 +21,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.Menu;
 import android.view.View;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -30,12 +29,10 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.jasonko.movietime.adapters.BloggerGridAdapter;
 import com.jasonko.movietime.adapters.DrawerListAdapter;
 import com.jasonko.movietime.adapters.RankMovieAdapter;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.model.Movie;
-import com.jasonko.movietime.model.MyYoutubeVideo;
 import com.jasonko.movietime.model.Version;
 import com.jasonko.movietime.services.FollowMovieReceiver;
 import com.jasonko.movietime.tool.NetworkUtil;
@@ -52,20 +49,17 @@ public class MainActivity extends Activity {
     private ListView listview_drawer;
     private SearchBox searchBox;
     private RecyclerView rankRecyclerView;
-    private GridView blogGridView;
 
     private ArrayList<Movie> rankMovies = new ArrayList<>();
-    private ArrayList<MyYoutubeVideo> randomVideos = new ArrayList<>();
-    private BloggerGridAdapter mBloggerGridAdatper;
 
     private CardView newsCardView;
     private CardView theaterCardView;
     private CardView movieCardView;
-    private CardView creditCardView;
     private CardView ticketCardView;
     private CardView moreRankCardView;
-    private CardView moreBlog;
     private CardView quickCardView;
+    private CardView blogCardView;
+    private CardView messageCardView;
 
     private ProgressBar movieProgress;
     private TextView movieText;
@@ -184,14 +178,13 @@ public class MainActivity extends Activity {
         newsCardView = (CardView) findViewById(R.id.news_card_view);
         theaterCardView = (CardView) findViewById(R.id.theater_card_view);
         movieCardView = (CardView) findViewById(R.id.movie_card_view);
-        creditCardView = (CardView) findViewById(R.id.credit_card_view);
         ticketCardView = (CardView) findViewById(R.id.ticket_card_view);
         moreRankCardView = (CardView) findViewById(R.id.more_rank_card_view);
         movieProgress = (ProgressBar) findViewById(R.id.main_movie_progress);
         movieText = (TextView) findViewById(R.id.main_movie_text);
-        blogGridView = (GridView) findViewById(R.id.recommend_blog_grid_view);
-        moreBlog = (CardView) findViewById(R.id.more_recommend_blog_card_view);
         quickCardView = (CardView) findViewById(R.id.quick_card_view);
+        blogCardView = (CardView) findViewById(R.id.blog_card_view);
+        messageCardView = (CardView) findViewById(R.id.message_card_view);
 
         //設定drawer中的listview的選項
         DrawerListAdapter mAdapter = new DrawerListAdapter(this, AppParams.drawerItems);
@@ -229,13 +222,6 @@ public class MainActivity extends Activity {
             }
         });
 
-        creditCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newIntent = new Intent(MainActivity.this, CreditCardActivity.class);
-                startActivity(newIntent);
-            }
-        });
 
         moreRankCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,22 +231,28 @@ public class MainActivity extends Activity {
             }
         });
 
-        mBloggerGridAdatper = new BloggerGridAdapter(MainActivity.this, AppParams.bloggers);
-        blogGridView.setAdapter(mBloggerGridAdatper);
-
-        moreBlog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentBlogger = new Intent(MainActivity.this, BloggerActivity.class);
-                startActivity(intentBlogger);
-            }
-        });
 
         quickCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentQuick = new Intent(MainActivity.this, QuickMovieTimeActivity.class);
                 startActivity(intentQuick);
+            }
+        });
+
+        blogCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentBlogPost = new Intent(MainActivity.this, BlogPostActivity.class);
+                startActivity(intentBlogPost);
+            }
+        });
+
+        messageCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentBlogPost = new Intent(MainActivity.this, MessageBoardActivity.class);
+                startActivity(intentBlogPost);
             }
         });
 
@@ -280,7 +272,6 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(Object result) {
             if (currentVersion != null) {
-                //Todo put version code to pref
                 try {
                     PackageManager manager = getApplicationContext().getPackageManager();
                     PackageInfo info = manager.getPackageInfo(

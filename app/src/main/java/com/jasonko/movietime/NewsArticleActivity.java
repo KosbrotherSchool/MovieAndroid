@@ -31,6 +31,7 @@ public class NewsArticleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news_article);
         String mUrl = getIntent().getStringExtra("news_link");
         String title = getIntent().getStringExtra("news_title");
+        boolean isBlogPost = getIntent().getBooleanExtra("IsBlogPost",false);
 
 //        setAdView();
 
@@ -40,6 +41,10 @@ public class NewsArticleActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(title);
+
+        if (isBlogPost) {
+            toolbar.setBackgroundResource(R.color.deep_green);
+        }
 
         webView = (WebView) findViewById (R.id.news_webview);
         progress = (ProgressBar) findViewById(R.id.progressBar);

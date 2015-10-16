@@ -19,9 +19,9 @@
     <color name="pink_color">#ffBF2A6F</color>
     <color name="background_color">#ffE6DDB9</color>
     <color name="movie_indicator">#fff47721</color>
-    <color name="movie_indicator_pressed">#77f47721</color>
     <color name="deep_green">#ff52975A</color>
-    <color name="deep_blue">#ff1C708C</color>
+    <color name="deep_blue">#ff107AB1</color>
+    <color name="light_yellow">#ffEB952F</color>
 
     <color name="light_green">#ff5CB89A</color>
 

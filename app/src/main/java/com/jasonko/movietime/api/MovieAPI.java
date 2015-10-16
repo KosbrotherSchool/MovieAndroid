@@ -8,8 +8,6 @@ import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.model.MovieNews;
 import com.jasonko.movietime.model.MovieRank;
 import com.jasonko.movietime.model.MovieTime;
-import com.jasonko.movietime.model.MyYoutubeColumn;
-import com.jasonko.movietime.model.MyYoutubeVideo;
 import com.jasonko.movietime.model.Photo;
 import com.jasonko.movietime.model.Trailer;
 import com.jasonko.movietime.model.Version;
@@ -99,7 +97,7 @@ public class MovieAPI {
 
     public static ArrayList<Movie> getTaipeiRankMovies(int page){
         ArrayList<Movie> movies = new ArrayList<Movie>();
-        String url = host + "/api/movie/rank_movies?rank_type=1";
+        String url = host + "/api/movie/rank_movies?rank_type=1&new_api=true";
         if (page != -1){
             url = url + "&page=" + Integer.toString(page);
         }
@@ -186,17 +184,6 @@ public class MovieAPI {
         }
     }
 
-    public static ArrayList<Movie> getYearRankMovies(){
-        ArrayList<Movie> movies = new ArrayList<Movie>();
-        String url = host + "/api/movie/rank_movies?rank_type=4";
-        String message = getMessageFromServer("GET", null, null, url);
-        if (message == null) {
-            return null;
-        } else {
-            parseMovie(movies, message);
-        }
-        return movies;
-    }
 
     public static ArrayList<Movie> getExpectRankMovies(){
         ArrayList<Movie> movies = new ArrayList<Movie>();
@@ -291,95 +278,7 @@ public class MovieAPI {
         return times;
     }
 
-    public static ArrayList<MyYoutubeVideo> getRandomYoutubeVideos(){
-        ArrayList<MyYoutubeVideo> videos = new ArrayList<MyYoutubeVideo>();
-        String url = host + "/api/movie/youtubes?random=true";
-        String message = getMessageFromServer("GET", null, null, url);
-        if (message == null) {
-            return null;
-        } else {
-            parseMyYoutubeVideos(videos, message);
-        }
-        return videos;
-    }
 
-    public static ArrayList<MyYoutubeVideo> getColumnYoutubeVideos(int youtube_column_id){
-        ArrayList<MyYoutubeVideo> videos = new ArrayList<MyYoutubeVideo>();
-        String url = host + "/api/movie/youtubes?column_id=" + Integer.toString(youtube_column_id);
-        String message = getMessageFromServer("GET", null, null, url);
-        if (message == null) {
-            return null;
-        } else {
-            parseMyYoutubeVideos(videos, message);
-        }
-        return videos;
-    }
-
-    public static ArrayList<MyYoutubeColumn> getYoutubeColumns(int page){
-        ArrayList<MyYoutubeColumn> columns = new ArrayList<>();
-        String url = host + "/api/movie/youtubes?page=" + Integer.toString(page);
-        String message = getMessageFromServer("GET", null, null, url);
-        if (message == null) {
-            return null;
-        } else {
-            parseMyYoutubeColumns(columns, message);
-        }
-        return columns;
-    }
-
-    private static void parseMyYoutubeColumns(ArrayList<MyYoutubeColumn> columns, String message) {
-        try {
-            JSONArray columnArray = new JSONArray(message);
-            for (int i = 0; i < columnArray.length(); i++){
-                JSONObject columnObject = columnArray.getJSONObject(i);
-                String title = "";
-                int column_id = 0;
-                String image_link = "";
-                try {
-                    title = columnObject.getString("title");
-                    column_id = columnObject.getInt("id");
-                    image_link = columnObject.getString("image_link");
-                }catch (Exception e){
-
-                }
-                MyYoutubeColumn newColumn = new MyYoutubeColumn(title,column_id, image_link);
-                columns.add(newColumn);
-            }
-        }catch (Exception e){
-
-        }
-    }
-
-    private static void parseMyYoutubeVideos(ArrayList<MyYoutubeVideo> videos, String message) {
-        try {
-            JSONArray videoArray = new JSONArray(message);
-            for (int i = 0; i < videoArray.length(); i++){
-                JSONObject videoObject = videoArray.getJSONObject(i);
-                String title = "";
-                String youtube_id = "";
-                int youtube_column_id = 0;
-                int youtube_sub_column_id = 0;
-                String subColumnName = "";
-                try {
-                    title = videoObject.getString("title");
-                    youtube_id = videoObject.getString("youtube_id");
-                    youtube_column_id = videoObject.getInt("youtube_column_id");
-                    youtube_sub_column_id = videoObject.getInt("youtube_sub_column_id");
-                }catch (Exception e){
-
-                }
-                try {
-                    subColumnName = videoObject.getString("name");
-                }catch (Exception e){
-
-                }
-                MyYoutubeVideo newVideo = new MyYoutubeVideo(title, youtube_id, youtube_column_id, youtube_sub_column_id, subColumnName);
-                videos.add(newVideo);
-            }
-        }catch (Exception e){
-
-        }
-    }
 
     private static void parseMovieTrailers(ArrayList<Trailer> trailers, String message) {
         try {
@@ -635,7 +534,21 @@ public class MovieAPI {
 
             }
 
-            mMovie = new Movie(title,title_eng,movie_class,movie_type,movie_length,publish_date,director,editors,actors,official,movie_info,small_pic,large_pic,publish_date_date,movie_round,movie_id,photo_size,trailer_size,points,review_size,null);
+            String imdb_point = "0.0";
+            String imdb_link = "";
+            String potato_point = "0.0";
+            String potato_link = "";
+
+            try {
+                imdb_point = movieObject.getString("imdb_point");
+                imdb_link = movieObject.getString("imdb_link");
+                potato_point = movieObject.getString("potato_point");
+                potato_link = movieObject.getString("potato_link");
+            }catch (Exception e){
+
+            }
+
+            mMovie = new Movie(title,title_eng,movie_class,movie_type,movie_length,publish_date,director,editors,actors,official,movie_info,small_pic,large_pic,publish_date_date,movie_round,movie_id,photo_size,trailer_size,points,review_size,null,imdb_point,imdb_link, potato_point,potato_link);
         }catch (Exception e){
 
         }

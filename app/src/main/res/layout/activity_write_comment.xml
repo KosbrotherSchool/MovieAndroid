@@ -33,12 +33,24 @@
 
         <EditText
             android:id="@+id/write_comment_nickname_edittext"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:hint="請輸入暱稱"
+            android:layout_weight="1"
             />
+
+        <CheckBox
+            android:id="@+id/checkbox_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="記下暱稱"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/movie_indicator"
+            android:textSize="17dp"
+            />
+
     </LinearLayout>
 
     <TextView

@@ -99,10 +99,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme" />
         <activity
-            android:name=".RecentMovieActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/CustomTheme" />
-        <activity
             android:name=".FollowMovieActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme" />
@@ -124,6 +120,26 @@
             android:theme="@style/CustomTheme" />
         <activity
             android:name=".QuickMovieTimeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme" />
+
+        <activity
+            android:name=".BlogPostActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme" />
+
+        <activity
+            android:name=".MessageBoardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme" />
+
+        <activity
+            android:name=".WriteMessageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme" />
+
+        <activity
+            android:name=".MessageDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme" />
 

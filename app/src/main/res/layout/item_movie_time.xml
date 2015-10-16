@@ -45,7 +45,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="誠品戲院"
-                        android:textSize="18dp"
+                        android:textSize="22dp"
                         />
                     <TextView
                         android:id="@+id/movietime_remark"
@@ -53,18 +53,18 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="數位"
-                        android:textSize="15dp"
+                        android:textSize="18dp"
                         />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/movietime_theater_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="台北市松山區長安東路二段219號3樓"
-                    android:textSize="13dp"
-                    android:layout_marginTop="3dp"
-                    />
+                <!--<TextView-->
+                    <!--android:id="@+id/movietime_theater_address"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="台北市松山區長安東路二段219號3樓"-->
+                    <!--android:textSize="16dp"-->
+                    <!--android:layout_marginTop="3dp"-->
+                    <!--/>-->
             </LinearLayout>
 
             <ImageView

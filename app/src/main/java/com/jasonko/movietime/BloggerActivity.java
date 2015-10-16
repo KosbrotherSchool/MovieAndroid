@@ -36,7 +36,7 @@ public class BloggerActivity extends AppCompatActivity {
         
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
-        toolbar.setBackgroundResource(R.color.deep_blue);
+        toolbar.setBackgroundResource(R.color.deep_green);
         toolbar.setTitleTextColor(0xFFFFFFFF);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

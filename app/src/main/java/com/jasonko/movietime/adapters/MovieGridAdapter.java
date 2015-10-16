@@ -27,11 +27,13 @@ public class MovieGridAdapter extends BaseAdapter {
     private Activity mActivity;
     private ArrayList<Movie> mMovies;
     private ImageLoader mImageLoader;
+    private int roundId;
 
-    public MovieGridAdapter(Activity activity, ArrayList<Movie> movies) {
+    public MovieGridAdapter(Activity activity, ArrayList<Movie> movies, int round_id) {
         mActivity = activity;
         mMovies = movies;
         mImageLoader = new ImageLoader(this.mActivity, 100);
+        roundId = round_id;
     }
 
     @Override
@@ -61,6 +63,7 @@ public class MovieGridAdapter extends BaseAdapter {
         TextView gridClass = (TextView) convertView.findViewById(R.id.movie_grid_class_text);
         TextView user_point = (TextView) convertView.findViewById(R.id.text_user_point);
         RatingBar ratingBar = (RatingBar) convertView.findViewById(R.id.ratingBar);
+        TextView textMessage = (TextView) convertView.findViewById(R.id.message_text);
 
         LayerDrawable stars = (LayerDrawable) ratingBar
                 .getProgressDrawable();
@@ -100,6 +103,12 @@ public class MovieGridAdapter extends BaseAdapter {
         }else {
             user_point.setText(Double.toString(mMovies.get(position).getPoints()) + "分");
             ratingBar.setRating((float) (mMovies.get(position).getPoints() / 2));
+        }
+
+        if (roundId == 1) {
+            textMessage.setText(Integer.toString(mMovies.get(position).getReview_size()) + "人留言");
+        }else {
+            textMessage.setText(mMovies.get(position).getPublish_date());
         }
 
         convertView.setOnClickListener(new View.OnClickListener() {

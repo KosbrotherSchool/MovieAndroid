@@ -31,7 +31,7 @@ public class MovieTimeAdapter extends RecyclerView.Adapter<MovieTimeAdapter.View
         public View mView;
         public TextView textTheaterTitle;
         public TextView textRemark;
-        public TextView textTeaterAddress;
+//        public TextView textTeaterAddress;
         public ExpandableHeightGridView gridTheaterMovie;
         public ImageView imageMap;
 
@@ -40,7 +40,7 @@ public class MovieTimeAdapter extends RecyclerView.Adapter<MovieTimeAdapter.View
             mView = v;
             textTheaterTitle = (TextView) mView.findViewById(R.id.movietime_theater_title);
             textRemark = (TextView) mView.findViewById(R.id.movietime_remark);
-            textTeaterAddress = (TextView) mView.findViewById(R.id.movietime_theater_address);
+//            textTeaterAddress = (TextView) mView.findViewById(R.id.movietime_theater_address);
             gridTheaterMovie = (ExpandableHeightGridView) mView.findViewById(R.id.movietime_theater_movietime_grid);
             imageMap = (ImageView) mView.findViewById(R.id.image_map);
         }
@@ -69,7 +69,7 @@ public class MovieTimeAdapter extends RecyclerView.Adapter<MovieTimeAdapter.View
     public void onBindViewHolder(ViewHolder holder, final int position) {
         Theater theTheater = Theater.getTheaterByID(mMovieTimes.get(position).getTheater_id());
         holder.textTheaterTitle.setText(theTheater.getName());
-        holder.textTeaterAddress.setText(theTheater.getAddress());
+//        holder.textTeaterAddress.setText(theTheater.getAddress());
         holder.textRemark.setText(mMovieTimes.get(position).getRemark());
         String[] mStrings = mMovieTimes.get(position).getMovie_time().split(",");
         ArrayAdapter arrayAdapter = new ArrayAdapter(mActivity, android.R.layout.simple_list_item_1, mStrings);

@@ -3,6 +3,7 @@ package com.jasonko.movietime.fragments;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -49,6 +50,7 @@ public class MovieInfoFragment extends Fragment{
 
     private CardView photoCardView;
     private CardView trailerCardView;
+    private CardView reviewCardView;
     private TextView readmoreTextView;
 
     private TextView photoText;
@@ -71,13 +73,17 @@ public class MovieInfoFragment extends Fragment{
     private TextView noNetWorkText;
 
     private ImageView follow_bottom_image;
-    private ImageView follow_image;
     private LinearLayout linearAddFollow;
     private LinearLayout linearShare;
     private LinearLayout linearReview;
     private RatingBar ratingBar;
     private TextView rateText;
     private TextView reviewNumTExt;
+    private TextView reviewText;
+    private LinearLayout linearImdb;
+    private LinearLayout linearPotato;
+    private TextView imdbText;
+    private TextView potatoText;
 
     private DaoMaster.DevOpenHelper helper;
 
@@ -106,6 +112,8 @@ public class MovieInfoFragment extends Fragment{
 
         photoCardView = (CardView) view.findViewById(R.id.movie_photos_card_view);
         trailerCardView = (CardView) view.findViewById(R.id.movie_trailers_card_view);
+        reviewCardView = (CardView) view.findViewById(R.id.movie_review_card_view);
+
         readmoreTextView = (TextView) view.findViewById(R.id.textview_movie_info_readmore);
 
         titleText = (TextView) view.findViewById(R.id.movieinfo_text_title);
@@ -122,7 +130,6 @@ public class MovieInfoFragment extends Fragment{
         actorText = (TextView) view.findViewById(R.id.movieinfo_text_actors);
         officerText = (TextView) view.findViewById(R.id.movieinfo_text_officier);
 
-        follow_image = (ImageView) view.findViewById(R.id.follow_movie_up_image);
         linearAddFollow = (LinearLayout) view.findViewById(R.id.linearLayout_movie_add_follow);
         follow_bottom_image = (ImageView) view.findViewById(R.id.follow_movie_bottom_image);
         linearShare = (LinearLayout) view.findViewById(R.id.linearLayout_movie_share);
@@ -130,6 +137,12 @@ public class MovieInfoFragment extends Fragment{
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
         rateText = (TextView) view.findViewById(R.id.rate_text);
         reviewNumTExt = (TextView) view.findViewById(R.id.review_num_text);
+        reviewText = (TextView) view.findViewById(R.id.movieinfo_text_review);
+
+        linearImdb = (LinearLayout) view.findViewById(R.id.imdb_linear);
+        linearPotato = (LinearLayout) view.findViewById(R.id.potato_linear);
+        imdbText = (TextView) view.findViewById(R.id.imdb_text);
+        potatoText = (TextView) view.findViewById(R.id.potato_text);
 
         LayerDrawable stars = (LayerDrawable) ratingBar
                 .getProgressDrawable();
@@ -191,18 +204,30 @@ public class MovieInfoFragment extends Fragment{
                 publishDateText.setText("上映日期：" + mMovie.getPublish_date());
 
                 infoText.setText(Html.fromHtml(mMovie.getMovie_info()));
-                typeText.setText("類型:\n" + mMovie.getMovie_type());
-                diretorText.setText("導演:\n" + mMovie.getDirector());
-                actorText.setText("演員:\n" + mMovie.getActors());
-                officerText.setText("出品公司:\n" + mMovie.getOfficial());
+                typeText.setText(mMovie.getMovie_type());
+                diretorText.setText(mMovie.getDirector());
+                actorText.setText(mMovie.getActors());
+                officerText.setText(mMovie.getOfficial());
                 photoText.setText("圖集(" + Integer.toString(mMovie.getPhoto_size()) + ")");
                 trailerText.setText("影片(" + Integer.toString(mMovie.getTrailer_size()) + ")");
 
                 mImageLoader.DisplayImage(mMovie.getSmall_pic(), mImage);
 
-                ratingBar.setRating((float)(mMovie.getPoints()/2));
+                ratingBar.setRating((float) (mMovie.getPoints() / 2));
                 rateText.setText(Double.toString(mMovie.getPoints()));
                 reviewNumTExt.setText(Integer.toString(mMovie.getReview_size()));
+                reviewText.setText("留言(" + Integer.toString(mMovie.getReview_size()) + ")");
+
+                mImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent newIntent = new Intent(getActivity(), MoviePhotosActivity.class);
+                        newIntent.putExtra("photo_size", mMovie.getPhoto_size());
+                        newIntent.putExtra("movie_id", mMovie.getMovie_id());
+                        newIntent.putExtra("big_photo_url", mMovie.getLarge_pic());
+                        getActivity().startActivity(newIntent);
+                    }
+                });
 
                 photoCardView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -225,38 +250,31 @@ public class MovieInfoFragment extends Fragment{
                     }
                 });
 
+                reviewCardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent reviewIntent = new Intent(getActivity(), CommentActivity.class);
+                        reviewIntent.putExtra("movie_id", mMovieID);
+                        reviewIntent.putExtra("title", mMovie.getTitle());
+                        reviewIntent.putExtra("point_str", Double.toString(mMovie.getPoints()));
+                        reviewIntent.putExtra("review_size_str", Integer.toString(mMovie.getReview_size()));
+                        getActivity().startActivity(reviewIntent);
+                    }
+                });
 
                 mProgressBar.setVisibility(View.GONE);
                 mLinearLayout.setVisibility(View.VISIBLE);
 
-                follow_image.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (checkFollow()) {
-                            deleteFollow();
-                            follow_image.setImageResource(R.drawable.icon_tag);
-                            follow_bottom_image.setImageResource(R.drawable.icon_tag);
-                            Toast.makeText(getActivity(), "取消追蹤", Toast.LENGTH_SHORT).show();
-                        } else {
-                            addFollow();
-                            follow_image.setImageResource(R.drawable.icon_tag_full);
-                            follow_bottom_image.setImageResource(R.drawable.icon_tag_full);
-                            Toast.makeText(getActivity(), "追蹤此電影", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
 
                 linearAddFollow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (checkFollow()) {
                             deleteFollow();
-                            follow_image.setImageResource(R.drawable.icon_tag);
                             follow_bottom_image.setImageResource(R.drawable.icon_tag);
                             Toast.makeText(getActivity(), "取消追蹤", Toast.LENGTH_SHORT).show();
                         } else {
                             addFollow();
-                            follow_image.setImageResource(R.drawable.icon_tag_full);
                             follow_bottom_image.setImageResource(R.drawable.icon_tag_full);
                             Toast.makeText(getActivity(), "追蹤此電影", Toast.LENGTH_SHORT).show();
                         }
@@ -269,7 +287,7 @@ public class MovieInfoFragment extends Fragment{
                         Intent intentShare = new Intent(Intent.ACTION_SEND);
                         intentShare.setType("text/plain");
                         intentShare.putExtra(Intent.EXTRA_SUBJECT, "電影即時通 APP !");
-                        intentShare.putExtra(Intent.EXTRA_TEXT, "走走走,看電影:" + mMovie.getTitle()+"~ from 電影即時通APP \n https://play.google.com/store/apps/details?id=com.jasonko.movietime");
+                        intentShare.putExtra(Intent.EXTRA_TEXT, "走走走,看電影:" + mMovie.getTitle() + "~ from 電影即時通APP \n https://play.google.com/store/apps/details?id=com.jasonko.movietime");
                         try {
                             startActivity(Intent.createChooser(intentShare, "分享 ..."));
                         } catch (android.content.ActivityNotFoundException ex) {
@@ -291,11 +309,49 @@ public class MovieInfoFragment extends Fragment{
                 });
 
 
+                if (!mMovie.getImdb_point().equals("0.0")){
+                    imdbText.setText(mMovie.getImdb_point());
+                }else {
+                    imdbText.setText("未提供");
+                }
+
+                if (!mMovie.getPotato_point().equals("0.0")){
+                    potatoText.setText(mMovie.getPotato_point()+"%");
+                }else {
+                    potatoText.setText("未提供");
+                }
+
+                linearImdb.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!mMovie.getImdb_link().equals("")){
+                            String url = mMovie.getImdb_link();
+                            Intent intentGood = new Intent(Intent.ACTION_VIEW);
+                            intentGood.setData(Uri.parse(url));
+                            startActivity(intentGood);
+                        }else {
+                            Toast.makeText(getActivity(), "IMDB尚無此電影", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                linearPotato.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!mMovie.getPotato_link().equals("")){
+                            String url = mMovie.getPotato_link();
+                            Intent intentGood = new Intent(Intent.ACTION_VIEW);
+                            intentGood.setData(Uri.parse(url));
+                            startActivity(intentGood);
+                        }else {
+                            Toast.makeText(getActivity(), "爛番茄尚無此電影", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
                 addThisMovieToRecentMovie();
 
                 if (checkFollow()) {
-                    follow_image.setImageResource(R.drawable.icon_tag_full);
                     follow_bottom_image.setImageResource(R.drawable.icon_tag_full);
                 }
             }else {

@@ -19,6 +19,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.jasonko.movietime.adapters.QuickTimeAdapter;
 import com.jasonko.movietime.api.MovieTimeAPI;
 import com.jasonko.movietime.model.Area;
@@ -63,6 +66,7 @@ public class QuickMovieTimeActivity extends AppCompatActivity {
     private LinearLayout linearButtons;
     private Button upButton;
     private Button downButton;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +82,8 @@ public class QuickMovieTimeActivity extends AppCompatActivity {
         downButton = (Button) findViewById(R.id.quicktime_down_button);
 
         prefs = getPreferences(0);
+
+        setAdView();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
@@ -230,6 +236,42 @@ public class QuickMovieTimeActivity extends AppCompatActivity {
 
     }
 
+
+    private void setAdView() {
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                mAdView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                super.onAdFailedToLoad(errorCode);
+                mAdView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                super.onAdLeftApplication();
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+                mAdView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                mAdView.setVisibility(View.VISIBLE);
+            }
+        });
+        mAdView.loadAd(adRequest);
+    }
 
     private class QuickTimesTask extends AsyncTask {
 

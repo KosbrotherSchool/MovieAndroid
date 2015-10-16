@@ -1,5 +1,6 @@
 package com.jasonko.movietime;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,14 +16,12 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.jasonko.movietime.fragments.MovieRankFragment;
-import com.jasonko.movietime.fragments.MovieRankPointFragment;
-import com.jasonko.movietime.fragments.MovieRankReviewFragment;
+import com.jasonko.movietime.fragments.BlogPostFragment;
 
 /**
- * Created by kolichung on 8/27/15.
+ * Created by kolichung on 10/14/15.
  */
-public class MovieRankActivity extends AppCompatActivity {
+public class BlogPostActivity  extends AppCompatActivity {
 
     private AdView mAdView;
 
@@ -43,15 +42,18 @@ public class MovieRankActivity extends AppCompatActivity {
         tabsStrip.setViewPager(viewPager);
         tabsStrip.setIndicatorColor(getResources().getColor(R.color.white));
         tabsStrip.setIndicatorHeight(10);
-        tabsStrip.setBackgroundColor(getResources().getColor(R.color.movie_indicator));
+        tabsStrip.setBackgroundColor(getResources().getColor(R.color.deep_green));
         tabsStrip.setTextColorResource(R.color.white);
+        tabsStrip.setVisibility(View.GONE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
         toolbar.setTitleTextColor(0xFFFFFFFF);
+        toolbar.setBackgroundResource(R.color.deep_green);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("上映電影排行榜");
+        getSupportActionBar().setTitle("電影部落");
+
 
     }
 
@@ -93,8 +95,8 @@ public class MovieRankActivity extends AppCompatActivity {
 
     public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
-        final int PAGE_COUNT = 3;
-        private String tabTitles[] = new String[] { "台北票房","評分", "評論數" };
+        final int PAGE_COUNT = 1;
+        private String tabTitles[] = new String[] { "部落格"};
 
         public SampleFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -107,19 +109,13 @@ public class MovieRankActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Fragment newFragment = null;
+            BlogPostFragment theNewsFragment = null;
             switch (position){
                 case 0:
-                    newFragment = MovieRankFragment.newInstance(1);
-                    break;
-                case 1:
-                    newFragment = MovieRankPointFragment.newInstance();
-                    break;
-                case 2:
-                    newFragment = MovieRankReviewFragment.newInstance();
+                    theNewsFragment = BlogPostFragment.newInstance();
                     break;
             }
-            return newFragment;
+            return theNewsFragment;
         }
 
         @Override
@@ -129,16 +125,19 @@ public class MovieRankActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_blog, menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == android.R.id.home) {
             finish();
+        }else if (menuItem.getItemId() == R.id.action_blogs){
+            Intent intent = new Intent(BlogPostActivity.this, BloggerActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(menuItem);
     }

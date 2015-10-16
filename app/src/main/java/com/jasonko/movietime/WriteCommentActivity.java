@@ -1,6 +1,7 @@
 package com.jasonko.movietime;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -10,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -30,6 +33,7 @@ public class WriteCommentActivity extends AppCompatActivity {
     RatingBar ratingBar;
     TextView pointTextView;
     Button sendButton;
+    CheckBox nickNameCheckBox;
 
     boolean isPosting = false;
     boolean isPublished = false;
@@ -38,11 +42,13 @@ public class WriteCommentActivity extends AppCompatActivity {
     private int headIndex = 1;
     private int movie_id;
 
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_comment);
+        prefs = getSharedPreferences(null, 0);
 
         movie_id = getIntent().getIntExtra("movie_id",1);
 
@@ -52,6 +58,7 @@ public class WriteCommentActivity extends AppCompatActivity {
         ratingBar = (RatingBar) findViewById(R.id.write_comment_ratting_bar);
         pointTextView = (TextView) findViewById(R.id.write_comment_point_text);
         sendButton = (Button) findViewById(R.id.write_comment_send_button);
+        nickNameCheckBox = (CheckBox) findViewById(R.id.checkbox_nickname);
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -94,6 +101,40 @@ public class WriteCommentActivity extends AppCompatActivity {
             }
         });
 
+        nickNameCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    prefs.edit().putBoolean("is save nickname", true).commit();
+                }else {
+                    prefs.edit().putBoolean("is save nickname", false).commit();
+                }
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean isSaveNickName = prefs.getBoolean("is save nickname", false);
+        if (isSaveNickName){
+            String nickName = prefs.getString("NickName","");
+            nicknameEditText.setText(nickName);
+            nickNameCheckBox.setChecked(true);
+        }else {
+            nickNameCheckBox.setChecked(false);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (nickNameCheckBox.isChecked()){
+            if (nicknameEditText.getText()!=null && !nicknameEditText.getText().toString().equals("")) {
+                prefs.edit().putString("NickName", nicknameEditText.getText().toString()).commit();
+            }
+        }
     }
 
     private void showChoseHeadDialog() {

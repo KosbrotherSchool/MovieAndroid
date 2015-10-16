@@ -34,12 +34,11 @@ public class AppParams {
 
 
     public static final DrawerItem[] drawerItems={
-           new DrawerItem("最近瀏覽", R.drawable.drawer_recent_read),
            new DrawerItem("我的追蹤", R.drawable.drawer_follow),
-           new DrawerItem("我要訂票", R.drawable.drawer_ticket),
            new DrawerItem("問題回報", R.drawable.drawer_problem),
            new DrawerItem("好用給個讚", R.drawable.drawer_thumb),
            new DrawerItem("分享給好友", R.drawable.drawer_share),
+           new DrawerItem("信用卡優惠", R.drawable.drawer_credit_card),
            new DrawerItem("關於我們", R.drawable.drawer_about),
            new DrawerItem("我的設定", R.drawable.drawer_setting),
     };

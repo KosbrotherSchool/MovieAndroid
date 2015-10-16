@@ -12,11 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jasonko.movietime.AboutUsActivity;
+import com.jasonko.movietime.CreditCardActivity;
 import com.jasonko.movietime.FollowMovieActivity;
 import com.jasonko.movietime.R;
-import com.jasonko.movietime.RecentMovieActivity;
 import com.jasonko.movietime.SettingActivity;
-import com.jasonko.movietime.TicketActivity;
 import com.jasonko.movietime.model.DrawerItem;
 
 /**
@@ -66,18 +65,10 @@ public class DrawerListAdapter extends BaseAdapter {
 
                 switch (position) {
                     case 0:
-                        Intent newIntent = new Intent(mActivity, RecentMovieActivity.class);
-                        mActivity.startActivity(newIntent);
-                        break;
-                    case 1:
                         Intent intentFollow = new Intent(mActivity, FollowMovieActivity.class);
                         mActivity.startActivity(intentFollow);
                         break;
-                    case 2:
-                        Intent intentTicket = new Intent(mActivity, TicketActivity.class);
-                        mActivity.startActivity(intentTicket);
-                        break;
-                    case 3:
+                    case 1:
                         Intent intentReport = new Intent(Intent.ACTION_SEND);
                         intentReport.setType("text/plain");
                         intentReport.putExtra(Intent.EXTRA_EMAIL, new String[]{"kosbrotherschool@gmail.com"});
@@ -88,13 +79,13 @@ public class DrawerListAdapter extends BaseAdapter {
                             Toast.makeText(mActivity, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                         }
                         break;
-                    case 4:
+                    case 2:
                         String url = "https://play.google.com/store/apps/details?id=com.jasonko.movietime";
                         Intent intentGood = new Intent(Intent.ACTION_VIEW);
                         intentGood.setData(Uri.parse(url));
                         mActivity.startActivity(intentGood);
                         break;
-                    case 5:
+                    case 3:
                         Intent intentShare = new Intent(Intent.ACTION_SEND);
                         intentShare.setType("text/plain");
                         intentShare.putExtra(Intent.EXTRA_SUBJECT, "電影即時通 APP !");
@@ -105,15 +96,15 @@ public class DrawerListAdapter extends BaseAdapter {
                             Toast.makeText(mActivity, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                         }
                         break;
-//                    case 6:
-//                        Intent intentBlogger = new Intent(mActivity, BloggerActivity.class);
-//                        mActivity.startActivity(intentBlogger);
-//                        break;
-                    case 6:
+                    case 4:
+                        Intent intentCredit = new Intent(mActivity, CreditCardActivity.class);
+                        mActivity.startActivity(intentCredit);
+                        break;
+                    case 5:
                         Intent intentAbout = new Intent(mActivity, AboutUsActivity.class);
                         mActivity.startActivity(intentAbout);
                         break;
-                    case 7:
+                    case 6:
                         Intent intentSetting = new Intent(mActivity, SettingActivity.class);
                         mActivity.startActivity(intentSetting);
                         break;
