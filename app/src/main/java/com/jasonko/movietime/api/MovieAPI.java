@@ -540,10 +540,19 @@ public class MovieAPI {
             String potato_link = "";
 
             try {
-                imdb_point = movieObject.getString("imdb_point");
-                imdb_link = movieObject.getString("imdb_link");
-                potato_point = movieObject.getString("potato_point");
-                potato_link = movieObject.getString("potato_link");
+                if (!movieObject.getString("imdb_point").equals("null")) {
+                    imdb_point = movieObject.getString("imdb_point");
+                }
+                if (!movieObject.getString("imdb_link").equals("null")) {
+                    imdb_link = movieObject.getString("imdb_link");
+                }
+                if (!movieObject.getString("potato_point").equals("null")){
+                    potato_point = movieObject.getString("potato_point");
+                }
+
+                if (!movieObject.getString("potato_link").equals("null")) {
+                    potato_link = movieObject.getString("potato_link");
+                }
             }catch (Exception e){
 
             }

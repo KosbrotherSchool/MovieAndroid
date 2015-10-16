@@ -203,7 +203,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="留言版"
+                            android:text="哈拉區"
                             android:textColor="#FFFFFF"
                             android:textSize="18dp"
                             android:layout_marginTop="8dp"

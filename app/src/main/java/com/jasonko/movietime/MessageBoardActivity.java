@@ -46,7 +46,7 @@ public class MessageBoardActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(0xFFFFFFFF);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("留言版");
+        getSupportActionBar().setTitle("哈拉區");
 
         mProgressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
 
@@ -82,6 +82,12 @@ public class MessageBoardActivity extends AppCompatActivity {
     }
 
     private class CommentTask extends AsyncTask {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
 
         @Override
         protected Object doInBackground(Object[] params){

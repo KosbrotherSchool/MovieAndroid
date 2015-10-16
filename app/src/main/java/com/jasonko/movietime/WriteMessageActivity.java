@@ -48,6 +48,7 @@ public class WriteMessageActivity extends AppCompatActivity {
         nicknameEditText = (EditText) findViewById(R.id.write_comment_nickname_edittext);
         contentEditText = (EditText) findViewById(R.id.write_comment_content_edittext);
         titleEditText = (EditText) findViewById(R.id.write_message_title_edittext);
+        tagEditText = (EditText) findViewById(R.id.write_message_tag_edittext);
 
         sendButton = (Button) findViewById(R.id.write_comment_send_button);
         nickNameCheckBox = (CheckBox) findViewById(R.id.checkbox_nickname);
@@ -57,9 +58,9 @@ public class WriteMessageActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
         toolbar.setTitleTextColor(0xFFFFFFFF);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("電影短評");
+        getSupportActionBar().setTitle("哈拉區");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        toolbar.setBackgroundResource(R.color.pink_color);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override

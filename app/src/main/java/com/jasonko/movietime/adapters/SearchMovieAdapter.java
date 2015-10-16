@@ -29,6 +29,8 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
 
         public View mView;
         public TextView textMovieTitle;
+        public TextView textMovieEng;
+        public TextView textClass;
         public TextView textType;
         public TextView textPublish;
         public TextView textActors;
@@ -39,6 +41,8 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
             mView = v;
             imageMovie = (ImageView) mView.findViewById(R.id.movie_thisweek_image);
             textMovieTitle = (TextView) mView.findViewById(R.id.movie_thisweek_title_text);
+            textMovieEng = (TextView) mView.findViewById(R.id.movie_thisweek_eng_text);
+            textClass = (TextView) mView.findViewById(R.id.movie_thisweek_class_text);
             textType = (TextView) mView.findViewById(R.id.movie_thisweek_type_text);
             textActors = (TextView) mView.findViewById(R.id.movie_thisweek_actors_text);
             textPublish = (TextView) mView.findViewById(R.id.movie_thisweek_publish_text);
@@ -50,7 +54,7 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
     public SearchMovieAdapter(Activity mActivity, ArrayList<Movie> movies) {
         mMovies = movies;
         this.mActivity = mActivity;
-        mImageLoader = new ImageLoader(this.mActivity);
+        mImageLoader = new ImageLoader(this.mActivity,100);
     }
 
     // Create new views (invoked by the layout manager)
@@ -73,7 +77,29 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
         holder.textMovieTitle.setText(mMovies.get(position).getTitle());
         holder.textType.setText(mMovies.get(position).getMovie_type());
         holder.textActors.setText(mMovies.get(position).getActors());
-        holder.textPublish.setText("上映日期：" + mMovies.get(position).getPublish_date() + "  " + mMovies.get(position).getMovie_class());
+        holder.textMovieEng.setText(mMovies.get(position).getTitle_eng());
+
+        if (mMovies.get(position).getMovie_class().indexOf("限") != -1){
+            holder.textClass.setBackgroundResource(R.drawable.class_red_selector);
+            holder.textClass.setText("限");
+            holder.textClass.setVisibility(View.VISIBLE);
+        }else if(mMovies.get(position).getMovie_class().indexOf("保") != -1){
+            holder.textClass.setBackgroundResource(R.drawable.class_blue_selector);
+            holder.textClass.setText("保");
+            holder.textClass.setVisibility(View.VISIBLE);
+        }else if(mMovies.get(position).getMovie_class().indexOf("輔") != -1){
+            holder.textClass.setBackgroundResource(R.drawable.class_yellow_selector);
+            holder.textClass.setText("輔");
+            holder.textClass.setVisibility(View.VISIBLE);
+        }else if(mMovies.get(position).getMovie_class().indexOf("普") != -1){
+            holder.textClass.setBackgroundResource(R.drawable.class_green_selector);
+            holder.textClass.setText("普");
+            holder.textClass.setVisibility(View.VISIBLE);
+        }else {
+            holder.textClass.setVisibility(View.GONE);
+        }
+
+        holder.textPublish.setText("上映日期：" + mMovies.get(position).getPublish_date());
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
