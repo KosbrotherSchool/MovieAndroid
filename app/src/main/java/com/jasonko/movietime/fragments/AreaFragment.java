@@ -23,6 +23,10 @@ public class AreaFragment extends Fragment {
     private AreaGridAdapter adapter;
     private GridView gridView;
 
+    public static AreaFragment newInstance() {
+        AreaFragment fragment = new AreaFragment();
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){

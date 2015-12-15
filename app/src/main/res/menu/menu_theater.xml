@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <item android:id="@+id/action_to_map"
-        android:title="地圖"
-        app:showAsAction="always"
-        android:icon="@drawable/icon_map_white"
+
+    <item android:id="@+id/action_to_theater_info"
+        android:title="戲院資訊"
+        app:showAsAction="never"
+
         />
 
 </menu>

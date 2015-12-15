@@ -10,10 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.jasonko.movietime.AppParams;
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.imageloader.ImageLoader;
 import com.jasonko.movietime.model.MyYoutubeVideo;
@@ -72,9 +68,6 @@ public static class ViewHolder extends RecyclerView.ViewHolder {
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AppParams.isShowIntersitialAd(mActivity)){
-                    requestNewInterstitial();
-                }
                 String url = mVideos.get(position).getYoutbeLink();
                 Intent intentGood = new Intent(Intent.ACTION_VIEW);
                 intentGood.setData(Uri.parse(url));
@@ -89,20 +82,4 @@ public static class ViewHolder extends RecyclerView.ViewHolder {
         return mVideos.size();
     }
 
-    private InterstitialAd mInterstitialAd;
-    private void requestNewInterstitial() {
-        mInterstitialAd = new InterstitialAd(mActivity);
-        mInterstitialAd.setAdUnitId(mActivity.getResources().getString(R.string.intersitial_ad_unit_id));
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                mInterstitialAd.show();
-            }
-        });
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("9A6CCAB163B87B4531D8D6278B898D2C")
-                .build();
-        mInterstitialAd.loadAd(adRequest);
-    }
 }

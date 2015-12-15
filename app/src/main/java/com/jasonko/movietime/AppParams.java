@@ -3,7 +3,6 @@ package com.jasonko.movietime;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
-import com.jasonko.movietime.model.Blogger;
 import com.jasonko.movietime.model.DrawerItem;
 import com.jasonko.movietime.model.OrderTheater;
 
@@ -23,24 +22,22 @@ public class AppParams {
             new OrderTheater("in89影城", "http://www.in89.com.tw/booking_00.php", R.drawable.theater_icon_3),
             new OrderTheater("喜滿客美奇萊影城", "http://maichilai.ehosting.com.tw/login.aspx", R.drawable.theater_icon_2),
             new OrderTheater("樂聲影城", "http://tix.luxcinema.com.tw/Booking/index.php/login", R.drawable.theater_icon_1),
-            new OrderTheater("博客來訂票", "http://www.ezding.com.tw/mmb.do", R.drawable.theater_icon_8),
+            new OrderTheater("博客來訂票", "http://tickets.books.com.tw/movie/", R.drawable.theater_icon_8),
     };
 
-    public static final Blogger[] bloggers ={
-            new Blogger("Das Kino波電影", "http://bernd97.pixnet.net/blog", R.drawable.blogger_5),
-            new Blogger("鯨鯊的塗鴨影評", "http://whale005.pixnet.net/blog", R.drawable.blogger_1),
-            new Blogger("火行者的電影部落格", "http://firewalker-movie.blogspot.tw/", R.drawable.blogger_4)
-    };
+//    public static final Blogger[] bloggers ={
+//            new Blogger("Das Kino波電影", "http://bernd97.pixnet.net/blog", R.drawable.blogger_5),
+//            new Blogger("鯨鯊的塗鴨影評", "http://whale005.pixnet.net/blog", R.drawable.blogger_1),
+//            new Blogger("火行者的電影部落格", "http://firewalker-movie.blogspot.tw/", R.drawable.blogger_4)
+//    };
 
 
     public static final DrawerItem[] drawerItems={
-           new DrawerItem("我的追蹤", R.drawable.drawer_follow),
-           new DrawerItem("問題回報", R.drawable.drawer_problem),
-           new DrawerItem("好用給個讚", R.drawable.drawer_thumb),
-           new DrawerItem("分享給好友", R.drawable.drawer_share),
-           new DrawerItem("信用卡優惠", R.drawable.drawer_credit_card),
-           new DrawerItem("關於我們", R.drawable.drawer_about),
+           new DrawerItem("我的最愛", R.drawable.drawer_love),
            new DrawerItem("我的設定", R.drawable.drawer_setting),
+            new DrawerItem("問題回報", R.drawable.drawer_problem),
+            new DrawerItem("給星星", R.drawable.drawer_star),
+            new DrawerItem("關於我們", R.drawable.drawer_about)
     };
 
     public static boolean isShowIntersitialAd(Activity activity){

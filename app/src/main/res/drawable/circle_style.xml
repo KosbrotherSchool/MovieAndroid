@@ -3,7 +3,7 @@
 
     <item xmlns:android="http://schemas.android.com/apk/res/android">
         <shape>
-            <solid android:color="#f00" />
+            <solid android:color="@color/movie_indicator" />
             <corners
                 android:topLeftRadius="30dp"
                 android:topRightRadius="30dp"

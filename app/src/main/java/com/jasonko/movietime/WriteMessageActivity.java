@@ -123,10 +123,13 @@ public class WriteMessageActivity extends AppCompatActivity {
 
     private class PostTask extends AsyncTask {
 
+        Toast upLoadToast;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(WriteMessageActivity.this, "上傳中...", Toast.LENGTH_SHORT).show();
+            upLoadToast = Toast.makeText(WriteMessageActivity.this, "上傳中...", Toast.LENGTH_SHORT);
+            upLoadToast.show();
         }
 
         @Override
@@ -163,9 +166,11 @@ public class WriteMessageActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Object result) {
+            upLoadToast.cancel();
             if ((boolean)result){
                 Toast.makeText(WriteMessageActivity.this, "成功上傳", Toast.LENGTH_SHORT).show();
                 isPublished = true;
+                finish();
             }else {
                 Toast.makeText(WriteMessageActivity.this, "未上傳成功", Toast.LENGTH_SHORT).show();
             }

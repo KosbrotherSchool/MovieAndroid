@@ -5,10 +5,10 @@
 
 
 
-    <color name="gray_line">#ff8A8A8A</color>
+
     <color name="white">#ffFFFFFF</color>
 
-    <color name="gray_background">#ff4d4d4d</color>
+
 
     <color name="class_red_color">#ffFC0000</color>
     <color name="class_green_color">#ff118323</color>
@@ -17,8 +17,16 @@
 
 
     <color name="pink_color">#ffBF2A6F</color>
-    <color name="background_color">#ffE6DDB9</color>
-    <color name="movie_indicator">#fff47721</color>
+
+    <color name="background_color">#ffE3E3E3</color>
+
+
+    <!-- main color same as iOS-->
+    <color name="movie_indicator">#ffEB952F</color>
+    <color name="gray_background">#ff3D3D3D</color>
+    <color name="gray_line">#ff8A8A8A</color>
+    <color name="gray_text">#ffB0B0B0</color>
+
     <color name="deep_green">#ff52975A</color>
     <color name="deep_blue">#ff107AB1</color>
     <color name="light_yellow">#ffEB952F</color>

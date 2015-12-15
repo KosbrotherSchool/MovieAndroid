@@ -1,6 +1,5 @@
 package com.jasonko.movietime;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -12,87 +11,142 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.view.Menu;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ProgressBar;
+import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.jasonko.movietime.adapters.DrawerListAdapter;
-import com.jasonko.movietime.adapters.RankMovieAdapter;
 import com.jasonko.movietime.api.MovieAPI;
-import com.jasonko.movietime.model.Movie;
+import com.jasonko.movietime.fragments.TabHallaFragment;
+import com.jasonko.movietime.fragments.TabMovieFragment;
+import com.jasonko.movietime.fragments.TabOtherFragment;
+import com.jasonko.movietime.fragments.TabPostFragment;
+import com.jasonko.movietime.fragments.TabTheaterFragment;
 import com.jasonko.movietime.model.Version;
 import com.jasonko.movietime.services.FollowMovieReceiver;
-import com.jasonko.movietime.tool.NetworkUtil;
-import com.quinny898.library.persistentsearch.SearchBox;
 
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout mDrawerLayout;
-    private LinearLayout lLayout_drawer;
-    private ListView listview_drawer;
-    private SearchBox searchBox;
-    private RecyclerView rankRecyclerView;
-
-    private ArrayList<Movie> rankMovies = new ArrayList<>();
-
-    private CardView newsCardView;
-    private CardView theaterCardView;
-    private CardView movieCardView;
-    private CardView ticketCardView;
-    private CardView moreRankCardView;
-    private CardView quickCardView;
-    private CardView blogCardView;
-    private CardView messageCardView;
-
-    private ProgressBar movieProgress;
-    private TextView movieText;
-
-    private AdView mAdView;
+    private FragmentTabHost mTabHost;
+    private String currentTabId = "tab1";
+    private HashMap<String, View> tabs = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setRepeatAlarm();
-        checkCurrentVersion();
+        mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
+        mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-        //設定各個元件的對應id
-        processViews();
+        View tab1 = getLayoutInflater().inflate(R.layout.tab_item,null);
+        ImageView movieImage = (ImageView) tab1.findViewById(R.id.tab_iamge);
+        movieImage.setImageResource(R.drawable.tab_icon_movie_yellow);
+        TextView movieText = (TextView) tab1.findViewById(R.id.tab_title);
+        movieText.setText("電影");
+        movieText.setTextColor(getResources().getColor(R.color.movie_indicator));
+        tabs.put("tab1", tab1);
+        mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator(tab1),
+                TabMovieFragment.class, null);
 
-        setSearchBar();
-//        setAdView();
+        View tab2 = getLayoutInflater().inflate(R.layout.tab_item,null);
+        ImageView theaterImage = (ImageView) tab2.findViewById(R.id.tab_iamge);
+        theaterImage.setImageResource(R.drawable.tab_icon_theater_gray);
+        TextView theaterText = (TextView) tab2.findViewById(R.id.tab_title);
+        theaterText.setText("影院");
+        theaterText.setTextColor(getResources().getColor(R.color.gray_text));
+        tabs.put("tab2", tab2);
+        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator(tab2),
+                TabTheaterFragment.class, null);
 
-        rankRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_rank);
-        rankRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rankRecyclerView.setLayoutManager(mLayoutManager);
+        View tab3 = getLayoutInflater().inflate(R.layout.tab_item,null);
+        ImageView hallaImage = (ImageView) tab3.findViewById(R.id.tab_iamge);
+        hallaImage.setImageResource(R.drawable.tab_icon_discuss_gray);
+        TextView hallaText = (TextView) tab3.findViewById(R.id.tab_title);
+        hallaText.setText("哈拉區");
+        hallaText.setTextColor(getResources().getColor(R.color.gray_text));
+        tabs.put("tab3", tab3);
+        mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator(tab3),
+                TabHallaFragment.class, null);
 
 
-        if (NetworkUtil.getConnectivityStatus(MainActivity.this) != 0) {
-            new RankMoviesTask().execute();
-        }else {
-            movieProgress.setVisibility(View.GONE);
-            movieText.setVisibility(View.VISIBLE);
-        }
+        View tab4 = getLayoutInflater().inflate(R.layout.tab_item,null);
+        ImageView blogImage = (ImageView) tab4.findViewById(R.id.tab_iamge);
+        blogImage.setImageResource(R.drawable.tab_icon_blog_post_gray);
+        TextView blogText = (TextView) tab4.findViewById(R.id.tab_title);
+        blogText.setText("影評");
+        blogText.setTextColor(getResources().getColor(R.color.gray_text));
+        tabs.put("tab4", tab4);
+        mTabHost.addTab(mTabHost.newTabSpec("tab4").setIndicator(tab4),
+                TabPostFragment.class, null);
+
+        View tab5 = getLayoutInflater().inflate(R.layout.tab_item,null);
+        ImageView otherImage = (ImageView) tab5.findViewById(R.id.tab_iamge);
+        otherImage.setImageResource(R.drawable.tab_icon_other_gray);
+        TextView otherText = (TextView) tab5.findViewById(R.id.tab_title);
+        otherText.setText("其他");
+        otherText.setTextColor(getResources().getColor(R.color.gray_text));
+        tabs.put("tab5", tab5);
+        mTabHost.addTab(mTabHost.newTabSpec("tab5").setIndicator(tab5),
+                TabOtherFragment.class, null);
+
+        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+
+                View tab = tabs.get(tabId);
+                ImageView  tabImage = (ImageView) tab.findViewById(R.id.tab_iamge);
+                TextView tabText = (TextView) tab.findViewById(R.id.tab_title);
+                tabText.setTextColor(getResources().getColor(R.color.movie_indicator));
+                if (tabId.equals("tab1")) {
+                    tabImage.setImageResource(R.drawable.tab_icon_movie_yellow);
+                }
+                if (tabId.equals("tab2")) {
+                    tabImage.setImageResource(R.drawable.tab_icon_theater_yellow);
+                }
+                if (tabId.equals("tab3")) {
+                    tabImage.setImageResource(R.drawable.tab_icon_discuss_yellow);
+                }
+                if (tabId.equals("tab4")) {
+                    tabImage.setImageResource(R.drawable.tab_icon_blog_post_yellow);
+                }
+                if (tabId.equals("tab5")) {
+                    tabImage.setImageResource(R.drawable.tab_icon_other_yellow);
+                }
+
+                View lastTab = tabs.get(currentTabId);
+                ImageView  lastTabImage = (ImageView) lastTab.findViewById(R.id.tab_iamge);
+                TextView lastTabText = (TextView) lastTab.findViewById(R.id.tab_title);
+                lastTabText.setTextColor(getResources().getColor(R.color.gray_text));
+                if (currentTabId.equals("tab1")) {
+                    lastTabImage.setImageResource(R.drawable.tab_icon_movie_gray);
+                }
+                if (currentTabId.equals("tab2")) {
+                    lastTabImage.setImageResource(R.drawable.tab_icon_theater_gray);
+                }
+                if (currentTabId.equals("tab3")) {
+                    lastTabImage.setImageResource(R.drawable.tab_icon_discuss_gray);
+                }
+                if (currentTabId.equals("tab4")) {
+                    lastTabImage.setImageResource(R.drawable.tab_icon_blog_post_gray);
+                }
+                if (currentTabId.equals("tab5")) {
+                    lastTabImage.setImageResource(R.drawable.tab_icon_other_gray);
+                }
+
+                currentTabId = tabId;
+            }
+        });
+
     }
 
     private void checkCurrentVersion() {
@@ -125,137 +179,6 @@ public class MainActivity extends Activity {
         return PendingIntent.getBroadcast(MainActivity.this, 0,
                 new Intent("register alarm from movietime"),
                 PendingIntent.FLAG_NO_CREATE) != null;
-    }
-
-    private void setAdView() {
-        mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-                mAdView.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                super.onAdFailedToLoad(errorCode);
-                mAdView.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-                mAdView.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                mAdView.setVisibility(View.VISIBLE);
-            }
-        });
-        mAdView.loadAd(adRequest);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    //設定各個元件的對應id
-    protected void processViews(){
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.layout_drawer);
-        listview_drawer = (ListView)findViewById(R.id.listview_drawer);
-        lLayout_drawer = (LinearLayout)findViewById(R.id.lLayout_drawer);
-        newsCardView = (CardView) findViewById(R.id.news_card_view);
-        theaterCardView = (CardView) findViewById(R.id.theater_card_view);
-        movieCardView = (CardView) findViewById(R.id.movie_card_view);
-        ticketCardView = (CardView) findViewById(R.id.ticket_card_view);
-        moreRankCardView = (CardView) findViewById(R.id.more_rank_card_view);
-        movieProgress = (ProgressBar) findViewById(R.id.main_movie_progress);
-        movieText = (TextView) findViewById(R.id.main_movie_text);
-        quickCardView = (CardView) findViewById(R.id.quick_card_view);
-        blogCardView = (CardView) findViewById(R.id.blog_card_view);
-        messageCardView = (CardView) findViewById(R.id.message_card_view);
-
-        //設定drawer中的listview的選項
-        DrawerListAdapter mAdapter = new DrawerListAdapter(this, AppParams.drawerItems);
-        listview_drawer.setAdapter(mAdapter);
-
-        newsCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newIntent = new Intent(MainActivity.this, NewsActivity.class);
-                startActivity(newIntent);
-            }
-        });
-
-        theaterCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newIntent = new Intent(MainActivity.this, TheatersActivity.class);
-                startActivity(newIntent);
-            }
-        });
-
-        ticketCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newIntent = new Intent(MainActivity.this, TicketActivity.class);
-                startActivity(newIntent);
-            }
-        });
-
-        movieCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newIntent = new Intent(MainActivity.this, MovieListActivity.class);
-                startActivity(newIntent);
-            }
-        });
-
-
-        moreRankCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newIntent = new Intent(MainActivity.this, MovieRankActivity.class);
-                startActivity(newIntent);
-            }
-        });
-
-
-        quickCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentQuick = new Intent(MainActivity.this, QuickMovieTimeActivity.class);
-                startActivity(intentQuick);
-            }
-        });
-
-        blogCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentBlogPost = new Intent(MainActivity.this, BlogPostActivity.class);
-                startActivity(intentBlogPost);
-            }
-        });
-
-        messageCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentBlogPost = new Intent(MainActivity.this, MessageBoardActivity.class);
-                startActivity(intentBlogPost);
-            }
-        });
-
     }
 
 
@@ -327,7 +250,7 @@ public class MainActivity extends Activity {
             }
 
         });
-        dialog.setNeutralButton("稍後通知",new DialogInterface.OnClickListener() {
+        dialog.setNeutralButton("稍後通知", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
                 SharedPreferences mPref = getPreferences(0);
@@ -338,99 +261,5 @@ public class MainActivity extends Activity {
         dialog.show();
 
     }
-
-
-    private class RankMoviesTask extends AsyncTask {
-
-        @Override
-        protected Object doInBackground(Object[] params) {
-            rankMovies = MovieAPI.getTaipeiRankMovies(1);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Object result) {
-            if (rankMovies != null && rankMovies.size() > 0) {
-                RankMovieAdapter videoAdapter = new RankMovieAdapter(MainActivity.this, rankMovies);
-                rankRecyclerView.setAdapter(videoAdapter);
-                movieProgress.setVisibility(View.GONE);
-            }else{
-                movieProgress.setVisibility(View.GONE);
-                movieText.setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
-
-    private void setSearchBar(){
-        searchBox = (SearchBox) findViewById(R.id.searchbox);
-        searchBox.enableVoiceRecognition(this);
-//        for(int x = 0; x < 10; x++){
-//            SearchResult option = new SearchResult("Result " + Integer.toString(x), getResources().getDrawable(R.drawable.ic_action_mic));
-//            searchBox.addSearchable(option);
-//        }
-        searchBox.setLogoText("電影即時通");
-        searchBox.setMenuListener(new SearchBox.MenuListener() {
-            @Override
-            public void onMenuClick() {
-                //Hamburger has been clicked
-                mDrawerLayout.openDrawer(lLayout_drawer);//點擊menu icon時就會跳出drawer
-            }
-
-        });
-        searchBox.setSearchListener(new SearchBox.SearchListener() {
-
-            @Override
-            public void onSearchOpened() {
-                //Use this to tint the screen
-            }
-
-            @Override
-            public void onSearchClosed() {
-                //Use this to un-tint the screen
-            }
-
-            @Override
-            public void onSearchTermChanged() {
-                //React to the search term changing
-                //Called after it has updated results
-            }
-
-            @Override
-            public void onSearch(String searchTerm) {
-//                Toast.makeText(MainActivity.this, searchTerm + " Searched", Toast.LENGTH_LONG).show();
-                Intent newIntent = new Intent(MainActivity.this, SearchResultActivity.class);
-                newIntent.putExtra("query", searchTerm);
-                startActivity(newIntent);
-            }
-
-            @Override
-            public void onSearchCleared() {
-
-            }
-
-        });
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (isAdded() && requestCode == SearchBox.VOICE_RECOGNITION_CODE && resultCode == this.RESULT_OK) {
-            // get first match and move to search result activity
-            ArrayList<String> matches = data
-                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-//            Toast.makeText(MainActivity.this, matches.get(0) + " Searched", Toast.LENGTH_LONG).show();
-            Intent newIntent = new Intent(MainActivity.this, SearchResultActivity.class);
-            newIntent.putExtra("query",matches.get(0));
-            startActivity(newIntent);
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private boolean isAdded() {
-        searchBox.clearResults();
-        return true;
-    }
-
 
 }

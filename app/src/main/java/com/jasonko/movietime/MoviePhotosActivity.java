@@ -3,15 +3,12 @@ package com.jasonko.movietime;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 import com.jasonko.movietime.api.MovieAPI;
 import com.jasonko.movietime.fragments.PhotoFragment;
 import com.jasonko.movietime.model.Photo;
@@ -21,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by kolichung on 9/3/15.
  */
-public class MoviePhotosActivity  extends AppCompatActivity {
+public class MoviePhotosActivity  extends FragmentActivity {
 
     private int photo_size = 0;
     private int movie_id;
@@ -31,8 +28,6 @@ public class MoviePhotosActivity  extends AppCompatActivity {
     private ViewPager viewPager;
     private TextView textNum;
 
-    InterstitialAd mInterstitialAd;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +36,6 @@ public class MoviePhotosActivity  extends AppCompatActivity {
         initial_photo_url = getIntent().getStringExtra("big_photo_url");
         movie_id = getIntent().getIntExtra("movie_id", 0);
 
-        requestNewInterstitial();
-
         textNum = (TextView) findViewById(R.id.photo_num_text);
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
@@ -50,7 +43,6 @@ public class MoviePhotosActivity  extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -65,24 +57,8 @@ public class MoviePhotosActivity  extends AppCompatActivity {
         });
 
         new NewsTask().execute();
-    }
 
-    private void requestNewInterstitial() {
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(getResources().getString(R.string.intersitial_ad_unit_id));
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                mInterstitialAd.show();
-            }
-        });
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("9A6CCAB163B87B4531D8D6278B898D2C")
-                .build();
-        mInterstitialAd.loadAd(adRequest);
     }
-
 
     public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
 

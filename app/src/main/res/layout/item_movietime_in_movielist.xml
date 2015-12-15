@@ -44,6 +44,7 @@
                 android:id="@+id/tv_movie_title"
                 android:textSize="20dp"
                 android:layout_marginLeft="5dp"
+                android:textColor="#5D5E5E"
                 />
 
             <TextView
@@ -54,6 +55,7 @@
                 android:textSize="15dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
+                android:textColor="#5D5E5E"
                 />
 
             <com.jasonko.movietime.tool.ExpandableHeightGridView

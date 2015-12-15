@@ -121,9 +121,34 @@ public class WriteCommentActivity extends AppCompatActivity {
         if (isSaveNickName){
             String nickName = prefs.getString("NickName","");
             nicknameEditText.setText(nickName);
+            headIndex = prefs.getInt("HeadIndex", 1);
+            switchHead(headIndex);
             nickNameCheckBox.setChecked(true);
         }else {
             nickNameCheckBox.setChecked(false);
+        }
+    }
+
+    private void switchHead(int headIndex) {
+        switch (headIndex){
+            case 1:
+                imageView.setImageResource(R.drawable.head_captain);
+                break;
+            case 2:
+                imageView.setImageResource(R.drawable.head_iron_man);
+                break;
+            case 3:
+                imageView.setImageResource(R.drawable.head_black_widow);
+                break;
+            case 4:
+                imageView.setImageResource(R.drawable.head_thor);
+                break;
+            case 5:
+                imageView.setImageResource(R.drawable.head_hulk);
+                break;
+            case 6:
+                imageView.setImageResource(R.drawable.head_hawkeye);
+                break;
         }
     }
 
@@ -133,6 +158,7 @@ public class WriteCommentActivity extends AppCompatActivity {
         if (nickNameCheckBox.isChecked()){
             if (nicknameEditText.getText()!=null && !nicknameEditText.getText().toString().equals("")) {
                 prefs.edit().putString("NickName", nicknameEditText.getText().toString()).commit();
+                prefs.edit().putInt("HeadIndex", headIndex).commit();
             }
         }
     }
@@ -217,10 +243,13 @@ public class WriteCommentActivity extends AppCompatActivity {
 
     private class PostTask extends AsyncTask {
 
+        Toast upLoadToast;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(WriteCommentActivity.this, "上傳中...", Toast.LENGTH_SHORT).show();
+            upLoadToast = Toast.makeText(WriteCommentActivity.this, "上傳中...", Toast.LENGTH_SHORT);
+            upLoadToast.show();
         }
 
         @Override
@@ -241,9 +270,11 @@ public class WriteCommentActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Object result) {
+            upLoadToast.cancel();
             if ((boolean)result){
                 Toast.makeText(WriteCommentActivity.this, "成功上傳", Toast.LENGTH_SHORT).show();
                 isPublished = true;
+                finish();
             }else {
                 Toast.makeText(WriteCommentActivity.this, "未上傳成功", Toast.LENGTH_SHORT).show();
             }

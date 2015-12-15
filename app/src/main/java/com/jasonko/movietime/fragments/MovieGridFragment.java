@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.adapters.MovieGridAdapter;
@@ -62,7 +61,9 @@ public class MovieGridFragment extends Fragment {
         mGridView.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                new NewsTask().execute();
+                if(movieRoundID!=4) {
+                    new NewsTask().execute();
+                }
             }
         });
 
@@ -98,13 +99,13 @@ public class MovieGridFragment extends Fragment {
                 if (movieGridAdapter == null) {
                     movieGridAdapter = new MovieGridAdapter(getActivity(), mMovies, movieRoundID);
                     mGridView.setAdapter(movieGridAdapter);
-                    mProgressBar.setVisibility(View.GONE);
                 }else {
                     movieGridAdapter.notifyDataSetChanged();
                 }
             }else {
-                Toast.makeText(getActivity(), "無其他資料", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "無其他資料", Toast.LENGTH_SHORT).show();
             }
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 }

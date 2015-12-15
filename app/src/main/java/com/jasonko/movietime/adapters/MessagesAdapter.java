@@ -39,6 +39,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         TextView publish_date;
         TextView messageTag;
         TextView viewCount;
+        TextView replyCount;
         View mView;
     }
 
@@ -55,6 +56,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         viewHolder.publish_date = (TextView) view.findViewById(R.id.text_publish_date);
         viewHolder.messageTag = (TextView) view.findViewById(R.id.message_tag_text);
         viewHolder.viewCount = (TextView) view.findViewById(R.id.text_message_viewcount);
+        viewHolder.replyCount = (TextView) view.findViewById(R.id.text_message_replycount);
         return viewHolder;
     }
 
@@ -64,8 +66,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         viewHolder.author.setText("作者:"+ message.getAuthor());
         viewHolder.title.setText(message.getTitle());
         viewHolder.publish_date.setText(message.getPub_date());
-        viewHolder.messageTag.setText("["+message.getMessage_tag()+"]");
-        viewHolder.viewCount.setText(Integer.toString(message.getView_count())+"人瀏覽");
+        viewHolder.messageTag.setText("["+message.getTag()+"]");
+        viewHolder.viewCount.setText(Integer.toString(message.getLike_count())+"人喜歡");
+        viewHolder.replyCount.setText(Integer.toString(message.getReply_size())+"人回覆");
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

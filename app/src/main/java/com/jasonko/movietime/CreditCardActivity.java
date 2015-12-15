@@ -9,20 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.jasonko.movietime.fragments.CreditCardDetailFragment;
 
 /**
  * Created by kolichung on 8/26/15.
  */
 public class CreditCardActivity extends AppCompatActivity {
-
-    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,55 +35,19 @@ public class CreditCardActivity extends AppCompatActivity {
         tabsStrip.setViewPager(viewPager);
         tabsStrip.setIndicatorColor(getResources().getColor(R.color.white));
         tabsStrip.setIndicatorHeight(10);
-        tabsStrip.setBackgroundColor(getResources().getColor(R.color.deep_green));
+        tabsStrip.setBackgroundColor(getResources().getColor(R.color.movie_indicator));
         tabsStrip.setTextColorResource(R.color.white);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
         toolbar.setTitleTextColor(0xFFFFFFFF);
-        toolbar.setBackgroundResource(R.color.deep_green);
+        toolbar.setBackgroundResource(R.color.movie_indicator);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("信用卡優惠資訊");
 
 
-    }
-
-    private void setAdView() {
-        mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-                mAdView.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                super.onAdFailedToLoad(errorCode);
-                mAdView.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-                mAdView.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                mAdView.setVisibility(View.VISIBLE);
-            }
-        });
-        mAdView.loadAd(adRequest);
     }
 
     public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {

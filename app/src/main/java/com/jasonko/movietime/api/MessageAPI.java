@@ -3,6 +3,7 @@ package com.jasonko.movietime.api;
 import android.util.Log;
 
 import com.jasonko.movietime.model.Message;
+import com.jasonko.movietime.model.Reply;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -37,9 +38,9 @@ public class MessageAPI {
     public static final boolean DEBUG = true;
     public static final String host = "http://139.162.10.76";
 
-    public static ArrayList<Message> getMessages(int page){
+    public static ArrayList<Message> getHighLightMessages(){
         ArrayList<Message> messages= new ArrayList<>();
-        String url = host + "/api/movie/messages?page="+Integer.toString(page);
+        String url = host + "/api2/movie/highlight_messages";
         String message = getMessageFromServer("GET", null, null, url);
         if (message == null) {
             return null;
@@ -49,60 +50,63 @@ public class MessageAPI {
         return messages;
     }
 
-    public static Message getMessageByID (int message_id){
-        String url = host + "/api/movie/messages?message_id="+Integer.toString(message_id);
+    public static ArrayList<Message> getMessages(int board_id, int page){
+        ArrayList<Message> messages= new ArrayList<>();
+        String url = host + "/api2/movie/message?board_id="+Integer.toString(board_id)+"&page="+Integer.toString(page);
         String message = getMessageFromServer("GET", null, null, url);
         if (message == null) {
             return null;
         } else {
-            return  parseMessage(message);
+            parseMessages(messages, message);
         }
+        return messages;
     }
 
-    private static Message parseMessage(String message) {
+    public static ArrayList<Reply> getReplies(int message_id, int page){
+        ArrayList<Reply> replies = new ArrayList<>();
+        String url = host + "/api2/movie/reply?message_id="+Integer.toString(message_id)+"&page="+Integer.toString(page);
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            parseReplies(replies, message);
+        }
+        return replies;
+    }
 
+    private static void parseReplies(ArrayList<Reply> replies, String message) {
         try {
-            JSONObject messageObject = new JSONObject(message);
+            JSONArray columnArray = new JSONArray(message);
+            for (int i = 0; i < columnArray.length(); i++){
+                JSONObject messageObject = columnArray.getJSONObject(i);
 
-            int message_id=0;
-            String author = "";
-            String title = "";
-            String message_tag = "";
-            String content = "";
-            String pub_date = "";
-            int view_count = 0;
+                int reply_id = 0;
+                int message_id = 0;
+                String author = "";
+                String content = "";
+                String pub_date = "";
+                int head_index = 1;
+                int like_count = 0;
 
-            try {
-                message_id = messageObject.getInt("id");
-                title = messageObject.getString("title");
-                author = messageObject.getString("author");
-                message_tag = messageObject.getString("message_tag");
-                view_count = messageObject.getInt("view_count");
-            }catch (Exception e){
+                try {
+                    reply_id = messageObject.getInt("id");
+                    message_id = messageObject.getInt("ios_message_id");
+                    author = messageObject.getString("author");
+                    content = messageObject.getString("content");
+                    pub_date = messageObject.getString("pub_date");
+                    head_index = messageObject.getInt("head_index");
+                    like_count = messageObject.getInt("like_count");
+                }catch (Exception e){
 
+                }
+
+                Reply newReply = new Reply(reply_id,message_id,author,content,pub_date,head_index,like_count);
+                replies.add(newReply);
             }
-
-            try {
-                content = messageObject.getString("content");
-            }catch (Exception e){
-
-            }
-
-            try {
-                pub_date = messageObject.getString("pub_date");
-            }catch (Exception e){
-
-            }
-
-            Message theMessage = new Message(message_id,author,title,message_tag,content,pub_date,view_count);
-            return theMessage;
         }catch (Exception e){
 
         }
-        return null;
     }
-
-
 
     private static void parseMessages(ArrayList<Message> messages, String message) {
 
@@ -111,37 +115,45 @@ public class MessageAPI {
             for (int i = 0; i < columnArray.length(); i++){
                 JSONObject messageObject = columnArray.getJSONObject(i);
 
-                int message_id=0;
+                int board_id = -1;
+                int message_id = 0;
                 String author = "";
                 String title = "";
-                String message_tag = "";
+                String tag = "";
                 String content = "";
                 String pub_date = "";
                 int view_count = 0;
+                int like_count = 0;
+                int reply_size = 0;
+                int head_index = 0;
+                boolean is_head = false;
+                String link_url = "";
+                String pic_url = "";
+
 
                 try {
                     message_id = messageObject.getInt("id");
+                    board_id = messageObject.getInt("board_id");
                     title = messageObject.getString("title");
+                    link_url = messageObject.getString("link_url");
+                    pic_url = messageObject.getString("pic_link");
+                }catch (Exception e){
+
+                }
+
+                try {
                     author = messageObject.getString("author");
-                    message_tag = messageObject.getString("message_tag");
-                    view_count = messageObject.getInt("view_count");
-                }catch (Exception e){
-
-                }
-
-                try {
-                    content = messageObject.getString("content");
-                }catch (Exception e){
-
-                }
-
-                try {
                     pub_date = messageObject.getString("pub_date");
+                    content = messageObject.getString("content");
+                    tag = messageObject.getString("tag");
+                    reply_size = messageObject.getInt("reply_size");
+                    like_count = messageObject.getInt("like_count");
+                    head_index = messageObject.getInt("head_index");
                 }catch (Exception e){
 
                 }
 
-                Message newMessage = new Message(message_id,author,title,message_tag,content,pub_date,view_count);
+                Message newMessage = new Message(board_id,message_id,author,title,tag,content,pub_date,view_count,like_count,reply_size,head_index,is_head,link_url,pic_url);
                 messages.add(newMessage);
             }
         }catch (Exception e){
@@ -163,6 +175,41 @@ public class MessageAPI {
         params.add(new BasicNameValuePair("t", title));
         params.add(new BasicNameValuePair("c", content));
         params.add(new BasicNameValuePair("tag", tag));
+
+        HttpResponse httpResponse = null;
+        try {
+            // 设置httpPost请求参数
+            httpPost.setEntity(new UrlEncodedFormEntity( params , HTTP.UTF_8 ));
+            HttpClient httpClient = new DefaultHttpClient() ;
+            // 请求超时  10s
+            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10000 ) ;
+            // 读取超时  10s
+            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 10000);
+
+            httpResponse = httpClient.execute( httpPost ) ;
+            if (httpResponse.getStatusLine().getStatusCode() == 200) {
+                // 第三步，使用getEntity方法活得返回结果
+                result  = EntityUtils.toString(httpResponse.getEntity());
+            }
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result ;
+    }
+
+    public static String httpPostReply(String author,String content, int message_id){
+        String result = "" ;
+        // 第一步，创建HttpPost对象
+        HttpPost httpPost = new HttpPost( host + "/message/update_reply" );
+
+        // 设置HTTP POST请求参数必须用NameValuePair对象
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+        params.add(new BasicNameValuePair("a", author));
+        params.add(new BasicNameValuePair("c", content));
+        params.add(new BasicNameValuePair("message_id", Integer.toString(message_id)));
 
         HttpResponse httpResponse = null;
         try {

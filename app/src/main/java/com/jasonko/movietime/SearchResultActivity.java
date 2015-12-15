@@ -61,7 +61,14 @@ public class SearchResultActivity extends AppCompatActivity {
         });
 
         if (NetworkUtil.getConnectivityStatus(SearchResultActivity.this) != 0) {
-            new NewsTask().execute();
+            if(queryString == null){
+                searchBox.setLogoText("電影即時通");
+                mProgressBar.setVisibility(View.GONE);
+                noNetText.setVisibility(View.VISIBLE);
+                noNetText.setText("請在搜索框輸入要搜索片名");
+            }else {
+                new NewsTask().execute();
+            }
         }else {
             mProgressBar.setVisibility(View.GONE);
             noNetText.setVisibility(View.VISIBLE);
@@ -73,6 +80,7 @@ public class SearchResultActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            noNetText.setVisibility(View.GONE);
         }
 
         @Override

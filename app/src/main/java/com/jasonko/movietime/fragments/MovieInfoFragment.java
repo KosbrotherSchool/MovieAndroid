@@ -28,8 +28,6 @@ import com.jasonko.movietime.dao.DaoMaster;
 import com.jasonko.movietime.dao.DaoSession;
 import com.jasonko.movietime.dao.FollowMovie;
 import com.jasonko.movietime.dao.FollowMovieDao;
-import com.jasonko.movietime.dao.RecentMovie;
-import com.jasonko.movietime.dao.RecentMovieDao;
 import com.jasonko.movietime.imageloader.ImageLoader;
 import com.jasonko.movietime.model.Movie;
 import com.jasonko.movietime.tool.NetworkUtil;
@@ -65,7 +63,6 @@ public class MovieInfoFragment extends Fragment{
     private TextView classText;
     private TextView publishDateText;
     private ImageView mImage;
-//    private ImageView image_review;
 
     private ImageLoader mImageLoader;
     private ProgressBar mProgressBar;
@@ -84,6 +81,7 @@ public class MovieInfoFragment extends Fragment{
     private LinearLayout linearPotato;
     private TextView imdbText;
     private TextView potatoText;
+    private TextView textClass;
 
     private DaoMaster.DevOpenHelper helper;
 
@@ -143,6 +141,7 @@ public class MovieInfoFragment extends Fragment{
         linearPotato = (LinearLayout) view.findViewById(R.id.potato_linear);
         imdbText = (TextView) view.findViewById(R.id.imdb_text);
         potatoText = (TextView) view.findViewById(R.id.potato_text);
+        textClass = (TextView) view.findViewById(R.id.movie_thisweek_class_text);
 
         LayerDrawable stars = (LayerDrawable) ratingBar
                 .getProgressDrawable();
@@ -200,15 +199,35 @@ public class MovieInfoFragment extends Fragment{
                 }else {
                     titleEngText.setText(mMovie.getTitle_eng());
                 }
-                classText.setText(mMovie.getMovie_class() + " 片長：" + mMovie.getMovie_length());
+                classText.setText("片長：" + mMovie.getMovie_length());
                 publishDateText.setText("上映日期：" + mMovie.getPublish_date());
+
+                if (mMovie.getMovie_class().indexOf("限") != -1){
+                    textClass.setBackgroundResource(R.drawable.class_red_selector);
+                    textClass.setText("限");
+                    textClass.setVisibility(View.VISIBLE);
+                }else if(mMovie.getMovie_class().indexOf("保") != -1){
+                    textClass.setBackgroundResource(R.drawable.class_blue_selector);
+                    textClass.setText("保");
+                    textClass.setVisibility(View.VISIBLE);
+                }else if(mMovie.getMovie_class().indexOf("輔") != -1){
+                    textClass.setBackgroundResource(R.drawable.class_yellow_selector);
+                    textClass.setText("輔");
+                    textClass.setVisibility(View.VISIBLE);
+                }else if(mMovie.getMovie_class().indexOf("普") != -1){
+                    textClass.setBackgroundResource(R.drawable.class_green_selector);
+                    textClass.setText("普");
+                    textClass.setVisibility(View.VISIBLE);
+                }else {
+                    textClass.setVisibility(View.GONE);
+                }
 
                 infoText.setText(Html.fromHtml(mMovie.getMovie_info()));
                 typeText.setText(mMovie.getMovie_type());
                 diretorText.setText(mMovie.getDirector());
                 actorText.setText(mMovie.getActors());
                 officerText.setText(mMovie.getOfficial());
-                photoText.setText("圖集(" + Integer.toString(mMovie.getPhoto_size()) + ")");
+                photoText.setText("圖集(" + Integer.toString(mMovie.getPhoto_size()+1) + ")");
                 trailerText.setText("影片(" + Integer.toString(mMovie.getTrailer_size()) + ")");
 
                 mImageLoader.DisplayImage(mMovie.getSmall_pic(), mImage);
@@ -271,12 +290,12 @@ public class MovieInfoFragment extends Fragment{
                     public void onClick(View v) {
                         if (checkFollow()) {
                             deleteFollow();
-                            follow_bottom_image.setImageResource(R.drawable.icon_tag);
-                            Toast.makeText(getActivity(), "取消追蹤", Toast.LENGTH_SHORT).show();
+                            follow_bottom_image.setImageResource(R.drawable.icon_love);
+                            Toast.makeText(getActivity(), "取消我的最愛", Toast.LENGTH_SHORT).show();
                         } else {
                             addFollow();
-                            follow_bottom_image.setImageResource(R.drawable.icon_tag_full);
-                            Toast.makeText(getActivity(), "追蹤此電影", Toast.LENGTH_SHORT).show();
+                            follow_bottom_image.setImageResource(R.drawable.icon_love_full);
+                            Toast.makeText(getActivity(), "加入我的最愛", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -349,10 +368,11 @@ public class MovieInfoFragment extends Fragment{
                     }
                 });
 
-                addThisMovieToRecentMovie();
+//                addThisMovieToRecentMovie();
+                helper = new DaoMaster.DevOpenHelper(getActivity(), "expense", null);
 
                 if (checkFollow()) {
-                    follow_bottom_image.setImageResource(R.drawable.icon_tag_full);
+                    follow_bottom_image.setImageResource(R.drawable.icon_love_full);
                 }
             }else {
                 noNetWorkText.setVisibility(View.VISIBLE);
@@ -375,7 +395,6 @@ public class MovieInfoFragment extends Fragment{
         }catch (Exception e){
 
         }
-
 
         FollowMovie newFollowMovie = new FollowMovie(null, mMovie.getTitle(), mMovie.getMovie_class(), mMovie.getSmall_pic(), mMovie.getMovie_id(), publish_date_date, new Date());
         followMovieDao.insert(newFollowMovie);
@@ -409,31 +428,31 @@ public class MovieInfoFragment extends Fragment{
 
     }
 
-    private void addThisMovieToRecentMovie() {
-
-        helper = new DaoMaster.DevOpenHelper(getActivity(), "expense", null);
-        DaoMaster daoMaster = new DaoMaster(helper.getWritableDatabase());
-        DaoSession daoSession = daoMaster.newSession();
-
-        RecentMovieDao movieDao = daoSession.getRecentMovieDao();
-        List recentMovies = movieDao.queryBuilder()
-                .where(RecentMovieDao.Properties.Movie_id.eq(mMovie.getMovie_id()))
-                .list();
-        if (recentMovies.size() == 0) {
-            RecentMovie newRencentMovie = new RecentMovie(null, mMovie.getTitle(), mMovie.getMovie_class(),
-                    mMovie.getMovie_type(), mMovie.getActors(), mMovie.getPublish_date(), mMovie.getSmall_pic(), mMovie.getMovie_id(), new Date());
-            movieDao.insert(newRencentMovie);
-        }else {
-            RecentMovie theMovie = (RecentMovie)recentMovies.get(0);
-            theMovie.setUpdate_date(new Date());
-            movieDao.update(theMovie);
-        }
-
-        List allRecentMovies = movieDao.queryBuilder().orderAsc(RecentMovieDao.Properties.Update_date).list();
-        if (allRecentMovies.size()> 10){
-            movieDao.delete((RecentMovie)allRecentMovies.get(0));
-        }
-
-    }
+//    private void addThisMovieToRecentMovie() {
+//
+//        helper = new DaoMaster.DevOpenHelper(getActivity(), "expense", null);
+//        DaoMaster daoMaster = new DaoMaster(helper.getWritableDatabase());
+//        DaoSession daoSession = daoMaster.newSession();
+//
+//        RecentMovieDao movieDao = daoSession.getRecentMovieDao();
+//        List recentMovies = movieDao.queryBuilder()
+//                .where(RecentMovieDao.Properties.Movie_id.eq(mMovie.getMovie_id()))
+//                .list();
+//        if (recentMovies.size() == 0) {
+//            RecentMovie newRencentMovie = new RecentMovie(null, mMovie.getTitle(), mMovie.getMovie_class(),
+//                    mMovie.getMovie_type(), mMovie.getActors(), mMovie.getPublish_date(), mMovie.getSmall_pic(), mMovie.getMovie_id(), new Date());
+//            movieDao.insert(newRencentMovie);
+//        }else {
+//            RecentMovie theMovie = (RecentMovie)recentMovies.get(0);
+//            theMovie.setUpdate_date(new Date());
+//            movieDao.update(theMovie);
+//        }
+//
+//        List allRecentMovies = movieDao.queryBuilder().orderAsc(RecentMovieDao.Properties.Update_date).list();
+//        if (allRecentMovies.size()> 10){
+//            movieDao.delete((RecentMovie)allRecentMovies.get(0));
+//        }
+//
+//    }
 
 }

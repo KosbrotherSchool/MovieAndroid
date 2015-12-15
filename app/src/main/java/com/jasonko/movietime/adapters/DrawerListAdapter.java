@@ -1,22 +1,26 @@
 package com.jasonko.movietime.adapters;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jasonko.movietime.AboutUsActivity;
-import com.jasonko.movietime.CreditCardActivity;
 import com.jasonko.movietime.FollowMovieActivity;
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.SettingActivity;
 import com.jasonko.movietime.model.DrawerItem;
+import com.jasonko.movietime.tool.GMailSender;
 
 /**
  * Created by kolichung on 9/1/15.
@@ -69,44 +73,21 @@ public class DrawerListAdapter extends BaseAdapter {
                         mActivity.startActivity(intentFollow);
                         break;
                     case 1:
-                        Intent intentReport = new Intent(Intent.ACTION_SEND);
-                        intentReport.setType("text/plain");
-                        intentReport.putExtra(Intent.EXTRA_EMAIL, new String[]{"kosbrotherschool@gmail.com"});
-                        intentReport.putExtra(Intent.EXTRA_SUBJECT, "問題回報：(from 電影即時通 APP)");
-                        try {
-                            mActivity.startActivity(Intent.createChooser(intentReport, "傳送 mail..."));
-                        } catch (android.content.ActivityNotFoundException ex) {
-                            Toast.makeText(mActivity, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-                        }
+                        Intent intentSetting = new Intent(mActivity, SettingActivity.class);
+                        mActivity.startActivity(intentSetting);
                         break;
                     case 2:
+                        showProblemDialog();
+                        break;
+                    case 3:
                         String url = "https://play.google.com/store/apps/details?id=com.jasonko.movietime";
                         Intent intentGood = new Intent(Intent.ACTION_VIEW);
                         intentGood.setData(Uri.parse(url));
                         mActivity.startActivity(intentGood);
                         break;
-                    case 3:
-                        Intent intentShare = new Intent(Intent.ACTION_SEND);
-                        intentShare.setType("text/plain");
-                        intentShare.putExtra(Intent.EXTRA_SUBJECT, "電影即時通 APP !");
-                        intentShare.putExtra(Intent.EXTRA_TEXT, "推薦給您, [電影即時通]APP 找電影一點通~  https://play.google.com/store/apps/details?id=com.jasonko.movietime");
-                        try {
-                            mActivity.startActivity(Intent.createChooser(intentShare, "分享 ..."));
-                        } catch (android.content.ActivityNotFoundException ex) {
-                            Toast.makeText(mActivity, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-                        }
-                        break;
                     case 4:
-                        Intent intentCredit = new Intent(mActivity, CreditCardActivity.class);
-                        mActivity.startActivity(intentCredit);
-                        break;
-                    case 5:
                         Intent intentAbout = new Intent(mActivity, AboutUsActivity.class);
                         mActivity.startActivity(intentAbout);
-                        break;
-                    case 6:
-                        Intent intentSetting = new Intent(mActivity, SettingActivity.class);
-                        mActivity.startActivity(intentSetting);
                         break;
                 }
 
@@ -115,5 +96,69 @@ public class DrawerListAdapter extends BaseAdapter {
         });
 
         return convertView;
+    }
+
+    private void showProblemDialog() {
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
+        View replyView = mActivity.getLayoutInflater().inflate(R.layout.mail_content_view, null);
+        final EditText contentEditText = (EditText) replyView.findViewById(R.id.mail_content_edit_text);
+        dialog.setView(replyView);
+        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+
+            }
+
+        });
+        dialog.setPositiveButton("送出", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                if (!contentEditText.getText().toString().equals("")) {
+                    String[] strings = {"電影即時通問題或建議(Android)", contentEditText.getText().toString()};
+                    new SendMailTask().execute(strings);
+                } else {
+                    Toast.makeText(mActivity, "空白內容無法傳送", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
+        dialog.show();
+
+    }
+
+    private class SendMailTask extends AsyncTask<String, Void, String> {
+
+        Toast mailToast;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mailToast = Toast.makeText(mActivity,"傳送中...", Toast.LENGTH_SHORT);
+            mailToast.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            GMailSender sender = new GMailSender("movietimeautomail@gmail.com", "MovieTime2015");
+            try {
+                sender.sendMail(params[0],
+                        params[1],
+                        "movietimeautomail@gmail.com", "kosbrotherschool@gmail.com");
+            }catch (Exception e){
+                return "error";
+            }
+            return "ok";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            mailToast.cancel();
+            if (s.equals("ok")){
+                Toast.makeText(mActivity,"已成功上傳", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(mActivity,"未成功上傳", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

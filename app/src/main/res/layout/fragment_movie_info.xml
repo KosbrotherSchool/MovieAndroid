@@ -154,48 +154,7 @@
                 android:weightSum="3"
                 >
 
-                <android.support.v7.widget.CardView
-                    android:id="@+id/movie_photos_card_view"
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    card_view:cardBackgroundColor="#FF9245"
-                    card_view:cardUseCompatPadding="true"
-                    card_view:cardElevation="0dp"
-                    card_view:cardCornerRadius="3dp"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:selectableItemBackground"
-                    >
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal"
-                        >
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:src="@drawable/icon_photo"
-                            android:layout_marginTop="5dp"
-                            />
-
-                        <TextView
-                            android:id="@+id/movieinfo_text_photos"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="圖集(15)"
-                            android:textColor="#FFFFFF"
-                            android:textSize="20dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="10dp"
-                            />
-                    </LinearLayout>
-
-                </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/movie_trailers_card_view"
@@ -203,7 +162,7 @@
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    card_view:cardBackgroundColor="#FF9245"
+                    card_view:cardBackgroundColor="@color/movie_indicator"
                     card_view:cardUseCompatPadding="true"
                     card_view:cardElevation="0dp"
                     card_view:cardCornerRadius="3dp"
@@ -248,7 +207,7 @@
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    card_view:cardBackgroundColor="#FF9245"
+                    card_view:cardBackgroundColor="@color/movie_indicator"
                     card_view:cardUseCompatPadding="true"
                     card_view:cardElevation="0dp"
                     card_view:cardCornerRadius="3dp"
@@ -283,6 +242,49 @@
                             android:layout_marginBottom="10dp"
                             />
 
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/movie_photos_card_view"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    card_view:cardBackgroundColor="@color/movie_indicator"
+                    card_view:cardUseCompatPadding="true"
+                    card_view:cardElevation="0dp"
+                    card_view:cardCornerRadius="3dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:selectableItemBackground"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        >
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/icon_photo"
+                            android:layout_marginTop="5dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/movieinfo_text_photos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="圖集(15)"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            />
                     </LinearLayout>
 
                 </android.support.v7.widget.CardView>
@@ -509,12 +511,12 @@
                         android:id="@+id/follow_movie_bottom_image"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/icon_tag"
+                        android:src="@drawable/icon_love"
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="加入追蹤"
+                        android:text="加入最愛"
                         android:textSize="14dp"
                         />
                 </LinearLayout>

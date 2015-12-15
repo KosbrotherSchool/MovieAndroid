@@ -8,10 +8,28 @@
     <style name="CustomTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="actionMenuTextColor">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="colorPrimaryDark">#D48528</item>
+        <item name="apcStyles">@style/AppPageControlStyle</item>
     </style>
+
 
     <style name="CardViewStyle" parent="CardView.Light">
         <item name="android:foreground">@drawable/drawer_list_selector</item>
+    </style>
+
+    <style name="AppPageControlStyle">
+        <!-- To change indicator size -->
+        <item name="apc_indicatorSize">3dp</item>
+        <!-- To change distance between indicators -->
+        <item name="apc_indicatorDistance">3dp</item>
+        <!-- To change current item indicator size -->
+        <item name="apc_currentIndicatorSize">3dp</item>
+        <!-- To change indicator colors -->
+        <item name="apc_colorCurrentDefault">#E3E3E3</item>
+        <item name="apc_colorCurrentPressed">#E3E3E3</item>
+        <item name="apc_colorNormalDefault">#9E9E9E</item>
+        <item name="apc_colorNormalPressed">#9E9E9E</item>
     </style>
 
 </resources>

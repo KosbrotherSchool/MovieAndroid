@@ -77,16 +77,33 @@
                     />
 
 
-                <TextView
-                    android:id="@+id/text_message_viewcount"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="2213人瀏覽"
+                    android:orientation="horizontal"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginRight="5dp"
-                    android:gravity="right"
-                    android:textSize="15dp"/>
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical|right"
+                    >
+
+                    <TextView
+                        android:id="@+id/text_message_replycount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="8人回覆"
+                        android:gravity="right"
+                        android:textSize="15dp"/>
+
+                    <TextView
+                        android:id="@+id/text_message_viewcount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2213人瀏覽"
+                        android:layout_marginLeft="15dp"
+                        android:gravity="right"
+                        android:textSize="15dp"/>
+                </LinearLayout>
 
             </LinearLayout>
 

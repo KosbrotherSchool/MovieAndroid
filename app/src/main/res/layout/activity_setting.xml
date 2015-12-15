@@ -11,7 +11,8 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
+        android:minHeight="48dp"
         android:background="@color/movie_indicator"
         app:contentInsetEnd="0dp"
         app:contentInsetStart="0dp"
@@ -27,7 +28,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="追蹤電影通知設定:"
+            android:text="我的最愛電影通知設定:"
             android:textSize="18dp"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="10dp"

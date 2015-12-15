@@ -88,6 +88,7 @@ public class MoviesListOfTheaterAdapter extends RecyclerView.Adapter<MoviesListO
             viewHolder.tv_movie_remark.setVisibility(View.GONE);
         }else {
             viewHolder.tv_movie_remark.setText(movieTime.getRemark());
+            viewHolder.tv_movie_remark.setVisibility(View.VISIBLE);
         }
 
 //        viewHolder.tv_movie_time.setText(movieTime.getMovie_time());
@@ -95,7 +96,7 @@ public class MoviesListOfTheaterAdapter extends RecyclerView.Adapter<MoviesListO
         Log.d("test movie photo",movieTime.getMovie_photo());
 
         String[] mStrings = movieTime.getMovie_time().split(",");
-        ArrayAdapter arrayAdapter = new ArrayAdapter(mActivity, android.R.layout.simple_list_item_1, mStrings);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(mActivity, R.layout.mytext, mStrings);
         viewHolder.gridTheaterMovie.setExpanded(true);
         viewHolder.gridTheaterMovie.setAdapter(arrayAdapter);
 

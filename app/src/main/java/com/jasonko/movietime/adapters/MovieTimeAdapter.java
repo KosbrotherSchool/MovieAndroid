@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jasonko.movietime.R;
+import com.jasonko.movietime.TheaterActivity;
 import com.jasonko.movietime.model.MovieTime;
 import com.jasonko.movietime.model.Theater;
 import com.jasonko.movietime.tool.ExpandableHeightGridView;
@@ -72,7 +73,7 @@ public class MovieTimeAdapter extends RecyclerView.Adapter<MovieTimeAdapter.View
 //        holder.textTeaterAddress.setText(theTheater.getAddress());
         holder.textRemark.setText(mMovieTimes.get(position).getRemark());
         String[] mStrings = mMovieTimes.get(position).getMovie_time().split(",");
-        ArrayAdapter arrayAdapter = new ArrayAdapter(mActivity, android.R.layout.simple_list_item_1, mStrings);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(mActivity, R.layout.mytext, mStrings);
         holder.gridTheaterMovie.setExpanded(true);
         holder.gridTheaterMovie.setAdapter(arrayAdapter);
         holder.imageMap.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +83,14 @@ public class MovieTimeAdapter extends RecyclerView.Adapter<MovieTimeAdapter.View
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                         Uri.parse("geo:0,0?q=" + theTheater.getAddress()));
                 mActivity.startActivity(intent);
+            }
+        });
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent theaterIntent = new Intent(mActivity, TheaterActivity.class);
+                theaterIntent.putExtra("theater_id", mMovieTimes.get(position).getTheater_id());
+                mActivity.startActivity(theaterIntent);
             }
         });
     }

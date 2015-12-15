@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.jasonko.movietime.adapters.MessagesAdapter;
 import com.jasonko.movietime.api.MessageAPI;
@@ -34,19 +33,38 @@ public class MessageBoardActivity extends AppCompatActivity {
     private boolean isNeedReload = false;
 
     private ProgressBar mProgressBar;
-
+    private int board_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
+        board_id = getIntent().getIntExtra("board_id",0);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_comment);
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
         toolbar.setTitleTextColor(0xFFFFFFFF);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("哈拉區");
+        switch (board_id){
+            case 0:
+                getSupportActionBar().setTitle("公告區");
+                break;
+            case 1:
+                getSupportActionBar().setTitle("電影版");
+                break;
+            case 2:
+                getSupportActionBar().setTitle("戲劇版");
+                break;
+            case 3:
+                getSupportActionBar().setTitle("生活版");
+                break;
+            case 4:
+                getSupportActionBar().setTitle("最近按讚");
+                break;
+        }
+
 
         mProgressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
 
@@ -91,7 +109,7 @@ public class MessageBoardActivity extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object[] params){
-            ArrayList<Message> tempMessages = MessageAPI.getMessages(mPage);
+            ArrayList<Message> tempMessages = MessageAPI.getMessages(board_id,mPage);
             if(tempMessages != null && tempMessages.size() > 0){
                 mMessages.addAll(tempMessages);
                 mPage++;
@@ -111,7 +129,7 @@ public class MessageBoardActivity extends AppCompatActivity {
                 }
             }else{
                 if (mAdapter != null) {
-                    Toast.makeText(MessageBoardActivity.this, "沒有其他留言", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MessageBoardActivity.this, "沒有其他留言", Toast.LENGTH_SHORT).show();
                 }
             }
             mProgressBar.setVisibility(View.GONE);

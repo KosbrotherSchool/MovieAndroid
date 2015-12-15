@@ -6,12 +6,15 @@
     android:orientation="vertical"
     tools:context="com.jasonko.movietime.CommentActivity"
     android:background="@color/background_color"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_comment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
+        android:minHeight="48dp"
         android:background="@color/movie_indicator"
         app:contentInsetEnd="0dp"
         app:contentInsetStart="0dp"

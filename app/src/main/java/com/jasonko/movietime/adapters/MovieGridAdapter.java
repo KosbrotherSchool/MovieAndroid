@@ -64,6 +64,14 @@ public class MovieGridAdapter extends BaseAdapter {
         TextView user_point = (TextView) convertView.findViewById(R.id.text_user_point);
         RatingBar ratingBar = (RatingBar) convertView.findViewById(R.id.ratingBar);
         TextView textMessage = (TextView) convertView.findViewById(R.id.message_text);
+        TextView text_rank_num = (TextView) convertView.findViewById(R.id.text_rank_num);
+
+        if (roundId == 1 && position<20){
+            text_rank_num.setVisibility(View.VISIBLE);
+            text_rank_num.setText(Integer.toString(position+1));
+        }else {
+            text_rank_num.setVisibility(View.GONE);
+        }
 
         LayerDrawable stars = (LayerDrawable) ratingBar
                 .getProgressDrawable();
@@ -103,6 +111,7 @@ public class MovieGridAdapter extends BaseAdapter {
         }else {
             user_point.setText(Double.toString(mMovies.get(position).getPoints()) + "分");
             ratingBar.setRating((float) (mMovies.get(position).getPoints() / 2));
+            ratingBar.setVisibility(View.VISIBLE);
         }
 
         if (roundId == 1) {

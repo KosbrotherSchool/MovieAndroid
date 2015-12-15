@@ -10,9 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.jasonko.movietime.adapters.TheatersListAdapter;
 import com.jasonko.movietime.model.Theater;
 
@@ -25,8 +22,6 @@ public class TheatersOfAreaActivity extends AppCompatActivity {
     private TheatersListAdapter mAdapter;
     private ArrayList<Theater> mData;
 
-    private AdView mAdView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +32,6 @@ public class TheatersOfAreaActivity extends AppCompatActivity {
         int area_id = intent.getIntExtra("area_id", 0);
         String area_name = intent.getStringExtra("area_name");
 
-//        setAdView();
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
         toolbar.setTitleTextColor(0xFFFFFFFF);
@@ -48,7 +41,11 @@ public class TheatersOfAreaActivity extends AppCompatActivity {
 
 
         //設定Adapter
-        mData = Theater.getTheaters(area_id);
+        if (area_id != 25) {
+            mData = Theater.getTheaters(area_id);
+        }else {
+            mData = Theater.getSecondRoundTheaters();
+        }
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_theaters_of_area);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -59,7 +56,7 @@ public class TheatersOfAreaActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 Theater theater = mData.get(position);
-                Intent intent1 = new Intent(TheatersOfAreaActivity.this, MovieListOfTheaterInAreaActivity.class);
+                Intent intent1 = new Intent(TheatersOfAreaActivity.this, TheaterActivity.class);
                 intent1.putExtra("theater_name", theater.getName());
                 intent1.putExtra("theater_phone", theater.getPhone());
                 intent1.putExtra("theater_address", theater.getAddress());
@@ -73,42 +70,6 @@ public class TheatersOfAreaActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
 
-    }
-
-    private void setAdView() {
-        mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-                mAdView.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                super.onAdFailedToLoad(errorCode);
-                mAdView.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-                mAdView.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                mAdView.setVisibility(View.VISIBLE);
-            }
-        });
-        mAdView.loadAd(adRequest);
     }
 
     @Override

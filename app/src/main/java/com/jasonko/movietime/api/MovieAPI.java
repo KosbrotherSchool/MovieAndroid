@@ -85,7 +85,12 @@ public class MovieAPI {
 
     public static ArrayList<Movie> getMoviesByRoundID(int movie_round, int page){
         ArrayList<Movie> movies = new ArrayList<Movie>();
-        String url = host + "/api/movie/movies?movie_round="+ Integer.toString(movie_round)+ "&page="+ Integer.toString(page);
+        String url;
+        if (movie_round != 1) {
+            url = host + "/api/movie/movies?movie_round=" + Integer.toString(movie_round) + "&page=" + Integer.toString(page);
+        }else {
+            url = host + "/api2/movie/pub_movies?page="+ Integer.toString(page);
+        }
         String message = getMessageFromServer("GET", null, null, url);
         if (message == null) {
             return null;

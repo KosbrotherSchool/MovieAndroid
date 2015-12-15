@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jasonko.movietime.MovieActivity;
-import com.jasonko.movietime.QuickMovieTimeActivity;
 import com.jasonko.movietime.R;
+import com.jasonko.movietime.fragments.QuickTimeFragment;
 import com.jasonko.movietime.model.MovieTime;
 import com.jasonko.movietime.model.Theater;
 
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class QuickTimeAdapter extends RecyclerView.Adapter<QuickTimeAdapter.ViewHolder> {
 
     public ArrayList<MovieTime> mMovieTimes;
-    public QuickMovieTimeActivity mActivity;
+    public QuickTimeFragment mFragment;
     public String mHour;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,9 +57,9 @@ public class QuickTimeAdapter extends RecyclerView.Adapter<QuickTimeAdapter.View
     }
 
     // clockHour = "10" or "11" etc
-    public QuickTimeAdapter(ArrayList<MovieTime> movieTimes, QuickMovieTimeActivity activity, String clockHour) {
+    public QuickTimeAdapter(ArrayList<MovieTime> movieTimes, QuickTimeFragment fragment, String clockHour) {
         mMovieTimes = movieTimes;
-        mActivity = activity;
+        mFragment = fragment;
         mHour = clockHour;
     }
 
@@ -92,16 +92,16 @@ public class QuickTimeAdapter extends RecyclerView.Adapter<QuickTimeAdapter.View
                 Theater theTheater = Theater.getTheaterByID(mMovieTimes.get(position).getTheater_id());
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                         Uri.parse("geo:0,0?q=" + theTheater.getAddress()));
-                mActivity.startActivity(intent);
+                mFragment.getActivity().startActivity(intent);
             }
         });
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newIntent = new Intent(mActivity, MovieActivity.class);
+                Intent newIntent = new Intent(mFragment.getActivity(), MovieActivity.class);
                 newIntent.putExtra("movie_id", mMovieTimes.get(position).getMovie_id());
-                mActivity.startActivity(newIntent);
+                mFragment.getActivity().startActivity(newIntent);
             }
         });
 
@@ -134,14 +134,14 @@ public class QuickTimeAdapter extends RecyclerView.Adapter<QuickTimeAdapter.View
             holder.downButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mActivity.downTimeSelection();
+                    mFragment.downTimeSelection();
                 }
             });
 
             holder.upButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mActivity.upTimeSelection();
+                    mFragment.upTimeSelection();
                 }
             });
 

@@ -8,8 +8,8 @@ android {
         applicationId "com.jasonko.movietime"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 15
-        versionName "1.14"
+        versionCode 20
+        versionName "1.19"
     }
     buildTypes {
         release {
@@ -29,5 +29,6 @@ dependencies {
     compile 'com.quinny898.library.persistentsearch:library:1.0.0-SNAPSHOT'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'de.greenrobot:greendao:2.0.0'
-    compile 'com.google.android.gms:play-services-ads:7.+'
+    compile 'com.google.android.gms:play-services-analytics:7.5.0'
+    compile 'com.github.ksoichiro:androidpagecontrol:0.1.1'
 }

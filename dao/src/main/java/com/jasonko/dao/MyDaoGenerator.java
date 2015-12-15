@@ -10,10 +10,11 @@ import de.greenrobot.daogenerator.Schema;
 public class MyDaoGenerator {
 
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(1, "com.jasonko.movietime.dao");
+        Schema schema = new Schema(3, "com.jasonko.movietime.dao");
 
-        addRecentMovie(schema);
         addFollowMovie(schema);
+        addFavoriteTheater(schema);
+        addFavoriteMessage(schema);
 
         new DaoGenerator().generateAll(schema, "../Movietime/app/src/main/java");
     }
@@ -29,18 +30,45 @@ public class MyDaoGenerator {
         followMovie.addDateProperty("update_date").notNull();
     }
 
-    private static void addRecentMovie(Schema schema) {
-        Entity recentMovie = schema.addEntity("RecentMovie");
-        recentMovie.addIdProperty();
-        recentMovie.addStringProperty("title").notNull();
-        recentMovie.addStringProperty("movie_class").notNull();
-        recentMovie.addStringProperty("movie_type").notNull();
-        recentMovie.addStringProperty("actors").notNull();
-        recentMovie.addStringProperty("publish_date").notNull();
-        recentMovie.addStringProperty("small_pic").notNull();
-        recentMovie.addIntProperty("movie_id").notNull();
-        recentMovie.addDateProperty("update_date").notNull();
+    private static void addFavoriteTheater(Schema schema){
+        Entity favoriteTheater = schema.addEntity("FavoriteTheater");
+        favoriteTheater.addIdProperty();
+        favoriteTheater.addIntProperty("theater_id").notNull();
+        favoriteTheater.addIntProperty("area_id").notNull();
+        favoriteTheater.addStringProperty("name").notNull();
+        favoriteTheater.addStringProperty("address").notNull();
+        favoriteTheater.addStringProperty("phone").notNull();
     }
+
+    private static void addFavoriteMessage (Schema schema){
+        Entity favoriteTheater = schema.addEntity("FavoriteMessage");
+        favoriteTheater.addIdProperty();
+        favoriteTheater.addIntProperty("message_id").notNull();
+        favoriteTheater.addStringProperty("author").notNull();
+        favoriteTheater.addStringProperty("title").notNull();
+        favoriteTheater.addStringProperty("tag").notNull();
+        favoriteTheater.addStringProperty("content").notNull();
+        favoriteTheater.addStringProperty("pub_date").notNull();
+        favoriteTheater.addIntProperty("view_count").notNull();
+        favoriteTheater.addIntProperty("like_count").notNull();
+        favoriteTheater.addIntProperty("reply_size").notNull();
+        favoriteTheater.addIntProperty("head_index").notNull();
+        favoriteTheater.addBooleanProperty("is_head").notNull();
+        favoriteTheater.addStringProperty("link_url").notNull();
+    }
+
+//    private static void addRecentMovie(Schema schema) {
+//        Entity recentMovie = schema.addEntity("RecentMovie");
+//        recentMovie.addIdProperty();
+//        recentMovie.addStringProperty("title").notNull();
+//        recentMovie.addStringProperty("movie_class").notNull();
+//        recentMovie.addStringProperty("movie_type").notNull();
+//        recentMovie.addStringProperty("actors").notNull();
+//        recentMovie.addStringProperty("publish_date").notNull();
+//        recentMovie.addStringProperty("small_pic").notNull();
+//        recentMovie.addIntProperty("movie_id").notNull();
+//        recentMovie.addDateProperty("update_date").notNull();
+//    }
 
 
 }

@@ -10,12 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.jasonko.movietime.AppParams;
-import com.jasonko.movietime.MovieListOfTheaterInAreaActivity;
 import com.jasonko.movietime.R;
+import com.jasonko.movietime.TheaterActivity;
 import com.jasonko.movietime.WebTheaterActivity;
 import com.jasonko.movietime.model.Theater;
 
@@ -113,15 +109,9 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
             @Override
             public void onClick(View v) {
 
-                if (AppParams.isShowIntersitialAd(mActivity)){
-                    requestNewInterstitial();
-                }
-
-                if (mTheater.getTheater_id()!=12 && mTheater.getTheater_id()!=25 && mTheater.getTheater_id() != 6) {
-                    Intent intent = new Intent(v.getContext(), MovieListOfTheaterInAreaActivity.class);
-                    intent.putExtra("theater_name", mTheater.getName());
-                    intent.putExtra("theater_phone", mTheater.getPhone());
-                    intent.putExtra("theater_address", mTheater.getAddress());
+                if (mTheater.getTheater_id()!=12 && mTheater.getTheater_id()!=25
+                        && mTheater.getTheater_id() != 6 && mTheater.getTheater_id()!=33) {
+                    Intent intent = new Intent(v.getContext(), TheaterActivity.class);
                     intent.putExtra("theater_id", mTheater.getTheater_id());
                     v.getContext().startActivity(intent);
                 }else {
@@ -129,16 +119,25 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
                     switch (mTheater.getTheater_id()){
                         case 6:
                             intent.putExtra("theater_link", "http://www.westin-taipei.com/01_text.asp?sn=40");
+                            intent.putExtra("theater_id", mTheater.getTheater_id());
                             intent.putExtra("theater_title", mTheater.getName());
                             intent.putExtra("theater_address", mTheater.getAddress());
                             break;
                         case 12:
                             intent.putExtra("theater_link", "http://www.spot-hs.org.tw/schedule/schedule.html");
+                            intent.putExtra("theater_id", mTheater.getTheater_id());
                             intent.putExtra("theater_title", mTheater.getName());
                             intent.putExtra("theater_address", mTheater.getAddress());
                             break;
                         case 25:
                             intent.putExtra("theater_link", "http://www.spot.org.tw/schedule/schedule_one.html");
+                            intent.putExtra("theater_id", mTheater.getTheater_id());
+                            intent.putExtra("theater_title", mTheater.getName());
+                            intent.putExtra("theater_address", mTheater.getAddress());
+                            break;
+                        case 33:
+                            intent.putExtra("theater_link", "http://web.fuzhong15.ntpc.gov.tw/films/schedule.aspx");
+                            intent.putExtra("theater_id", mTheater.getTheater_id());
                             intent.putExtra("theater_title", mTheater.getName());
                             intent.putExtra("theater_address", mTheater.getAddress());
                             break;
@@ -158,23 +157,6 @@ public class TheatersListAdapter extends RecyclerView.Adapter<TheatersListAdapte
             }
         });
 
-    }
-
-    private InterstitialAd mInterstitialAd;
-    private void requestNewInterstitial() {
-        mInterstitialAd = new InterstitialAd(mActivity);
-        mInterstitialAd.setAdUnitId(mActivity.getResources().getString(R.string.intersitial_ad_unit_id));
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                mInterstitialAd.show();
-            }
-        });
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("9A6CCAB163B87B4531D8D6278B898D2C")
-                .build();
-        mInterstitialAd.loadAd(adRequest);
     }
 
 }

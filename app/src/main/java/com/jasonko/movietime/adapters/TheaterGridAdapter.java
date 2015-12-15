@@ -10,10 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.jasonko.movietime.AppParams;
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.model.OrderTheater;
 
@@ -61,9 +57,6 @@ public class TheaterGridAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AppParams.isShowIntersitialAd(mActivity)){
-                    requestNewInterstitial();
-                }
                 String url = mOrderTheaters[position].getTheater_url();
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
@@ -72,22 +65,5 @@ public class TheaterGridAdapter extends BaseAdapter {
         });
 
         return convertView;
-    }
-
-    private InterstitialAd mInterstitialAd;
-    private void requestNewInterstitial() {
-        mInterstitialAd = new InterstitialAd(mActivity);
-        mInterstitialAd.setAdUnitId(mActivity.getResources().getString(R.string.intersitial_ad_unit_id));
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                mInterstitialAd.show();
-            }
-        });
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("9A6CCAB163B87B4531D8D6278B898D2C")
-                .build();
-        mInterstitialAd.loadAd(adRequest);
     }
 }

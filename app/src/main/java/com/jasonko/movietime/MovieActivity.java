@@ -34,9 +34,10 @@ public class MovieActivity extends AppCompatActivity {
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
-        tabsStrip.setIndicatorColor(getResources().getColor(R.color.white));
+        tabsStrip.setIndicatorColor(getResources().getColor(R.color.movie_indicator));
         tabsStrip.setIndicatorHeight(10);
         tabsStrip.setTextColorResource(R.color.white);
+        tabsStrip.setBackgroundColor(getResources().getColor(R.color.gray_background));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
@@ -91,23 +92,4 @@ public class MovieActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(menuItem);
     }
 
-//    private class ReviewTask extends AsyncTask {
-//
-//        @Override
-//        protected Object doInBackground(Object[] params) {
-//            ArrayList<Review> reviews = ReviewAPI.getReviewsByMovieID(1,1);
-//            return null;
-//        }
-//
-//    }
-//
-//    private class PostTask extends AsyncTask {
-//
-//        @Override
-//        protected Object doInBackground(Object[] params) {
-//            ReviewAPI.httpPostReview(1,"author","title","content","9.0");
-//            return null;
-//        }
-//
-//    }
 }
