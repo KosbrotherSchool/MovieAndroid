@@ -12,12 +12,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.jasonko.movietime.adapters.FavoriteMessageAdapter;
 import com.jasonko.movietime.adapters.MessagesAdapter;
 import com.jasonko.movietime.api.MessageAPI;
+import com.jasonko.movietime.dao.DaoMaster;
+import com.jasonko.movietime.dao.DaoSession;
+import com.jasonko.movietime.dao.FavoriteMessageDao;
 import com.jasonko.movietime.model.Message;
 import com.jasonko.movietime.tool.EndlessRecyclerOnScrollListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kolichung on 10/14/15.
@@ -34,12 +39,14 @@ public class MessageBoardActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
     private int board_id;
+    private DaoMaster.DevOpenHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
+        helper = new DaoMaster.DevOpenHelper(this, "expense", null);
         board_id = getIntent().getIntExtra("board_id",0);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_comment);
@@ -67,18 +74,21 @@ public class MessageBoardActivity extends AppCompatActivity {
 
 
         mProgressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
+        mProgressBar.setVisibility(View.GONE);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_comments);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mRecyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
-            @Override
-            public void onLoadMore(int current_page) {
-                new CommentTask().execute();
-            }
-        });
+        if(board_id!=4) {
+            mRecyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
+                @Override
+                public void onLoadMore(int current_page) {
+                    new CommentTask().execute();
+                }
+            });
+        }
 
     }
 
@@ -87,7 +97,16 @@ public class MessageBoardActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (mAdapter == null) {
-            new CommentTask().execute();
+            if (board_id!=4) {
+                new CommentTask().execute();
+            }else{
+                DaoMaster daoMaster = new DaoMaster(helper.getWritableDatabase());
+                DaoSession daoSession = daoMaster.newSession();
+                FavoriteMessageDao likeMessageDao = daoSession.getFavoriteMessageDao();
+                List favoriteMessageList = likeMessageDao.queryBuilder().orderDesc(FavoriteMessageDao.Properties.Id).list();
+                FavoriteMessageAdapter adapter = new FavoriteMessageAdapter(this,favoriteMessageList,4);
+                mRecyclerView.setAdapter(adapter);
+            }
         }else {
             if (isNeedReload) {
                 mMessages.clear();
@@ -95,6 +114,8 @@ public class MessageBoardActivity extends AppCompatActivity {
                 mPage = 1;
                 new CommentTask().execute();
                 isNeedReload = false;
+            }else {
+                mAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -138,7 +159,9 @@ public class MessageBoardActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_message, menu);
+        if(board_id!=4) {
+            getMenuInflater().inflate(R.menu.menu_message, menu);
+        }
         return true;
     }
 
@@ -148,6 +171,7 @@ public class MessageBoardActivity extends AppCompatActivity {
             finish();
         }else if (menuItem.getItemId() == R.id.action_write_message){
             Intent intent = new Intent(MessageBoardActivity.this, WriteMessageActivity.class);
+            intent.putExtra("board_id",board_id);
             startActivityForResult(intent, write_code);
         }
         return super.onOptionsItemSelected(menuItem);

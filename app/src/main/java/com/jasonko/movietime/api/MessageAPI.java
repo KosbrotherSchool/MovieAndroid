@@ -183,18 +183,21 @@ public class MessageAPI {
     }
 
 
-    public static String httpPostMessage(String author, String title, String content, String tag){
+    public static String httpPostMessage(int board_id,String author, String title, String tag, String content,int head_index, String link_url){
         String result = "" ;
         // 第一步，创建HttpPost对象
-        HttpPost httpPost = new HttpPost( host + "/api/movie/update_messages" );
+        HttpPost httpPost = new HttpPost( host + "/api2/movie/update_messages" );
 
         // 设置HTTP POST请求参数必须用NameValuePair对象
         List<NameValuePair> params = new ArrayList<NameValuePair>();
 
+        params.add(new BasicNameValuePair("b", Integer.toString(board_id)));
         params.add(new BasicNameValuePair("a", author));
         params.add(new BasicNameValuePair("t", title));
-        params.add(new BasicNameValuePair("c", content));
         params.add(new BasicNameValuePair("tag", tag));
+        params.add(new BasicNameValuePair("c", content));
+        params.add(new BasicNameValuePair("h", Integer.toString(head_index)));
+        params.add(new BasicNameValuePair("l", link_url));
 
         HttpResponse httpResponse = null;
         try {
@@ -219,17 +222,18 @@ public class MessageAPI {
         return result ;
     }
 
-    public static String httpPostReply(String author,String content, int message_id){
+    public static String httpPostReply(int message_id,String author,String content,int head_index){
         String result = "" ;
         // 第一步，创建HttpPost对象
-        HttpPost httpPost = new HttpPost( host + "/message/update_reply" );
+        HttpPost httpPost = new HttpPost( host + "/api2/movie/update_replies" );
 
         // 设置HTTP POST请求参数必须用NameValuePair对象
         List<NameValuePair> params = new ArrayList<NameValuePair>();
 
+        params.add(new BasicNameValuePair("m_id", Integer.toString(message_id)));
         params.add(new BasicNameValuePair("a", author));
         params.add(new BasicNameValuePair("c", content));
-        params.add(new BasicNameValuePair("message_id", Integer.toString(message_id)));
+        params.add(new BasicNameValuePair("h", Integer.toString(head_index)));
 
         HttpResponse httpResponse = null;
         try {

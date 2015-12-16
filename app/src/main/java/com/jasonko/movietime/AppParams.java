@@ -1,9 +1,5 @@
 package com.jasonko.movietime;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
-
-import com.jasonko.movietime.model.DrawerItem;
 import com.jasonko.movietime.model.OrderTheater;
 
 /**
@@ -25,32 +21,23 @@ public class AppParams {
             new OrderTheater("博客來訂票", "http://tickets.books.com.tw/movie/", R.drawable.theater_icon_8),
     };
 
-//    public static final Blogger[] bloggers ={
-//            new Blogger("Das Kino波電影", "http://bernd97.pixnet.net/blog", R.drawable.blogger_5),
-//            new Blogger("鯨鯊的塗鴨影評", "http://whale005.pixnet.net/blog", R.drawable.blogger_1),
-//            new Blogger("火行者的電影部落格", "http://firewalker-movie.blogspot.tw/", R.drawable.blogger_4)
-//    };
+    public static final String keyAnnouncement[] = {"公告","詢問","建議","其他"};
+    public static final String keyMovie[] = {" 讚 "," 噓 ","請益","找片","討論","新聞","趣味","好康","八卦","其他"};
+    public static final String keyDrama[] = {"台灣","歐美","韓劇","日劇","大陸劇","港劇","印新馬泰","其他"};
+    public static final String keyLife[] = {"星座","男女","美食","新聞","八卦","運動","環保","協尋","文藝","政治","寵物","食安","其他"};
 
 
-    public static final DrawerItem[] drawerItems={
-           new DrawerItem("我的最愛", R.drawable.drawer_love),
-           new DrawerItem("我的設定", R.drawable.drawer_setting),
-            new DrawerItem("問題回報", R.drawable.drawer_problem),
-            new DrawerItem("給星星", R.drawable.drawer_star),
-            new DrawerItem("關於我們", R.drawable.drawer_about)
-    };
-
-    public static boolean isShowIntersitialAd(Activity activity){
-           SharedPreferences myPref = activity.getPreferences(0);
-           int click_count = myPref.getInt("click_count", 0);
-           click_count = click_count + 1;
-           if (click_count == 5){
-             myPref.edit().putInt("click_count", 0).commit();
-             return  true;
-           }else {
-             myPref.edit().putInt("click_count", click_count).commit();
-             return  false;
-           }
-    }
+//    public static boolean isShowIntersitialAd(Activity activity){
+//           SharedPreferences myPref = activity.getPreferences(0);
+//           int click_count = myPref.getInt("click_count", 0);
+//           click_count = click_count + 1;
+//           if (click_count == 5){
+//             myPref.edit().putInt("click_count", 0).commit();
+//             return  true;
+//           }else {
+//             myPref.edit().putInt("click_count", click_count).commit();
+//             return  false;
+//           }
+//    }
 
 }

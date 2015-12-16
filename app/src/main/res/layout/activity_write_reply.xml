@@ -33,7 +33,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 >
+
+                <ImageView
+                    android:id="@+id/write_comment_image"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/head_captain"
+                    android:layout_marginLeft="10dp"
+                    />
 
                 <EditText
                     android:id="@+id/write_comment_nickname_edittext"

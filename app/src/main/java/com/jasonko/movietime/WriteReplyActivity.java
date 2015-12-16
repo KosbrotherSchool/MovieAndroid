@@ -1,8 +1,10 @@
 package com.jasonko.movietime;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -12,6 +14,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.jasonko.movietime.api.MessageAPI;
@@ -23,6 +27,7 @@ public class WriteReplyActivity extends AppCompatActivity {
 
     EditText nicknameEditText;
     EditText contentEditText;
+    ImageView imageView;
 
     Button sendButton;
     CheckBox nickNameCheckBox;
@@ -33,7 +38,8 @@ public class WriteReplyActivity extends AppCompatActivity {
     private int message_id;
 
     private SharedPreferences prefs;
-
+    private int mHeadCheckedId = R.id.radio_1;
+    private int headIndex = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,7 @@ public class WriteReplyActivity extends AppCompatActivity {
         String title = getIntent().getStringExtra("title");
         message_id = getIntent().getIntExtra("message_id",0);
 
+        imageView = (ImageView) findViewById(R.id.write_comment_image);
         nicknameEditText = (EditText) findViewById(R.id.write_comment_nickname_edittext);
         contentEditText = (EditText) findViewById(R.id.write_comment_content_edittext);
 
@@ -54,9 +61,9 @@ public class WriteReplyActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
         toolbar.setTitleTextColor(0xFFFFFFFF);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("回覆："+title);
+        getSupportActionBar().setTitle("回覆：" + title);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setBackgroundResource(R.color.pink_color);
+        toolbar.setBackgroundResource(R.color.movie_indicator);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +72,7 @@ public class WriteReplyActivity extends AppCompatActivity {
                     if (!isPosting) {
                         if (!nicknameEditText.getText().toString().equals("")
                                 && !contentEditText.getText().toString().equals("")
-                               ) {
+                                ) {
                             new PostTask().execute();
                         } else {
                             Toast.makeText(WriteReplyActivity.this, "暱稱,內容不可空白~", Toast.LENGTH_SHORT).show();
@@ -83,11 +90,18 @@ public class WriteReplyActivity extends AppCompatActivity {
         nickNameCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     prefs.edit().putBoolean("is save nickname", true).commit();
-                }else {
+                } else {
                     prefs.edit().putBoolean("is save nickname", false).commit();
                 }
+            }
+        });
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showChoseHeadDialog();
             }
         });
 
@@ -100,9 +114,35 @@ public class WriteReplyActivity extends AppCompatActivity {
         if (isSaveNickName){
             String nickName = prefs.getString("NickName","");
             nicknameEditText.setText(nickName);
+            headIndex = prefs.getInt("HeadIndex", 1);
+            switchHead(headIndex);
             nickNameCheckBox.setChecked(true);
         }else {
             nickNameCheckBox.setChecked(false);
+        }
+    }
+
+
+    private void switchHead(int headIndex) {
+        switch (headIndex){
+            case 1:
+                imageView.setImageResource(R.drawable.head_captain);
+                break;
+            case 2:
+                imageView.setImageResource(R.drawable.head_iron_man);
+                break;
+            case 3:
+                imageView.setImageResource(R.drawable.head_black_widow);
+                break;
+            case 4:
+                imageView.setImageResource(R.drawable.head_thor);
+                break;
+            case 5:
+                imageView.setImageResource(R.drawable.head_hulk);
+                break;
+            case 6:
+                imageView.setImageResource(R.drawable.head_hawkeye);
+                break;
         }
     }
 
@@ -112,10 +152,88 @@ public class WriteReplyActivity extends AppCompatActivity {
         if (nickNameCheckBox.isChecked()){
             if (nicknameEditText.getText()!=null && !nicknameEditText.getText().toString().equals("")) {
                 prefs.edit().putString("NickName", nicknameEditText.getText().toString()).commit();
+                prefs.edit().putInt("HeadIndex", headIndex).commit();
             }
         }
     }
 
+    private void showChoseHeadDialog() {
+
+        View contentView = this.getLayoutInflater().inflate(R.layout.dialog_chose_head,null);
+        final RadioGroup radioGroup_1 = (RadioGroup) contentView.findViewById(R.id.radio_group_1);
+        final RadioGroup radioGroup_2 = (RadioGroup) contentView.findViewById(R.id.radio_group_2);
+
+        radioGroup_1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId != -1){
+                    radioGroup_2.clearCheck();
+                    mHeadCheckedId = checkedId;
+                    group.check(checkedId);
+                }
+            }
+        });
+
+        radioGroup_2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId != -1){
+                    radioGroup_1.clearCheck();
+                    mHeadCheckedId = checkedId;
+                    group.check(checkedId);
+                }
+            }
+        });
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(WriteReplyActivity.this);
+
+        alertDialogBuilder.setTitle("選擇頭像");
+        alertDialogBuilder.setView(contentView);
+        // set positive button: Yes message
+        alertDialogBuilder.setPositiveButton("確定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                switch (mHeadCheckedId){
+                    case R.id.radio_1:
+                        headIndex = 1;
+                        imageView.setImageResource(R.drawable.head_captain);
+                        break;
+                    case R.id.radio_2:
+                        headIndex = 2;
+                        imageView.setImageResource(R.drawable.head_iron_man);
+                        break;
+                    case R.id.radio_3:
+                        headIndex = 3;
+                        imageView.setImageResource(R.drawable.head_black_widow);
+                        break;
+                    case R.id.radio_4:
+                        headIndex = 4;
+                        imageView.setImageResource(R.drawable.head_thor);
+                        break;
+                    case R.id.radio_5:
+                        headIndex = 5;
+                        imageView.setImageResource(R.drawable.head_hulk);
+                        break;
+                    case R.id.radio_6:
+                        headIndex = 6;
+                        imageView.setImageResource(R.drawable.head_hawkeye);
+                        break;
+                }
+            }
+        });
+        // set negative button: No message
+        alertDialogBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // cancel the alert box and put a Toast to the user
+                dialog.cancel();
+
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        // show alert
+        alertDialog.show();
+
+    }
 
     private class PostTask extends AsyncTask {
 
@@ -134,7 +252,7 @@ public class WriteReplyActivity extends AppCompatActivity {
             String a = nicknameEditText.getText().toString();
             String c = contentEditText.getText().toString();
 
-            String result = MessageAPI.httpPostReply(a,c,message_id);
+            String result = MessageAPI.httpPostReply(message_id,a,c,headIndex);
             if (result.equals("ok")){
                 return true;
             }else {

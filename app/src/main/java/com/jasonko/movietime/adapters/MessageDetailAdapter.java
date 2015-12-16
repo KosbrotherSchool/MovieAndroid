@@ -257,8 +257,16 @@ public class MessageDetailAdapter extends RecyclerView.Adapter<MessageDetailAdap
         DaoSession daoSession = daoMaster.newSession();
         FavoriteReplyDao likeReplyDao = daoSession.getFavoriteReplyDao();
 
-        FavoriteReply newFavReply = new FavoriteReply(null,reply.getReply_id(),reply.getMessage_id(),reply.getAuthor(),reply.getContent(),reply.getPub_date(),reply.getHead_index(),reply.getLike_count());
+        FavoriteReply newFavReply = new FavoriteReply(null,reply.getReply_id(),reply.getMessage_id(),reply.getAuthor(),reply.getContent(),reply.getPub_date(),reply.getHead_index(),reply.getLike_count()+1);
         likeReplyDao.insert(newFavReply);
+
+        // if like reply > 250, delete first 50
+        List favoriteReplyList = likeReplyDao.queryBuilder().orderAsc(FavoriteReplyDao.Properties.Id).list();
+        if (favoriteReplyList.size()>250){
+            for(int i=0;i<50;i++){
+                likeReplyDao.delete((FavoriteReply)favoriteReplyList.get(i));
+            }
+        }
     }
 
     private void addLikeMessage(Message message) {
@@ -267,9 +275,17 @@ public class MessageDetailAdapter extends RecyclerView.Adapter<MessageDetailAdap
         FavoriteMessageDao likeMessageDao = daoSession.getFavoriteMessageDao();
 
         FavoriteMessage newFavMessage = new FavoriteMessage(null,message.getMessage_id(),message.getAuthor(),message.getTitle(),
-                message.getTag(),message.getContent(),message.getPub_date(),message.getView_count(),message.getLike_count(),
+                message.getTag(),message.getContent(),message.getPub_date(),message.getView_count(),message.getLike_count()+1,
                 message.getReply_size(),message.getHead_index(),message.is_head(),message.getLink_url());
         likeMessageDao.insert(newFavMessage);
+
+        // if like message > 250, delete first 50
+        List favoriteMessageList = likeMessageDao.queryBuilder().orderAsc(FavoriteMessageDao.Properties.Id).list();
+        if (favoriteMessageList.size()>250){
+            for(int i=0;i<50;i++){
+                likeMessageDao.delete((FavoriteMessage)favoriteMessageList.get(i));
+            }
+        }
     }
 
     private class AddTask extends AsyncTask<Integer, Integer, Void> {

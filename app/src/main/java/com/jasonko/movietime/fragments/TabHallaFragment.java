@@ -135,7 +135,7 @@ public class TabHallaFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            return PhotoFragment.newInstance(messages.get(position).getPic_url());
+            return MessageHighLightFragment.newInstance(messages.get(position));
         }
     }
 

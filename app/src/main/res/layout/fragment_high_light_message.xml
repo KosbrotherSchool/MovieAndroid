@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:id="@+id/photo_fragment_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/icon_app"
+        android:layout_centerInParent="true"
+        />
+
+    <TextView
+        android:id="@+id/message_fragment_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="這個是標題"
+        android:gravity="center"
+        android:background="#cfE3E3E3"
+        android:textSize="14dp"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>

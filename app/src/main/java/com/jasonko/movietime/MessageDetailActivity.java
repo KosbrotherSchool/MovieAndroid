@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 
 import com.jasonko.movietime.adapters.MessageDetailAdapter;
 import com.jasonko.movietime.api.MessageAPI;
+import com.jasonko.movietime.dao.FavoriteMessage;
 import com.jasonko.movietime.model.Message;
 import com.jasonko.movietime.model.Reply;
 
@@ -28,7 +29,9 @@ public class MessageDetailActivity extends AppCompatActivity {
     private MessageDetailAdapter messageDetailAdapter;
     private int message_id;
     private Message mMessage;
-    private String board_title;
+    private FavoriteMessage favMessage;
+//    private String board_title;
+    private int board_id;
     private ArrayList<Reply> replies;
     private ProgressBar progressBar;
     private static final int  write_reply_code  = 999;
@@ -40,9 +43,14 @@ public class MessageDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_detail);
 
-        message_id = getIntent().getIntExtra("message id",0);
+        message_id = getIntent().getIntExtra("message id", 0);
+        board_id = getIntent().getIntExtra("board_id",0);
         mMessage = (Message) getIntent().getExtras().getSerializable("TheMessage");
-        board_title = getIntent().getStringExtra("board_title");
+        if(mMessage == null){
+            favMessage = (FavoriteMessage) getIntent().getExtras().getSerializable("FavMessage");
+            mMessage = new Message(board_id,favMessage.getMessage_id(),favMessage.getAuthor(),favMessage.getTitle(),favMessage.getTag(),favMessage.getContent(),favMessage.getPub_date(),favMessage.getView_count(),favMessage.getLike_count(),favMessage.getReply_size(),favMessage.getHead_index(),favMessage.getIs_head(),favMessage.getLink_url(),"");
+        }
+
 
         progressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
 
@@ -55,11 +63,25 @@ public class MessageDetailActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
         toolbar.setTitleTextColor(0xFFFFFFFF);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(board_title);
+        switch (board_id){
+            case 0:
+                getSupportActionBar().setTitle("公告區");
+                break;
+            case 1:
+                getSupportActionBar().setTitle("電影版");
+                break;
+            case 2:
+                getSupportActionBar().setTitle("戲劇版");
+                break;
+            case 3:
+                getSupportActionBar().setTitle("生活版");
+                break;
+            case 4:
+                getSupportActionBar().setTitle("最近按讚");
+                break;
+        }
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
-        new NewsTask().execute();
     }
 
 

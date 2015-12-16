@@ -80,12 +80,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         viewHolder.title.setText(message.getTitle());
         viewHolder.publish_date.setText(message.getPub_date());
         viewHolder.messageTag.setText("[" + message.getTag() + "]");
-        viewHolder.likeCount.setText(Integer.toString(message.getLike_count()));
+
+
+        final FavoriteMessage theFavMessage = checkLike(message);
         // check if liked
         viewHolder.likeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!checkLike(message)){
+                if (theFavMessage == null) {
                     viewHolder.likeImage.setImageResource(R.drawable.like_blue);
                     addLikeMessage(message);
                     viewHolder.likeCount.setText(Integer.toString(message.getLike_count() + 1));
@@ -94,34 +96,21 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 }
             }
         });
-        if (checkLike(message)){
+        if (theFavMessage != null){
             viewHolder.likeImage.setImageResource(R.drawable.like_blue);
+            viewHolder.likeCount.setText(Integer.toString(theFavMessage.getLike_count()));
         }else{
             viewHolder.likeImage.setImageResource(R.drawable.like_gray);
+            viewHolder.likeCount.setText(Integer.toString(message.getLike_count()));
         }
+
 
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mActivity, MessageDetailActivity.class);
                 intent.putExtra("message id", message.getMessage_id());
-                switch (board_id) {
-                    case 0:
-                        intent.putExtra("board_title", "公告區");
-                        break;
-                    case 1:
-                        intent.putExtra("board_title", "電影版");
-                        break;
-                    case 2:
-                        intent.putExtra("board_title", "戲劇版");
-                        break;
-                    case 3:
-                        intent.putExtra("board_title", "生活版");
-                        break;
-                    case 4:
-                        intent.putExtra("board_title", "最近按讚");
-                        break;
-                }
+                intent.putExtra("board_id", board_id);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("TheMessage", message);
                 intent.putExtras(bundle);
@@ -132,19 +121,19 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
 
 
-    private boolean checkLike(Message message) {
+    private FavoriteMessage checkLike(Message message) {
         if (helper!=null){
             DaoMaster daoMaster = new DaoMaster(helper.getWritableDatabase());
             DaoSession daoSession = daoMaster.newSession();
             FavoriteMessageDao likeMessageDao = daoSession.getFavoriteMessageDao();
             List favoriteMessageList = likeMessageDao.queryBuilder().where(FavoriteMessageDao.Properties.Message_id.eq(message.getMessage_id())).list();
             if (favoriteMessageList.size() > 0){
-                return true;
+                return (FavoriteMessage)favoriteMessageList.get(0);
             }else {
-                return false;
+                return null;
             }
         }
-        return false;
+        return null;
     }
 
     private void addLikeMessage(Message message) {
@@ -153,9 +142,17 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         FavoriteMessageDao likeMessageDao = daoSession.getFavoriteMessageDao();
 
         FavoriteMessage newFavMessage = new FavoriteMessage(null,message.getMessage_id(),message.getAuthor(),message.getTitle(),
-                message.getTag(),message.getContent(),message.getPub_date(),message.getView_count(),message.getLike_count(),
+                message.getTag(),message.getContent(),message.getPub_date(),message.getView_count(),message.getLike_count()+1,
                 message.getReply_size(),message.getHead_index(),message.is_head(),message.getLink_url());
         likeMessageDao.insert(newFavMessage);
+
+        // if like message > 250, delete first 50
+        List favoriteMessageList = likeMessageDao.queryBuilder().orderAsc(FavoriteMessageDao.Properties.Id).list();
+        if (favoriteMessageList.size()>250){
+            for(int i=0;i<50;i++){
+                likeMessageDao.delete((FavoriteMessage)favoriteMessageList.get(i));
+            }
+        }
     }
 
     private class AddTask extends AsyncTask<Integer, Integer, Void> {
