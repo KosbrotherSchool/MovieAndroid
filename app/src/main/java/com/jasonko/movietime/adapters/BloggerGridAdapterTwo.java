@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jasonko.movietime.NewsArticleActivity;
+import com.jasonko.movietime.WebViewArticleActivity;
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.imageloader.ImageLoader;
 import com.jasonko.movietime.model.Blogger;
@@ -63,7 +63,7 @@ public class BloggerGridAdapterTwo extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                Intent newIntent = new Intent(mActivity, NewsArticleActivity.class);
+                Intent newIntent = new Intent(mActivity, WebViewArticleActivity.class);
                 newIntent.putExtra("news_link", mBloggers.get(position).getBlogger_url());
                 newIntent.putExtra("news_title", mBloggers.get(position).getBlogger_name());
                 newIntent.putExtra("IsBlogPost", true);

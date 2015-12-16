@@ -1,9 +1,12 @@
 package com.jasonko.movietime.model;
 
+import java.io.Serializable;
+
 /**
  * Created by kolichung on 10/14/15.
  */
-public class Message {
+public class Message implements Serializable {
+    private static final long serialVersionUID = -7060210544600464481L;
 
     int board_id;
     int message_id;

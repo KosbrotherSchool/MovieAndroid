@@ -33,16 +33,21 @@
                 />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
                 >
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -60,10 +65,10 @@
                         android:text="publish_date"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="5dp"
                         android:textSize="14dp"
                         />
-                </RelativeLayout>
+                </LinearLayout>
 
 
                 <TextView
@@ -76,35 +81,25 @@
                     android:maxLines="2"
                     />
 
+            </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                >
+                <ImageView android:id="@+id/like_image"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/like_gray"
+                    />
+                <TextView android:id="@+id/like_count"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center_vertical|right"
-                    >
-
-                    <TextView
-                        android:id="@+id/text_message_replycount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="8人回覆"
-                        android:gravity="right"
-                        android:textSize="15dp"/>
-
-                    <TextView
-                        android:id="@+id/text_message_viewcount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2213人瀏覽"
-                        android:layout_marginLeft="15dp"
-                        android:gravity="right"
-                        android:textSize="15dp"/>
-                </LinearLayout>
-
+                    android:text="1222"
+                    android:textSize="15dp"
+                    android:maxLines="1"
+                    />
             </LinearLayout>
 
         </LinearLayout>

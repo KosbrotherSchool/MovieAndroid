@@ -32,74 +32,68 @@
                 android:gravity="center_vertical"
                 >
 
+                <ImageView
+                    android:id="@+id/comment_image"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/head_captain"
+                    />
+
+
                 <TextView
-                    android:id="@+id/message_tag_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="[公告]"
-                    android:textSize="25dp"
+                    android:id="@+id/text_message_userId"
+                    android:text="使用者"
+                    android:layout_centerVertical="true"
+                    android:textSize="17dp"
+                    android:layout_marginLeft="5dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/text_message_publish_date"
+                    android:text="publish_date"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="14dp"
                     android:layout_marginLeft="5dp"
                     />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="right|center_vertical"
                     >
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/text_message_userId"
-                            android:text="使用者"
-                            android:layout_centerVertical="true"
-                            android:textSize="17dp"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/text_message_publish_date"
-                            android:text="publish_date"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp"
-                            android:textSize="14dp"
-                            />
-                    </RelativeLayout>
-
-
-                    <TextView
-                        android:id="@+id/text_message_title"
+                    <ImageView android:id="@+id/message_like_image"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/like_gray"
+                        />
+                    <TextView android:id="@+id/message_like_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="這裏是標提這裏是標提這裏是標提這裏是標提"
-                        android:textSize="22dp"
-                        android:textColor="#000000"
-                        android:maxLines="2"
+                        android:text="1222"
+                        android:textSize="15dp"
+                        android:maxLines="1"
+                        android:layout_marginRight="5dp"
                         />
-
-
-                    <TextView
-                        android:id="@+id/text_message_viewcount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="2213人瀏覽"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:gravity="right"
-                        android:textSize="15dp"/>
-
                 </LinearLayout>
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_message_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="這裏是標提這裏是標提這裏是標提這裏是標提"
+                android:textSize="22dp"
+                android:textColor="#000000"
+                android:maxLines="2"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                />
 
             <TextView
                 android:id="@+id/text_message_tontent"
@@ -109,10 +103,37 @@
                 android:textSize="20dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="0dp"
                 android:autoLink="all"
                 />
 
+            <android.support.v7.widget.CardView
+                android:id="@+id/webbutton_cardview"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardBackgroundColor="#FFFFFF"
+                card_view:cardUseCompatPadding="true"
+                card_view:cardElevation="0dp"
+                card_view:cardCornerRadius="3dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:foreground="?android:selectableItemBackground"
+                android:layout_marginBottom="10dp"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/movie_indicator"
+                    android:text="連結"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="18dp"
+                    />
+            </android.support.v7.widget.CardView>>
 
         </LinearLayout>
 
@@ -135,10 +156,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             >
 
             <LinearLayout
@@ -148,33 +165,55 @@
                 android:gravity="center_vertical"
                 >
 
-                <TextView
-                    android:id="@+id/text_reply_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="回覆1"
-                    android:textSize="18dp"
+                <ImageView
+                    android:id="@+id/reply_image"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/head_captain"
                     />
 
+
                 <TextView
-                    android:id="@+id/text__reply_userId"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="暱稱"
+                    android:id="@+id/text_reply_userId"
+                    android:text="使用者"
                     android:layout_centerVertical="true"
                     android:textSize="17dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
                     />
 
                 <TextView
-                    android:id="@+id/text_reply_publish_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/text_reply_publish_date"
                     android:text="publish_date"
-                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:textSize="14dp"
+                    android:layout_marginLeft="5dp"
                     />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right|center_vertical"
+                    >
+                    <ImageView android:id="@+id/reply_like_image"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/like_gray"
+                        />
+                    <TextView android:id="@+id/reply_like_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1222"
+                        android:textSize="15dp"
+                        android:maxLines="1"
+                        android:layout_marginRight="5dp"
+                        />
+                </LinearLayout>
+
             </LinearLayout>
 
 
@@ -184,7 +223,8 @@
                 android:layout_height="wrap_content"
                 android:text="這裏是標提這裏是標提這裏是標提這裏是標提"
                 android:textSize="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:autoLink="all"
                 />
 

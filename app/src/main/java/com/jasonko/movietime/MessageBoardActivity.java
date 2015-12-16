@@ -122,7 +122,7 @@ public class MessageBoardActivity extends AppCompatActivity {
         protected void onPostExecute(Object result){
             if((boolean) result){
                 if(mAdapter == null){
-                    mAdapter = new MessagesAdapter(MessageBoardActivity.this, mMessages);
+                    mAdapter = new MessagesAdapter(MessageBoardActivity.this, mMessages, board_id);
                     mRecyclerView.setAdapter(mAdapter);
                 }else {
                     mAdapter.notifyDataSetChanged();

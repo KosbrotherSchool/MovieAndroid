@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 /**
  * Created by kolichung on 8/26/15.
  */
-public class NewsArticleActivity extends AppCompatActivity {
+public class WebViewArticleActivity extends AppCompatActivity {
 
     private WebView webView;
     private ProgressBar progress;
@@ -26,9 +26,6 @@ public class NewsArticleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news_article);
         String mUrl = getIntent().getStringExtra("news_link");
         String title = getIntent().getStringExtra("news_title");
-        boolean isBlogPost = getIntent().getBooleanExtra("IsBlogPost",false);
-
-//        setAdView();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
@@ -37,9 +34,9 @@ public class NewsArticleActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(title);
 
-        if (isBlogPost) {
-            toolbar.setBackgroundResource(R.color.deep_green);
-        }
+//        if (isBlogPost) {
+//            toolbar.setBackgroundResource(R.color.deep_green);
+//        }
 
         webView = (WebView) findViewById (R.id.news_webview);
         progress = (ProgressBar) findViewById(R.id.progressBar);

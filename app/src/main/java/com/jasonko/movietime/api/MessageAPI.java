@@ -62,6 +62,26 @@ public class MessageAPI {
         return messages;
     }
 
+    public static String getMessageLikePlusOne(int message_id){
+        String url = host + "/api2/movie/update_message_like?message_id="+Integer.toString(message_id);
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            return message;
+        }
+    }
+
+    public static String getReplyLikePlusOne(int reply_id){
+        String url = host + "/api2/movie/update_reply_like?reply_id="+Integer.toString(reply_id);
+        String message = getMessageFromServer("GET", null, null, url);
+        if (message == null) {
+            return null;
+        } else {
+            return message;
+        }
+    }
+
     public static ArrayList<Reply> getReplies(int message_id, int page){
         ArrayList<Reply> replies = new ArrayList<>();
         String url = host + "/api2/movie/reply?message_id="+Integer.toString(message_id)+"&page="+Integer.toString(page);

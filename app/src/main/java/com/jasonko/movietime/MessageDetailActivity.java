@@ -13,22 +13,27 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.jasonko.movietime.adapters.MessageDetailAdapter;
+import com.jasonko.movietime.api.MessageAPI;
 import com.jasonko.movietime.model.Message;
+import com.jasonko.movietime.model.Reply;
+
+import java.util.ArrayList;
 
 /**
  * Created by kolichung on 10/14/15.
  */
 public class MessageDetailActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    MessageDetailAdapter messageDetailAdapter;
-
-    int message_id;
-    Message mMessage;
-
-    ProgressBar progressBar;
+    private RecyclerView recyclerView;
+    private MessageDetailAdapter messageDetailAdapter;
+    private int message_id;
+    private Message mMessage;
+    private String board_title;
+    private ArrayList<Reply> replies;
+    private ProgressBar progressBar;
     private static final int  write_reply_code  = 999;
     private boolean isNeedReload = false;
+    private int mPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,9 @@ public class MessageDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message_detail);
 
         message_id = getIntent().getIntExtra("message id",0);
+        mMessage = (Message) getIntent().getExtras().getSerializable("TheMessage");
+        board_title = getIntent().getStringExtra("board_title");
+
         progressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_fragment);
@@ -47,11 +55,11 @@ public class MessageDetailActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.icon_back_white);
         toolbar.setTitleTextColor(0xFFFFFFFF);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("哈拉內容");
+        getSupportActionBar().setTitle(board_title);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
-//        new NewsTask().execute();
+        new NewsTask().execute();
     }
 
 
@@ -62,7 +70,7 @@ public class MessageDetailActivity extends AppCompatActivity {
             new NewsTask().execute();
         }else {
             if (isNeedReload) {
-                mMessage = null;
+                replies.clear();
                 new NewsTask().execute();
             }
         }
@@ -79,14 +87,14 @@ public class MessageDetailActivity extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object[] params) {
-//            mMessage  = MessageAPI.getMessageWithReplies(message_id);
+            replies  = MessageAPI.getReplies(message_id,mPage);
             return null;
         }
 
         @Override
         protected void onPostExecute(Object result) {
             if (mMessage!=null) {
-                messageDetailAdapter = new MessageDetailAdapter(mMessage);
+                messageDetailAdapter = new MessageDetailAdapter(MessageDetailActivity.this,mMessage, replies);
                 recyclerView.setAdapter(messageDetailAdapter);
             }
             progressBar.setVisibility(View.GONE);

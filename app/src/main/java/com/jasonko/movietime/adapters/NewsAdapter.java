@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jasonko.movietime.NewsArticleActivity;
+import com.jasonko.movietime.WebViewArticleActivity;
 import com.jasonko.movietime.R;
 import com.jasonko.movietime.imageloader.ImageLoader;
 import com.jasonko.movietime.model.MovieNews;
@@ -74,7 +74,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newIntent = new Intent(mActivity, NewsArticleActivity.class);
+                Intent newIntent = new Intent(mActivity, WebViewArticleActivity.class);
                 newIntent.putExtra("news_link", mNewses.get(position).getNews_link());
                 newIntent.putExtra("news_title", mNewses.get(position).getTitle());
                 mActivity.startActivity(newIntent);
