@@ -69,30 +69,34 @@ public class MovieTimeAdapter extends RecyclerView.Adapter<MovieTimeAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         Theater theTheater = Theater.getTheaterByID(mMovieTimes.get(position).getTheater_id());
-        holder.textTheaterTitle.setText(theTheater.getName());
-//        holder.textTeaterAddress.setText(theTheater.getAddress());
-        holder.textRemark.setText(mMovieTimes.get(position).getRemark());
-        String[] mStrings = mMovieTimes.get(position).getMovie_time().split(",");
-        ArrayAdapter arrayAdapter = new ArrayAdapter(mActivity, R.layout.mytext, mStrings);
-        holder.gridTheaterMovie.setExpanded(true);
-        holder.gridTheaterMovie.setAdapter(arrayAdapter);
-        holder.imageMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Theater theTheater = Theater.getTheaterByID(mMovieTimes.get(position).getTheater_id());
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("geo:0,0?q=" + theTheater.getAddress()));
-                mActivity.startActivity(intent);
-            }
-        });
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent theaterIntent = new Intent(mActivity, TheaterActivity.class);
-                theaterIntent.putExtra("theater_id", mMovieTimes.get(position).getTheater_id());
-                mActivity.startActivity(theaterIntent);
-            }
-        });
+        if (theTheater != null) {
+            holder.textTheaterTitle.setText(theTheater.getName());
+            holder.textRemark.setText(mMovieTimes.get(position).getRemark());
+            String[] mStrings = mMovieTimes.get(position).getMovie_time().split(",");
+            ArrayAdapter arrayAdapter = new ArrayAdapter(mActivity, R.layout.mytext, mStrings);
+            holder.gridTheaterMovie.setExpanded(true);
+            holder.gridTheaterMovie.setAdapter(arrayAdapter);
+            holder.imageMap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Theater theTheater = Theater.getTheaterByID(mMovieTimes.get(position).getTheater_id());
+                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                            Uri.parse("geo:0,0?q=" + theTheater.getAddress()));
+                    mActivity.startActivity(intent);
+                }
+            });
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent theaterIntent = new Intent(mActivity, TheaterActivity.class);
+                    theaterIntent.putExtra("theater_id", mMovieTimes.get(position).getTheater_id());
+                    mActivity.startActivity(theaterIntent);
+                }
+            });
+        }else {
+            holder.textTheaterTitle.setText("請更新至最新版以增加戲院資料");
+            holder.textRemark.setText("");
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

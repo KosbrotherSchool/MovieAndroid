@@ -74,6 +74,7 @@ public class NewsFragment extends Fragment {
 
         if (videoAdapter != null){
             newsRecylerView.setAdapter(videoAdapter);
+            mProgressBar.setVisibility(View.GONE);
         }else {
             if (NetworkUtil.getConnectivityStatus(getActivity()) != 0) {
                 new NewsTask().execute();

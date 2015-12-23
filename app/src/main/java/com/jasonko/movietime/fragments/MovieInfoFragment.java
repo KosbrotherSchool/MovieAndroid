@@ -70,12 +70,12 @@ public class MovieInfoFragment extends Fragment{
     private TextView noNetWorkText;
 
     private ImageView follow_bottom_image;
-    private LinearLayout linearAddFollow;
-    private LinearLayout linearShare;
-    private LinearLayout linearReview;
+//    private LinearLayout linearAddFollow;
+//    private LinearLayout linearShare;
+//    private LinearLayout linearReview;
     private RatingBar ratingBar;
     private TextView rateText;
-    private TextView reviewNumTExt;
+//    private TextView reviewNumTExt;
     private TextView reviewText;
     private LinearLayout linearImdb;
     private LinearLayout linearPotato;
@@ -128,13 +128,9 @@ public class MovieInfoFragment extends Fragment{
         actorText = (TextView) view.findViewById(R.id.movieinfo_text_actors);
         officerText = (TextView) view.findViewById(R.id.movieinfo_text_officier);
 
-        linearAddFollow = (LinearLayout) view.findViewById(R.id.linearLayout_movie_add_follow);
         follow_bottom_image = (ImageView) view.findViewById(R.id.follow_movie_bottom_image);
-        linearShare = (LinearLayout) view.findViewById(R.id.linearLayout_movie_share);
-        linearReview = (LinearLayout) view.findViewById(R.id.linearLayout_movie_review);
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
         rateText = (TextView) view.findViewById(R.id.rate_text);
-        reviewNumTExt = (TextView) view.findViewById(R.id.review_num_text);
         reviewText = (TextView) view.findViewById(R.id.movieinfo_text_review);
 
         linearImdb = (LinearLayout) view.findViewById(R.id.imdb_linear);
@@ -234,7 +230,6 @@ public class MovieInfoFragment extends Fragment{
 
                 ratingBar.setRating((float) (mMovie.getPoints() / 2));
                 rateText.setText(Double.toString(mMovie.getPoints()));
-                reviewNumTExt.setText(Integer.toString(mMovie.getReview_size()));
                 reviewText.setText("留言(" + Integer.toString(mMovie.getReview_size()) + ")");
 
                 mImage.setOnClickListener(new View.OnClickListener() {
@@ -285,7 +280,7 @@ public class MovieInfoFragment extends Fragment{
                 mLinearLayout.setVisibility(View.VISIBLE);
 
 
-                linearAddFollow.setOnClickListener(new View.OnClickListener() {
+                follow_bottom_image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (checkFollow()) {
@@ -297,33 +292,6 @@ public class MovieInfoFragment extends Fragment{
                             follow_bottom_image.setImageResource(R.drawable.icon_love_full);
                             Toast.makeText(getActivity(), "加入我的最愛", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                });
-
-                linearShare.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intentShare = new Intent(Intent.ACTION_SEND);
-                        intentShare.setType("text/plain");
-                        intentShare.putExtra(Intent.EXTRA_SUBJECT, "電影即時通 APP !");
-                        intentShare.putExtra(Intent.EXTRA_TEXT, "走走走,看電影:" + mMovie.getTitle() + "~ from 電影即時通APP \n https://play.google.com/store/apps/details?id=com.jasonko.movietime");
-                        try {
-                            startActivity(Intent.createChooser(intentShare, "分享 ..."));
-                        } catch (android.content.ActivityNotFoundException ex) {
-                            Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-                linearReview.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent reviewIntent = new Intent(getActivity(), CommentActivity.class);
-                        reviewIntent.putExtra("movie_id", mMovieID);
-                        reviewIntent.putExtra("title", mMovie.getTitle());
-                        reviewIntent.putExtra("point_str", Double.toString(mMovie.getPoints()));
-                        reviewIntent.putExtra("review_size_str", Integer.toString(mMovie.getReview_size()));
-                        getActivity().startActivity(reviewIntent);
                     }
                 });
 

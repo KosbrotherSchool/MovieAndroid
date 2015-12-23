@@ -79,22 +79,25 @@ public class QuickTimeAdapter extends RecyclerView.Adapter<QuickTimeAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         Theater theTheater = Theater.getTheaterByID(mMovieTimes.get(position).getTheater_id());
-        holder.textTheater.setText(theTheater.getName());
-        holder.textMovieTitle.setText(mMovieTimes.get(position).getMovie_title());
+        if (theTheater!=null) {
+            holder.textTheater.setText(theTheater.getName());
+            holder.imageMap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Theater theTheater = Theater.getTheaterByID(mMovieTimes.get(position).getTheater_id());
+                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                            Uri.parse("geo:0,0?q=" + theTheater.getAddress()));
+                    mFragment.getActivity().startActivity(intent);
+                }
+            });
+        }else {
+            holder.textTheater.setText("請更新至最新版以增加戲院資料");
+        }
 
+        holder.textMovieTitle.setText(mMovieTimes.get(position).getMovie_title());
         String timeString = mMovieTimes.get(position).getMovie_time();
         String theTime = timeString.substring(timeString.indexOf(mHour+"："), timeString.indexOf(mHour+"：")+5);
         holder.textTime.setText(theTime);
-
-        holder.imageMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Theater theTheater = Theater.getTheaterByID(mMovieTimes.get(position).getTheater_id());
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("geo:0,0?q=" + theTheater.getAddress()));
-                mFragment.getActivity().startActivity(intent);
-            }
-        });
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

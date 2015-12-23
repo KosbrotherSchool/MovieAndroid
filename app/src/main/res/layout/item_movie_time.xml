@@ -46,6 +46,7 @@
                         android:layout_height="wrap_content"
                         android:text="誠品戲院"
                         android:textSize="22dp"
+                        android:maxLines="1"
                         />
                     <TextView
                         android:id="@+id/movietime_remark"
@@ -54,6 +55,7 @@
                         android:layout_marginLeft="10dp"
                         android:text="數位"
                         android:textSize="18dp"
+                        android:maxLines="1"
                         />
                 </LinearLayout>
 

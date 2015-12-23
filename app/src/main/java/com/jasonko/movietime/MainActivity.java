@@ -1,8 +1,5 @@
 package com.jasonko.movietime;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,9 +24,7 @@ import com.jasonko.movietime.fragments.TabOtherFragment;
 import com.jasonko.movietime.fragments.TabPostFragment;
 import com.jasonko.movietime.fragments.TabTheaterFragment;
 import com.jasonko.movietime.model.Version;
-import com.jasonko.movietime.services.FollowMovieReceiver;
 
-import java.util.Calendar;
 import java.util.HashMap;
 
 
@@ -147,38 +142,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        checkCurrentVersion();
+
     }
 
     private void checkCurrentVersion() {
 
         new GetVersionCodeTask().execute();
 
-    }
-
-    private void setRepeatAlarm() {
-
-        // Set the alarm to start at approximately 2:00 p.m.
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 12);
-        calendar.set(Calendar.MINUTE, 30);
-
-        // With setInexactRepeating(), you have to use one of the AlarmManager interval
-        // constants--in this case, AlarmManager.INTERVAL_DAY.
-        AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent serviceIntent = new Intent(MainActivity.this, FollowMovieReceiver.class);
-        serviceIntent.setAction(FollowMovieReceiver.actionAlarm);
-        if (!alarmUp()) {
-            PendingIntent alarmIntent = PendingIntent.getBroadcast(MainActivity.this, 0, serviceIntent, 0);
-            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    AlarmManager.INTERVAL_DAY, alarmIntent);
-        }
-    }
-
-    private boolean alarmUp() {
-        return PendingIntent.getBroadcast(MainActivity.this, 0,
-                new Intent("register alarm from movietime"),
-                PendingIntent.FLAG_NO_CREATE) != null;
     }
 
 

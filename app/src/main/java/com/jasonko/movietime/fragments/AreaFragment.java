@@ -32,6 +32,12 @@ public class AreaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         super.onCreateView(inflater, container, savedInstanceState);
         View areaView = inflater.inflate(R.layout.tab_area, container, false);
+        gridView = (GridView) areaView.findViewById(R.id.gridViewArea);
+        //取得areas物件arraylist
+        areas = Area.getAreas();
+        adapter = new AreaGridAdapter(getActivity(), areas);
+        gridView.setAdapter(adapter);
+        gridView.setNumColumns(3);
         return areaView;
     }
 
@@ -41,20 +47,4 @@ public class AreaFragment extends Fragment {
 
     }
 
-    @Override
-    public void onStart(){
-        super.onStart();
-        //set gridView
-
-        if(gridView == null){
-            gridView = (GridView)getActivity().findViewById(R.id.gridViewArea);
-            //取得areas物件arraylist
-            areas = Area.getAreas();
-            adapter = new AreaGridAdapter(getActivity(), areas);
-            gridView.setAdapter(adapter);
-            gridView.setNumColumns(3);
-        }
-
-
-    }
 }

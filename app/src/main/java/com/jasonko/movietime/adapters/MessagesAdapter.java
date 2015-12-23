@@ -98,7 +98,11 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         });
         if (theFavMessage != null){
             viewHolder.likeImage.setImageResource(R.drawable.like_blue);
-            viewHolder.likeCount.setText(Integer.toString(theFavMessage.getLike_count()));
+            if (message.getLike_count() < theFavMessage.getLike_count()) {
+                viewHolder.likeCount.setText(Integer.toString(theFavMessage.getLike_count()));
+            }else{
+                viewHolder.likeCount.setText(Integer.toString(message.getLike_count()));
+            }
         }else{
             viewHolder.likeImage.setImageResource(R.drawable.like_gray);
             viewHolder.likeCount.setText(Integer.toString(message.getLike_count()));

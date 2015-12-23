@@ -4,11 +4,14 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardview"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     card_view:cardBackgroundColor="#FFFFFF"
     card_view:cardUseCompatPadding="true"
-    card_view:cardElevation="5dp"
+    card_view:cardElevation="3dp"
     card_view:cardCornerRadius="3dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:selectableItemBackground"
     >
 
     <LinearLayout
@@ -19,8 +22,10 @@
         <ImageView
             android:id="@+id/movie_grid_image"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="wrap_content"
             android:src="@drawable/icon_app"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             android:layout_marginTop="3dp"
             />
 
@@ -42,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="2dp"
             >
 
@@ -73,6 +78,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/rating_linear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -113,7 +119,7 @@
             android:text="111人留言"
             android:textColor="@color/movie_indicator"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="3dp"
             android:textSize="18dp"
             />
 

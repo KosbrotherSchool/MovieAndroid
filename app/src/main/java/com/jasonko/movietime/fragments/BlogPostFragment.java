@@ -64,6 +64,7 @@ public class BlogPostFragment extends Fragment {
 
         if (postsAdapter != null){
             newsRecylerView.setAdapter(postsAdapter);
+            mProgressBar.setVisibility(View.GONE);
         }else {
             if (NetworkUtil.getConnectivityStatus(getActivity()) != 0) {
                 new NewsTask().execute();

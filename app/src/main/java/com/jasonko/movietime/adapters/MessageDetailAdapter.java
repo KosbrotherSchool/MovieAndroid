@@ -116,7 +116,7 @@ public class MessageDetailAdapter extends RecyclerView.Adapter<MessageDetailAdap
             title.setText(mMessage.getTitle());
             publish_date.setText(mMessage.getPub_date());
             content.setText(mMessage.getContent());
-            likeCount.setText(Integer.toString(mMessage.getLike_count()));
+
             switch (mMessage.getHead_index()){
                 case 1:
                     headImage.setImageResource(R.drawable.head_captain);
@@ -152,8 +152,12 @@ public class MessageDetailAdapter extends RecyclerView.Adapter<MessageDetailAdap
             });
             if (checkLike(mMessage)){
                 likeImage.setImageResource(R.drawable.like_blue);
+                if (mMessage.getLike_count() == 0){
+                    likeCount.setText(Integer.toString(mMessage.getLike_count()+1));
+                }
             }else{
                 likeImage.setImageResource(R.drawable.like_gray);
+                likeCount.setText(Integer.toString(mMessage.getLike_count()));
             }
         }else {
             holder.messageDetailCardView.setVisibility(View.GONE);

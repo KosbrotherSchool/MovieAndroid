@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -65,6 +66,7 @@ public class MovieGridAdapter extends BaseAdapter {
         RatingBar ratingBar = (RatingBar) convertView.findViewById(R.id.ratingBar);
         TextView textMessage = (TextView) convertView.findViewById(R.id.message_text);
         TextView text_rank_num = (TextView) convertView.findViewById(R.id.text_rank_num);
+        LinearLayout rating_linear = (LinearLayout) convertView.findViewById(R.id.rating_linear);
 
         if (roundId == 1 && position<20){
             text_rank_num.setVisibility(View.VISIBLE);
@@ -114,10 +116,24 @@ public class MovieGridAdapter extends BaseAdapter {
             ratingBar.setVisibility(View.VISIBLE);
         }
 
-        if (roundId == 1) {
-            textMessage.setText(Integer.toString(mMovies.get(position).getReview_size()) + "人留言");
-        }else {
-            textMessage.setText(mMovies.get(position).getPublish_date());
+
+        switch (roundId){
+            case 1:
+                textMessage.setText(Integer.toString(mMovies.get(position).getReview_size()) + "人留言");
+                rating_linear.setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                textMessage.setText(Integer.toString(mMovies.get(position).getReview_size()) + "人留言");
+                rating_linear.setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                textMessage.setText(mMovies.get(position).getPublish_date());
+                rating_linear.setVisibility(View.GONE);
+                break;
+            case 4:
+                textMessage.setText(mMovies.get(position).getPublish_date());
+                rating_linear.setVisibility(View.VISIBLE);
+                break;
         }
 
         convertView.setOnClickListener(new View.OnClickListener() {

@@ -68,6 +68,7 @@ public class MovieGridFragment extends Fragment {
         });
 
         if (movieGridAdapter != null){
+            mProgressBar.setVisibility(View.GONE);
             mGridView.setAdapter(movieGridAdapter);
         }else {
             if (NetworkUtil.getConnectivityStatus(getActivity()) != 0) {
